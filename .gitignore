@@ -16,5 +16,11 @@ manager/misc
 manager/misc/*
 manager/init.sh
 
+simulator/data
+simulator/files
+simulator/output
+simulator/simulator
+
 # hide or ignore installation packages
 *.deb
+

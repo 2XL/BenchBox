@@ -1,0 +1,90 @@
+### BEGIN INIT INFO
+# Provides:          firewall
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start iptable rules at boot time
+# Description:       Start iptable rules at boot time
+### END INIT INFO
+
+firewall_start() {
+        iptables  -F
+        ip6tables -F
+
+        iptables  -X
+        ip6tables -X
+
+	# Turn on IP forwarding
+	echo 1 > /proc/sys/net/ipv4/ip_forward
+
+        iptables  -P OUTPUT ACCEPT
+        ip6tables -P OUTPUT ACCEPT
+
+        iptables  -A INPUT -i lo -j ACCEPT
+        ip6tables -A INPUT -i lo -j ACCEPT
+
+        iptables  -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+        ip6tables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+        iptables  -A INPUT -p tcp --dport 22 -j ACCEPT
+        ip6tables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+        iptables  -A INPUT -p icmp   -j ACCEPT
+	ip6tables -A INPUT -p icmpv6 -j ACCEPT
+        ip6tables -A INPUT -s fe80::/10 -j ACCEPT # Link-local traffic
+        ip6tables -A INPUT -s ff00::/8  -j ACCEPT # Multicast traffic
+
+        iptables  -A INPUT -j DROP
+        ip6tables -A INPUT -j DROP
+
+	iptables -t nat -A POSTROUTING -o eth0 -s 192.168.56.101/24 -j MASQUERADE
+	iptables -t nat -A POSTROUTING -o eth1 -s 192.168.56.101/24 -j MASQUERADE
+	iptables -A FORWARD -i vboxnet0 -o eth0 -j ACCEPT
+	iptables -A FORWARD -i vboxnet0 -o eth1 -j ACCEPT
+
+        iptables -A FORWARD -i eth1 -o vboxnet0 -m state --state ESTABLISHED,RELATED -j ACCEPT
+        iptables -A FORWARD -i eth0 -o vboxnet0 -m state --state ESTABLISHED,RELATED -j ACCEPT
+	iptables -A FORWARD -j DROP
+}
+
+firewall_stop() {
+        iptables  -X
+        ip6tables -X
+        iptables  -X -t nat
+        iptables  -X -t mangle
+
+        iptables  -F
+        ip6tables -F
+        iptables  -F -t nat
+        iptables  -F -t mangle
+
+	# Turn off IP forwarding
+	echo 0 > /proc/sys/net/ipv4/ip_forward
+}
+
+firewall_status() {
+        iptables -nL -v
+	iptables -nL -v -t nat
+	iptables -nL -v -t mangle
+}
+
+case "$1" in
+  start)
+	firewall_start
+    	;;
+  stop)
+	firewall_stop
+    	;;
+  status)
+	firewall_status
+	;;
+  restart)
+	firewall_stop
+	firewall_start
+	;;
+  force-reload)
+	firewall_stop
+	firewall_start
+	;;
+esac

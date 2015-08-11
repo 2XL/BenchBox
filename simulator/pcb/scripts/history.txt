@@ -1,0 +1,195 @@
+
+  316  git commit -m "Initial Commit"
+  317  git status
+  318  git ready
+  319  git branch
+  320  git branch chenglong
+  321  git checkout chenglong
+  322  git status
+  323  ls
+  324  ls -la
+  325  cd ..
+  326  rm -R BenchBox/
+  327  sudo rm -R BenchBox/
+  328  git clone https://github.com/2XL/BenchBox.git
+  329  ls
+  330  cd ..
+  331  rm BenchBox/
+  332  rm BenchBox/ -R
+  333  ls
+  334  ./configure 
+  335  make
+  336  ./make
+  337  ls
+  338  make install
+  339  ./install-sh 
+  340  ./compile 
+  341  ./py-compile 
+  342  ./make
+  343  cd src/
+  344  ls
+  345  git status
+  346  git branch chenglong
+  347  git status
+  348  git checkout chenglong
+  349  git status
+  350  touch main.py
+  351  ls
+  352  mkdir data
+  353  mv ~/Baixades/query_result.csv data/
+  354  mv data/query_result.csv data/cdn_duo.csv
+  355  more data/cdn_duo.csv 
+  356  sudo pip install csv
+  357  sudo pip install git+git://github.com/riccardoscalco/Pykov@master
+  358  git status
+  359  git add .
+  360  git commit -m "Initial Commit"
+  361  more ~/.memory.txt 
+  362  git rm -r --cached .
+  363  git add .
+  364  git commit -m ".gitignore is now working"
+  365  git status
+  366  git checkout master
+  367  git status
+  368  ls -l
+  369  git checkout chenglong 
+  370  git status
+  371  git status
+  372  python
+  373  cd MEISISI/
+  374  ls
+  375  cd 6AST/
+  376  ls
+  377  cd code/
+  378  ls
+  379  ls -l
+  380  git clone https://github.com/2XL/BenchBox.git
+  381  ls
+  382  cd Projects/
+  383  ls
+  384  cd ..
+  385  ls
+  386  mkdir Eric
+  387  cd E
+  388  cd Eric/
+  389  ls
+  390  ls -l
+  391  df -h
+  392  df -h
+  393  df -h
+  394  df -h
+  395  df -h
+  396  df -h
+  397  dropbox
+  398  dropbox start
+  399  df -h
+  400  df -h
+  401  df -h
+  402  df -h
+  403  sudo ipconfig
+  404  sudo ifconfig
+  405  ls
+  406  ls
+  407  ls
+  408  ls -la
+  409  ls -l
+  410  ls -l
+  411  ls -l
+  412  df -h
+  413  cd 
+  414  ls
+  415  cd MEISISI/6AST/code/pc-benchmark/
+  416  ifconfig 
+  417  ls
+  418  cd scripts/
+  419  ls
+  420  vi README.txt 
+  421  ls
+  422  vi firewall 
+  423  sudo ./firewall start
+  424  sudo ./firewall stop
+  425  sudo ./firewall start
+  426  ifconfig 
+  427  ping google.es
+  428  sudo ./firewall start
+  429  ifconfig 
+  430  ping 192
+  431  sudo ./firewall stop
+  432  sudo iptables -L
+  433  sudo ./firewall start
+  434  sudo iptables -L
+  435  route -n
+  436  ls
+  437  vi README.txt 
+  438  sudo route add default gw 192.168.56.1 eth0
+  439  ifconfig 
+  440  sudo ./firewall stop
+  441  sudo ./firewall start
+  442  ls
+  443  cd ..
+  444  cd capture/
+  445  ls
+  446  python massive_changes2.py 
+  447  vi general/files.py
+  448  python massive_changes2.py 
+  449  mkdir pcap
+  450  python massive_changes2.py --folder Dropbox -f test.bin -m pcap -p dropbox
+  451  ls
+  452  sudo python overhead.py 
+  453  python overhead.py --folder Dropbox -f test.bin --ftp 192
+  454  python overhead.py --folder Dropbox -f test.bin --ftp 192.168.56.101 --user cotes --passwd lab144 
+  455  python overhead.py --folder Dropbox --ftp 192.168.56.101 --user cotes --passwd lab144 
+  456  ls
+  457  vi benchmark.py 
+  458  python benchmark.py 
+  459  python benchmark.py --folder Dropbox --ftp 192.168.56.101 --user cotes --passwd lab144 
+  460  python benchmark.py --folder Dropbox --ftp 192.168.56.101 --user cotes --passwd lab144 -i eth0 -o pcap
+  461  sudo python benchmark.py --folder Dropbox --ftp 192.168.56.101 --user cotes --passwd lab144 -i eth0 -o pcap
+  462  sudo python benchmark.py --folder Dropbox --ftp 192.168.56.101 --user cotes --passwd lab144 -i eth0 -o pcap
+  463  sudo rm pcap/*
+  464  sudo python benchmark.py --folder Dropbox --ftp 192.168.56.101 --user cotes --passwd lab144 -i eth0 -o pcap
+  465  ls
+  466  cd pcap/
+  467  ls
+  468  vi metadata.log 
+  469  cd ..
+  470  ls
+  471  ls
+  472  vi .a
+  473  sudo passwd anna
+  474  cd NetBeansProjects/TorrentJS/
+  475  ls
+  476  cd public_html/
+  477  ls
+  478  cd nodejs/
+  479  ls
+  480  ls -l
+  481  cd bootstrap/
+  482  ls
+  483  git status
+  484  git add .
+  485  git status
+  486  cd ..
+  487  cd ..
+  488  cd js/
+  489  ls
+  490  cd naive/
+  491  ls
+  492  cd server/
+  493  ls
+  494  npm init
+  495  npm init
+  496  npm install socket.io
+  497  npm install socket.io http server --save
+  498  npm install node-static --save
+  499  ls
+  500  history
+  501  cd MEISISI/6AST/code/pc-benchmark/capture/
+  502  ls
+  503  ls -l
+  504  cd ..
+  505  ls -l
+  506  cd scripts/
+  507  ls
+  508  ls -l
+  509  history > history.txt
