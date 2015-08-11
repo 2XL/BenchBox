@@ -8,3 +8,13 @@
 *.box
 */*.box
 
+# omit specific folders and files
+*/hints
+manager/example
+manager/status/*
+manager/misc
+manager/misc/*
+manager/init.sh
+
+# hide or ignore installation packages
+*.deb
