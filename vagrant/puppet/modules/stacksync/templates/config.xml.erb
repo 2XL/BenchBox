@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<stacksync>
+    <username><%= @username %></username>
+    <queuename><%= @queuename %></queuename>
+    <autostart><%= @autostart %></autostart>
+    <notifications><%= @notifications %></notifications>
+
+    <apiLogUrl><%= @apilogurl %></apiLogUrl>
+    <remoteLogs><%= @remotelogs %></remoteLogs>
+
+    <rabbitMQ>
+        <host><%= @rmq_host %></host>
+
+        <port><%= @rmq_port %></port>
+        <enableSSL><%= @rmq_enablessl %></enableSSL>
+
+        <username><%= @rmq_username %></username>
+        <password><%= @rmq_password %></password>
+        <rpc_exchange><%= @rmq_rpc_exchange %></rpc_exchange>
+    </rabbitMQ>
+
+    <!--
+    <database>
+        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/stacksync"/>
+        <property name="javax.persistence.jdbc.password" value="stacksync"/>
+        <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+        <property name="javax.persistence.jdbc.user" value="stacksync"/>
+        <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+    </database>
+    -->
+
+    <cache>
+        <size><%= @cache_size %></size>
+    </cache>
+
+    <profiles>
+        <profile id="1">
+            <enabled>true</enabled>
+            <name><%= @p_name %></name>
+            <repository>
+                <chunksize><%= @p_repo_chunksize %></chunksize>
+                <connection type="rackspace">
+                    <username><%= @p_repo_connection_username %></username>
+                    <apikey><%= @p_repo_connection_apikey %></apikey>
+                    <container><%= @p_repo_connection_container %></container>
+                    <authurl><%= @p_repo_connection_authurl %></authurl>
+                </connection>
+                <encryption>
+                    <password><%= @p_repo_encryption_password %></password>
+                    <cipher><%= @p_repo_encryption_cipher %></cipher>
+                    <keylength><%= @p_repo_encryption_keylength%></keylength>
+                </encryption>
+            </repository>
+            <folders>
+                <folder>
+                    <active><%= @p_folder_active %></active>
+                    <remote><%= @p_folder_remote %></remote>
+                    <local><%= @p_folder_local %></local>
+                    <!--<local>C:\Users\fox\stacksync_folder</local>-->
+                </folder>
+            </folders>
+            <permissions/>
+            <remote-permissions/>
+        </profile>
+    </profiles>
+
+
+</stacksync>
+

@@ -1,0 +1,12 @@
+{
+  "name": "2xl-owncloud",
+  "version": "0.0.5",
+  "author": "Chenglong Zou",
+  "summary": "Puppet module owncloud-client configuration for personal cloud",
+  "license": "GPLv2",
+  "source": "https://github.com/2xl/2xl-owncloud",
+  "project_page": "https://github.com/2xl/2xl-owncloud",
+  "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
+  "dependencies": []
+
+}

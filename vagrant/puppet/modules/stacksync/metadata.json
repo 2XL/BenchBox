@@ -1,0 +1,38 @@
+{
+  "name": "2xl-stacksync",
+  "version": "0.0.10",
+  "author": "Chenglong Zou",
+  "summary": "Puppet module stacksync-client for personal cloud",
+  "license": "GPLv2",
+  "source": "https://github.com/2xl/2xl-stacksync",
+  "project_page": "https://github.com/2xl/2xl-stacksync",
+  "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": ">=3.2.0"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": ">=3.0.0"
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs-java",
+      "version_requirement": "1.4.1"
+    },
+    {
+      "name": "maestrodev-maven",
+      "version_requirement": "1.4.0"
+    }
+  ]
+}

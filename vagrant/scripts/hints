@@ -1,0 +1,103 @@
+
+
+
+
+
+vagrant init puppetlabs/ubuntu-14.04-32-nocm # invocar una maquina virtual
+
+vagrant up          # arrancar vm
+
+vagrant ssh         # iniciar session
+:>ctrl-d            # salir
+>>exit
+
+
+vagrant provision []# comprovar unicament els scripts de provisionament
+[puppet, shell, chef, ...]
+
+
+
+
+## Definition:
+
+Puppet agents can function in one of two ways:
+
+Puppetmaster > is a server or a cluster of servers,
+that is a centralized location for systems to
+retrieve system configuration.
+
+puppet apply > command to interpret and apply configurations locally.
+
+# add a module to a vagrant project
+puppet module install puppetlabs-apache --modulepath ./puppet/modules
+# the dependency modlues will has to been also available or installed...
+
+
+# puppet last apply report
+sudo more /var/lib/puppet/state/last_run_report.yaml
+
+
+# resolve host names with vagrant
+ https://github.com/mitchellh/vagrant/wiki/Available-Vagrant-Plugins
+
+vagrant plugin install vagrant-hosts
+# this adds the option
+###.vm.provision :hosts
+# alternative --> vagrant dns resolver at the master node.
+
+
+
+# Creating cluters of Vagrant machines :-> todo dns server for cluster discovering...
+-> consul-> local DNS infrastructure
+
+
+#Installing the Vagrant-AWS Plugin
+
+
+# where the mysql is running
+netstat -tlpn | grep mysql
+SHOW GLOBAL VARIABLES LIKE 'PORT';
+
+# ping specific port
+iptables -A INPUT -p tcp --destination-port 3306 -j ACCEPT
+nmap -p 80 example.com
+
+# restart mysql
+/etc/init.d/mysql restart
+
+# fix user grant permisions...etc
+
+create user 'root'@'192.168.0.41' identified by 'vagrant';
+grant all privileges on *.* to 'root'@'192.168.0.41' with grant option;
+flush privileges;
+
+mysql -h database.com -u root benchbox
+
+SELECT User FROM mysql.user; --> show users in the machine
+
+
+
+# list directory permisions as numbers :D
+ls -l | awk '{k=0;for(i=0;i<=8;i++)k+=((substr($1,i+2,1)~/[rwx]/) *2^(8-i));if(k)printf("%0o ",k);print}'
+
+#get ip addres by interface
+
+# bash if
+
+-b filename - Block special file
+-c filename - Special character file
+-d directoryname - Check for directory existence
+-e filename - Check for file existence, regardless of type (node, directory, socket, etc.)
+-f filename - Check for regular file existence not a directory
+-G filename - Check if file exists and is owned by effective group ID.
+-g filename - true if file exists and is set-group-id.
+-k filename - Sticky bit
+-L filename - Symbolic link
+-O filename - True if file exists and is owned by the effective user id.
+-r filename - Check if file is a readable
+-S filename - Check if file is socket
+-s filename - Check if file is nonzero size
+-u filename - Check if file set-user-id bit is set
+-w filename - Check if file is writable
+-x filename - Check if file is executable
+

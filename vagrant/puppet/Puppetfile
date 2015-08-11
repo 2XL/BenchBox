@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+#^syntax detection
+
+forge "https://forgeapi.puppetlabs.com"
+
+# use dependencies defined in metadata.json
+# metadata
+
+# use dependencies defined in Modulefile
+# modulefile
+
+# A module from the Puppet Forge
+# mod 'puppetlabs-stdlib'
+
+# A module from git
+# mod 'puppetlabs-ntp',
+#   :git => 'git://github.com/puppetlabs/puppetlabs-ntp.git'
+
+# A module from a git branch/tag
+# mod 'puppetlabs-apt',
+#   :git => 'https://github.com/puppetlabs/puppetlabs-apt.git',
+#   :ref => '1.4.x'
+
+# A module from Github pre-packaged tarball
+# mod 'puppetlabs-apache', '0.6.0', :github_tarball => 'puppetlabs/puppetlabs-apache'
+
+
+mod "2xl/benchbox",
+  :git => "git://github.com/2XL/2xl-benchbox.git"
+
+mod "2xl/stacksync",
+  :git => "git://github.com/2XL/2xl-stacksync.git"
+
+mod "2xl/owncloud",
+  :git => "git://github.com/2XL/2xl-owncloud.git"
+
+mod "nesi/git",
+  :git => "git://github.com/nesi/puppet-git.git"
+
+mod "puppet/python",
+  :git => "git://github.com/stankevich/puppet-python.git"
+
+
+
+# A module from the Puppet Forge
+mod 'puppetlabs-stdlib','4.6.0'
+mod 'ghoneycutt/vim', '2.10.0'
+mod 'puppetlabs-vcsrepo', '1.3.0'
+mod 'puppetlabs-apt', '2.1.0'
+
+mod 'puppetlabs/apache', '1.2.0'
+mod 'puppetlabs/mysql', '3.1.0'
+mod 'stahnma/epel', '1.0.2'
+#mod 'aco-oracle_java', '2.2.6'
+mod 'puppetlabs/java','1.4.1'
+mod 'thias-vsftpd', '0.2.1'
+#mod 'ckhall-remi', '0.0.2'
+#mod 'shoekstra-owncloud', '0.4.1' # could not resole th dependencies...
+# dependencies
+
+mod 'maestrodev-maven', '1.4.0'
+
+
+
+

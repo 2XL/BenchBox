@@ -1,0 +1,35 @@
+
+
+
+# binary path
+/usr/lib/stacksync/Stacksync.jar -d -c ~/.stacksync
+
+
+/home/vagrant/.stacksync/config.xml
+~/stacksync_folder
+
+
+# stacksync server -> change the mac address
+
+account -> adduser script
+
+
+
+config.xml
+-> must define
+	account
+	repo>username
+		>pass
+		>apikey
+
+
+# setup stacksync server
+vbox/readme
+	get users credential
+	psql -h localhost stacksync -db stacksync_user # password : stacksync_pass
+
+
+
+
+
+

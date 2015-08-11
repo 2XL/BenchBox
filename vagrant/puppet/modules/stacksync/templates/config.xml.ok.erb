@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<stacksync>
+    <username>anna</username>
+    <queuename>Jo201507211749</queuename>
+    <autostart>true</autostart>
+    <notifications>true</notifications>
+
+    <apiLogUrl>URL_LOG_SERVER_API</apiLogUrl>
+    <remoteLogs>false</remoteLogs>
+
+    <rabbitMQ>
+        <host>10.30.232.39</host>
+
+        <port>5672</port>
+        <enableSSL>false</enableSSL>
+
+        <username>guest</username>
+        <password>guest</password>
+        <rpc_exchange>rpc_global_exchange</rpc_exchange>
+    </rabbitMQ>
+
+    <!--
+    <database>
+        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/stacksync"/>
+        <property name="javax.persistence.jdbc.password" value="stacksync"/>
+        <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+        <property name="javax.persistence.jdbc.user" value="stacksync"/>
+        <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+    </database>
+    -->
+
+    <cache>
+        <size>1024</size>
+        <folder>/home/anna/.stacksync/cache</folder>
+    </cache>
+
+    <device>
+        <name>Jo</name>
+    </device>
+    <profile>
+        <enabled>true</enabled>
+        <name>(unknown)</name>
+        <repository>
+            <chunksize>512</chunksize>
+            <connection type="swift_comercial">
+                <username>stacksync:stacksync_930c1c9c_demo1</username>
+                <apikey>demo1</apikey>
+                <authurl>http://10.30.232.39:5000/v2.0/tokens</authurl>
+            </connection>
+        </repository>
+        <folder>
+            <active>true</active>
+            <local>/home/anna/stacksync_folder</local>
+        </folder>
+        <account>
+            <id>a0ba4b12-5f2d-45d6-9655-0012083cec4c</id>
+            <email>demo1@ast.cat</email>
+            <password>demo1</password>
+        </account>
+    </profile>
+</stacksync>

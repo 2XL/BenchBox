@@ -1,0 +1,12 @@
+fixtures:
+  forge_modules:
+    stdlib:
+      repo: 'puppetlabs-stdlib'
+      ref:  '4.4.0'
+    vcsrepo:
+      repo: 'puppetlabs-vcsrepo'
+      ref:  '1.2.0'
+  repositories:
+    # No git repositories required.
+  symlinks:
+    git: "#{source_dir}"

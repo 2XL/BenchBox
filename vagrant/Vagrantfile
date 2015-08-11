@@ -1,0 +1,68 @@
+# Example 1
+#
+# Single box with some custom configuration.
+#
+# NOTE: Make sure you have the precise32 base box installed...
+# vagrant box add precise32 http://files.vagrantup.com/precise32.box
+
+box = 'debian-7.0-amd64.box' # https://www.dropbox.com/s/si19tbftilcuipz/debian-7.0-amd64.box
+box_url = box # check if file exists else download from remote path
+
+box_memory = "1024"
+box_cpu = "1"
+
+nodes = [
+    {:hostname => 'sandBox', :ip => '192.168.56.101', :box => box}, # this contains the pc-clients
+ #   {:hostname => 'benchBox', :ip => '192.168.56.2', :box => box} # this contains the pc-benchmarking
+]
+
+
+Vagrant.configure("2") do |config|
+  nodes.each do |node|
+    config.vm.define node[:hostname] do |nodeconfig|
+      puts "BOX/LOAD"
+
+      nodeconfig.vm.box = node[:box]
+      nodeconfig.vm.hostname = node[:hostname] # capat: hostnamectl
+      nodeconfig.vm.box_url = box_url
+      nodeconfig.vm.network :private_network, ip: node[:ip]
+
+      nodeconfig.vm.provider :virtualbox do |vm|
+        vm.customize [
+                         "modifyvm", :id,
+                         # "--cpuexecutioncap", "50",
+                         "--memory", box_memory.to_s,
+                         "--cpus", box_cpu.to_s,
+                     ]
+      end
+
+
+      #config.vm.provision :shell, path: "scripts/ugrade-puppet.sh"
+      nodeconfig.vm.provision :shell, path: "scripts/bootstrap"
+      nodeconfig.vm.provision :shell, inline: "echo 'Sara!' > /etc/motd"
+
+
+    end
+  end
+
+  puts "PUPPET/LOAD"
+  config.vm.provision :puppet do |puppet|
+
+    # puppet.hiera_config_path = "puppet/hiera.yaml"
+    puppet.options= ['--verbose', '--debug']
+    puppet.facter = {
+        "is_vagrant" => true
+    }
+
+    puppet.manifests_path = "puppet/manifests"
+    puppet.manifest_file = "default-owncloud.pp"
+    puppet.module_path = "puppet/modules"
+
+
+  end
+
+
+  puts "VAGRANT/OK"
+
+
+end

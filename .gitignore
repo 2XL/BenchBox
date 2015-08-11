@@ -1,3 +1,10 @@
+
+# do not upload intelij project metadata and settings
 *.iml
 */*.iml
 .idea
+
+# do not upload boxes or the repo will get corrupted becuase of its size
+*.box
+*/*.box
+
