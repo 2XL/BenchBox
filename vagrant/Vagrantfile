@@ -13,7 +13,7 @@ box_cpu = "1"
 
 nodes = [
     {:hostname => 'sandBox', :ip => '192.168.56.101', :box => box}, # this contains the pc-clients
- #   {:hostname => 'benchBox', :ip => '192.168.56.2', :box => box} # this contains the pc-benchmarking
+   # {:hostname => 'benchBox', :ip => '192.168.56.2', :box => box} # this contains the pc-benchmarking
 ]
 
 
@@ -21,7 +21,6 @@ Vagrant.configure("2") do |config|
   nodes.each do |node|
     config.vm.define node[:hostname] do |nodeconfig|
       puts "BOX/LOAD"
-
       nodeconfig.vm.box = node[:box]
       nodeconfig.vm.hostname = node[:hostname] # capat: hostnamectl
       nodeconfig.vm.box_url = box_url
@@ -35,11 +34,9 @@ Vagrant.configure("2") do |config|
                          "--cpus", box_cpu.to_s,
                      ]
       end
-
-
       #config.vm.provision :shell, path: "scripts/ugrade-puppet.sh"
       nodeconfig.vm.provision :shell, path: "scripts/bootstrap"
-      nodeconfig.vm.provision :shell, inline: "echo 'Sara!' > /etc/motd"
+      nodeconfig.vm.provision :shell, inline: "echo 'Sara is my Cat & Tor is my Dog!' > /etc/motd"
 
 
     end

@@ -21,6 +21,8 @@ simulator/files
 simulator/output
 simulator/simulator
 
+vagrant/.*
+
 # hide or ignore installation packages
 *.deb
 
