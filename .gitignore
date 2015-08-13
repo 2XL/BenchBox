@@ -19,6 +19,7 @@ manager/init.sh
 manager/config
 manager/config/*
 manager/output
+manager/hosts
 
 test
 

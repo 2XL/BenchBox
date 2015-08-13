@@ -132,18 +132,22 @@ def start():
     #preconfig(HOSTS)  # tell all the hosts to download BenchBox
     #setup(HOSTS)  # tell all the hosts to install VirtualBox and Vagrant
     #summon(HOSTS)  # tell the hosts to download Vagrant box to use
-    config(HOSTS, CONFIG)
-
+    #config(HOSTS, CONFIG)  # tell each hosts their profile
+    #run(HOSTS) # make vagrant up
+    scan()
 def stop():
     print 'stop'
 
 
 def restart():
     print 'restart'
-
+    stop()
+    start()
+    print 'restart/OK'
 
 def status():
-    print 'status'
+    print 'status: Retrieve for each hosts if they are Ready|Running|Stopped'
+
 
 
 def clean():
@@ -214,7 +218,6 @@ def summon(hosts):
 def config(hosts, config):
     print 'config: Assign a Stereotype to each host'
 
-
     profiles = config['profile']
     p = []
     counter = 1
@@ -239,25 +242,6 @@ def config(hosts, config):
 
     print 'config/OK'
 
-def run():
-    print 'run'
-
-
-def keepalive():
-    print 'keepalive'
-
-
-def scan():
-    print 'scan'
-
-
-def destroy():
-    print 'destroy'
-
-
-def shutdown():
-    print 'shutdown'
-
 
 def keygen():
     print 'keygen'
@@ -265,6 +249,66 @@ def keygen():
 
 def credentials():
     print 'credentials'
+
+
+def run(hosts):
+    print 'run: Call Vagrant init at each host'
+    for host in hosts:
+        h = hosts[host]
+        str_cmd = "" \
+                  "if [ -d BenchBox ]; then " \
+                  "cd BenchBox;" \
+                  "git pull; " \
+                  "cd vagrant; " \
+                  "echo '-------------------------------'; " \
+                  "ls -l *.box; " \
+                  "vagrant -v; " \
+                  "VBoxManage --version; " \
+                  "echo '-------------------------------'; " \
+                  "VBoxManage list runningvms | wc -l > running; " \
+                  "vagrant up; " \
+                  "vagrant provision; " \
+                  "else " \
+                  "echo 'Vagrant Project not Found!??'; " \
+                  "fi;" \
+                  ""
+        print str_cmd
+        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    print 'run/OK'
+
+
+def keepalive(hosts):
+    print 'keepalive: Prevent the hosts from auto-shutdown'
+    for host in hosts:
+        h = hosts[host]
+        str_cmd = "" \
+                  "if [ -f /usr/lib/milax-labdeim/autoapaguin.sh ]; then " \
+                  "echo '%s' | sudo -S rm /usr/lib/milax-labdeim/autoapaguin.sh; " \
+                  "else" \
+                  "echo 'File not found!'; " \
+                  "fi; " % h['passwd']
+        print str_cmd
+        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    print 'keepalive/OK'
+
+
+def scan(subnet = '192.168.1.0-255', port = 22, output = 'hosts'):
+    print 'scan: Scan hosts at a specific subnet'
+    cmd_args = "nmap %s -p %s | grep 'Nmap scan' | awk '{print $5}' > %s" % (subnet, port, output)
+    print cmd_args
+    p = Popen('/bin/bash', stdin=PIPE, stdout=PIPE)
+    out, err = p.communicate(cmd_args)
+    print out
+    if err:
+        print err
+    print 'scan/OK...'
+
+def destroy():
+    print 'destroy'
+
+
+def shutdown():
+    print 'shutdown'
 
 
 # -------------------------------------------------------------------------------
@@ -277,7 +321,8 @@ COMMANDS = {
     'status': status,
     'restart': restart,
     'clean': clean,
-    'init': init
+    'init': init,
+    'scan': scan
 }
 
 if __name__ == '__main__':
