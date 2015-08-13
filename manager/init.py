@@ -128,8 +128,8 @@ def init():
 def start():
     print 'start'
     preconfig(HOSTS)  # tell all the hosts to download BenchBox
-    setup(HOSTS) # tell all the hosts to install VirtualBox and Vagrant
-
+    setup(HOSTS)  # tell all the hosts to install VirtualBox and Vagrant
+    summon(HOSTS)  # tell the hosts to download Vagrant box to use
 
 
 def stop():
@@ -154,19 +154,23 @@ def preconfig(hosts):
     print 'preconfig: download BenchBox repo at the Slave hosts'
     for host in hosts:
         h = hosts[host]
-        str = "" \
-              "echo 'check if Git is installed...'; " \
-              "echo '%s' | sudo -S apt-get install git; " \
-              "echo 'check if BenchBox is installed...'; " \
-              "if [ -d BenchBox ]; then " \
-              "cd BenchBox;" \
-              "git pull; " \
-              "else " \
-              "git clone --recursive https://github.com/2XL/BenchBox.git; " \
-              "fi;" \
-              "" % h['passwd']
-        # print str
-        rpc(h['ip'], h['user'], h['passwd'], str)
+        str_cmd = "" \
+                  "echo 'check if Git is installed...'; " \
+                  "echo '%s' | sudo -S apt-get install git; " \
+                  "echo 'check if BenchBox is installed...'; " \
+                  "if [ -d BenchBox ]; then " \
+                  "cd BenchBox;" \
+                  "git pull; " \
+                  "else " \
+                  "git clone --recursive https://github.com/2XL/BenchBox.git; " \
+                  "fi;" \
+                  "" % h['passwd']
+        # print str_cmd
+        rpc(h['ip'], h['user'], h['passwd'], str_cmd) # utilitzar un worker del pool
+
+    '''
+    versió pool
+    '''
     print 'preconfig/OK'
 
 
@@ -175,21 +179,34 @@ def setup(hosts):
     print 'setup: Setup vagrant and VirtualBox at the Slave hosts'
     for host in hosts:
         h = hosts[host]
-        str = "" \
-              "if [ -d BenchBox ]; then " \
-              "cd BenchBox;" \
-              "git pull; " \
-              "cd vagrant/scripts; " \
-              "echo '%s' | sudo -S ./installVagrantVBox.sh; " \
-              "fi;" \
-              "" % h['passwd']
-        print str
-        rpc(h['ip'], h['user'], h['passwd'], str)
+        str_cmd = "" \
+                  "if [ -d BenchBox ]; then " \
+                  "cd BenchBox;" \
+                  "git pull; " \
+                  "cd vagrant/scripts; " \
+                  "echo '%s' | sudo -S ./installVagrantVBox.sh; " \
+                  "fi;" \
+                  "" % h['passwd']
+        #print str_cmd
+        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'setup/OK'
 
 
-def summon():
-    print 'summon'
+def summon(hosts):
+    print 'summon: Download vagrant box dependencies at hte Slave hosts'
+    for host in hosts:
+        h = hosts[host]
+        str_cmd = "" \
+                  "if [ -d BenchBox ]; then " \
+                  "cd BenchBox;" \
+                  "git pull; " \
+                  "cd vagrant/scripts; " \
+                  "./installDependencies.sh; " \
+                  "fi;" \
+                  ""
+        print str_cmd
+        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    print 'summon/OK'
 
 
 def config():
