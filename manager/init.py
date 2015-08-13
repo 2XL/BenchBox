@@ -136,8 +136,9 @@ def start():
     # setup(HOSTS)  # tell all the hosts to install VirtualBox and Vagrant
     # summon(HOSTS)  # tell the hosts to download Vagrant box to use
     # config(HOSTS, CONFIG)  # tell each hosts their profile
-    # credentials(HOSTS) # call conectar desde la mateixa maquina virtual xk no dona accés a hosts externs
-    run(HOSTS) # make vagrant up
+    credentials(HOSTS) # call conectar desde la mateixa maquina virtual xk no dona accés a hosts externs
+    sserver(HOSTS,CONFIG) # tell each host where the sync servers are located
+    # run(HOSTS) # make vagrant up
     print 'start/OK'
 
 
@@ -184,7 +185,6 @@ def preconfig(hosts):
 
 
 def setup(hosts):
-
     print 'setup: Setup vagrant and VirtualBox at the Slave hosts'
     for host in hosts:
         h = hosts[host]
@@ -263,9 +263,27 @@ def keygen(ip = "192.168.1.237"):
     # el allin one tiene este puerto bloqueado por ello no puedo acceder a esos datos.
 
 
+def sserver(hosts, conf):
+    print 'sserver'
+    print config
+    owncloud_ip = conf['ss']['owncloud']
+    stacksync_ip = conf['ss']['stacksync']
+    for idx, host in enumerate(hosts):
+        h = hosts[host]
+        str_cmd = "" \
+                  "if [ -d BenchBox ]; then " \
+                  "cd BenchBox/vagrant; " \
+                  "echo '%s' > ss.stacksync.ip; " \
+                  "echo '%s' > ss.owncloud.ip; " \
+                  "fi; " % (stacksync_ip, owncloud_ip)
+        print str_cmd
+        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    print 'sserver/OK'
+
 def credentials(hosts):
     print 'credentials'
     keygen()  # stacksync
+
     # keygen() # owncloud
     # push the generated keys to each slave host
     cred = []
@@ -285,8 +303,8 @@ def credentials(hosts):
                   "cd BenchBox; " \
                   "git pull; " \
                   "cd vagrant; " \
-                  "echo '%s' > stacksync.key; " \
-                  "echo '%s' > owncloud.key; " \
+                  "echo '%s' > ss.stacksync.key; " \
+                  "echo '%s' > ss.owncloud.key; " \
                   "fi; " % (key, ownkey)
         print str_cmd
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+#
+# Add Vagrant Box
+#
 
 echo "Inicializar instalación de dependencias en los Hosts"
 
@@ -21,38 +24,10 @@ fi
 
 
 # check if the machine has installed python dependecy libraries
-
-
-
 # instalar owncloud i stacksync client
 # https://github.com/stacksync/desktop/releases/download/v2.0-alpha2/stacksync_2.0_all.deb
 
 
-
-
-
-#if [ -f "Debian-7.3.0-i386b.box" ]; then
-#	echo 'box/OK';
-#else
-#echo 'no';
-# wget https://dl.dropboxusercontent.com/s/60pv9an852jx9y0/Debian-7.3.0-i386b.box?dl=1;
-# mv Debian-7.3.0-i386b.box?dl=1 Debian-7.3.0-i386b.box;
-#fi
-
-  # ls;   pwd;
-  #sudo apt-get purge vagrant;
-  #wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.3_i686.deb;
-  #sudo dpkg -i vagrant_1.7.3_i686.deb;
-
-  #wget http://download.virtualbox.org/virtualbox/5.0.0/virtualbox-5.0_5.0.0-101573~Debian~wheezy_i386.deb
-  #sudo dpkg -i virtualbox-5.0_5.0.0-101573~Debian~wheezy_i386.deb
-
-  #sudo apt-get purge virtualbox;
-  #wget http://download.virtualbox.org/virtualbox/4.2.2/virtualbox-4.2_4.2.2-81494~Debian~wheezy_i386.deb;
-  #sudo dpkg -i virtualbox-4.2_4.2.2-81494~Debian~wheezy_i386.deb;
-
-
-  # todo -> inicializar els imatges del lab amb lo que hiha dalt instalats.
 echo "Instalation fin"
 
 

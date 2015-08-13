@@ -30,6 +30,10 @@ simulator/output
 simulator/simulator
 
 vagrant/.*
+vagrant/slaves
+vagrant/slaves/*
+vagrant/slaves/*/*
+vagrant/scripts/test
 
 # hide or ignore installation packages
 *.deb

@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
+#
+# Install Vagrant & VirtualBox
+#
+
 echo "Inicializar instalación de Vagrant and Virtualbox"
+
 MACHINE_TYPE=`uname -m`
 if which virtualbox; then
     echo 'vbox/OK';
