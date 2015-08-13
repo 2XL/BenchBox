@@ -11,10 +11,17 @@
 # omit specific folders and files
 */hints
 manager/example
+manager/status
 manager/status/*
 manager/misc
 manager/misc/*
 manager/init.sh
+manager/config
+manager/config/*
+manager/output
+
+test
+
 
 simulator/data
 simulator/files
@@ -25,4 +32,4 @@ vagrant/.*
 
 # hide or ignore installation packages
 *.deb
-
+*.OLD.*

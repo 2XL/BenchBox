@@ -3,8 +3,6 @@
 
 echo "Inicializar instalación de dependencias en los Hosts"
 
-
-
 if [ -f PuppetEssential/debian-7.0-amd64.box ]; then
 	echo 'box/OK';
 else
@@ -55,11 +53,6 @@ fi
 
 
   # todo -> inicializar els imatges del lab amb lo que hiha dalt instalats.
-
-
-
-
-
 echo "Instalation fin"
 
 

@@ -9,3 +9,9 @@ https://mongolab.com/databases/benchbox
 	mongo ds055822.mongolab.com:55822/benchbox -u <dbuser> -p <dbpassword>
 ## To connect using a driver via the standard URI (what's this?):
     mongodb://<dbuser>:<dbpassword>@ds055822.mongolab.com:55822/benchbox
+
+
+-- el mongo server podria trobarse aqui, pero nomes seria accessible en proves locals, encanvi si estiguesi en
+mongolabs seria accessible desde qualsevol lloc
+-- TODO exportar los logs en formato csv
+
