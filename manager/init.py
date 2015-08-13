@@ -18,6 +18,7 @@ import getpass
 CONFIG = {}
 HOSTS = {}
 
+
 def process_opt():
     parser = ArgumentParser()
 
@@ -59,6 +60,7 @@ def process_opt():
 # ------------------------------------------------------------------------------
 # Functions
 # ------------------------------------------------------------------------------
+
 
 def loadConfiguration(path):
     print 'Load configuration files settings'
@@ -127,10 +129,10 @@ def init():
 
 def start():
     print 'start'
-    preconfig(HOSTS)  # tell all the hosts to download BenchBox
-    setup(HOSTS)  # tell all the hosts to install VirtualBox and Vagrant
-    summon(HOSTS)  # tell the hosts to download Vagrant box to use
-
+    #preconfig(HOSTS)  # tell all the hosts to download BenchBox
+    #setup(HOSTS)  # tell all the hosts to install VirtualBox and Vagrant
+    #summon(HOSTS)  # tell the hosts to download Vagrant box to use
+    config(HOSTS, CONFIG)
 
 def stop():
     print 'stop'
@@ -209,9 +211,24 @@ def summon(hosts):
     print 'summon/OK'
 
 
-def config():
-    print 'config'
+def config(hosts, config):
+    print 'config: Assign a Stereotype to each host'
 
+    print config
+    '''
+    for host in hosts:
+        h = hosts[host]
+        str_cmd = "" \
+                  "if [ -d BenchBox ]; then " \
+                  "cd BenchBox;" \
+                  "git pull; " \
+                  "cd vagrant; " \
+                  "fi; "
+
+        print str_cmd
+        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    '''
+    print 'config/OK'
 
 def run():
     print 'run'
