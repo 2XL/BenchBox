@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Inicializar instalación de Vagrant and Virtualbox"
-
+MACHINE_TYPE=`uname -m`
 if which virtualbox; then
     echo 'vbox/OK';
  else
@@ -20,7 +20,7 @@ if which vagrant; then
  else
 	echo 'vagrant/no';
 	#sudo apt-get purge virtualbox;
-	if [ arch == 'x86_64' ]; then
+	if [ ${MACHINE_TYPE} == 'x86_64' ]; then
 		# 64-bit stuff here
 		if [ ! -f vagrant_1.7.3_x86_64.deb ]
 		then
