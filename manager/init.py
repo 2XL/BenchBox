@@ -214,20 +214,29 @@ def summon(hosts):
 def config(hosts, config):
     print 'config: Assign a Stereotype to each host'
 
-    print config
-    '''
-    for host in hosts:
+
+    profiles = config['profile']
+    p = []
+    counter = 1
+    for prof in profiles:
+        for idx in range(counter, counter+int(profiles[prof])):
+            #print prof, idx
+            p.append(prof)
+        counter+=int(profiles[prof])
+
+    for idx, host in enumerate(hosts):
         h = hosts[host]
         str_cmd = "" \
                   "if [ -d BenchBox ]; then " \
                   "cd BenchBox;" \
                   "git pull; " \
                   "cd vagrant; " \
-                  "fi; "
+                  "echo '%s' > profile; "  \
+                  "fi; " % p[idx]
 
         print str_cmd
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
-    '''
+
     print 'config/OK'
 
 def run():
