@@ -9,9 +9,14 @@ import shlex
 from subprocess import Popen, PIPE
 import traceback, time, sys, os
 import random, numpy
+from multiprocessing import Pool
+import pxssh
+import getpass
 
-#  sys.path.append('general') # hard-code :D
-
+# sys.path.append('general') # hard-code :D
+# global variables
+CONFIG = {}
+HOSTS = {}
 
 def process_opt():
     parser = ArgumentParser()
@@ -51,9 +56,12 @@ def process_opt():
 
     return opt
 
+# ------------------------------------------------------------------------------
+# Functions
+# ------------------------------------------------------------------------------
 
 def loadConfiguration(path):
-    print 'load configuration files settings'
+    print 'Load configuration files settings'
     configAll = SafeConfigParser()
     configAll.read(path)
     profile = dict(configAll.items('profile'))
@@ -65,7 +73,7 @@ def loadConfiguration(path):
             'ls': log_server}
 
 def loadHosts(path):
-    print 'load hosts candidates config file'
+    print 'Load hosts candidates config file'
     configHosts = SafeConfigParser()
     configHosts.read(path)
 
@@ -76,20 +84,50 @@ def loadHosts(path):
     return hosts
 
 
-def greet(who):
-    print "Hello %s" % who
+def power(x):
+    return x*x
 
+
+def greet(who):
+    print "BenchBox: %s" % who
+
+
+def rpc(hostname, login, passwd, cmd, callback=None):
+    while True:
+        try:
+            options={"StrictHostKeyChecking": "no", "UserKnownHostsFile": "/dev/null"}
+            s = pxssh.pxssh()
+            s.login(hostname, login, passwd)
+            s.sendline(cmd) # run a command
+            s.prompt() # match the prompt
+            print s.before # print everyting before the prompt
+            # s.sendline ('uptime;df -h') # running multiple lines
+            s.logout()
+        except pxssh.ExceptionPxssh, e:
+            print "pxssh failed on login."
+            print str(e)
+            continue
+        break
+
+    if callback:
+        return callback()
 
 # --------------------------------------------------------------------------------
 # Commands
 # --------------------------------------------------------------------------------
 
-def start():
+
+def init():
     # customized lambda functions :D
     greed_command = lambda: greet('owncloud')
     greed_command()
     greed_command = lambda: greet('stacksync')
     greed_command()
+
+
+def start():
+    print 'start'
+    preconfig(HOSTS)
 
 
 def stop():
@@ -108,11 +146,75 @@ def clean():
     print 'clean'
 
 
+# Advance functions
+
+def preconfig(hosts):
+    print 'preconfig: Setup vagrant and Virtualbox at the Slave hosts'
+    for host in hosts:
+        h = hosts[host]
+        str = "" \
+              "echo 'check if Git is installed...'; " \
+              "echo '%s' | sudo -S apt-get install git; " \
+              "echo 'check if BenchBox is installed...'; " \
+              "if [ -d BenchBox ]; then " \
+              "cd BenchBox;" \
+              "git pull; " \
+              "else " \
+              "git clone --recursive https://github.com/2XL/BenchBox.git; " \
+              "fi;" \
+              "" % h['passwd']
+        print str
+        rpc(h['ip'], h['user'], h['passwd'], str)
+    print 'preconfig/OK'
+
+def summon():
+    print 'summon'
+
+
+def config():
+    print 'config'
+
+
+def run():
+    print 'run'
+
+
+def keepalive():
+    print 'keepalive'
+
+
+def scan():
+    print 'scan'
+
+
+def destroy():
+    print 'destroy'
+
+
+def shutdown():
+    print 'shutdown'
+
+
+def keygen():
+    print 'keygen'
+
+
+def credentials():
+    print 'credentials'
+
+
 # -------------------------------------------------------------------------------
 # Main
 # -------------------------------------------------------------------------------
 # available commands
-COMMANDS = {'start': start, 'stop': stop, 'status': status, 'restart': restart, 'clean': clean }
+COMMANDS = {
+    'start': start,
+    'stop': stop,
+    'status': status,
+    'restart': restart,
+    'clean': clean,
+    'init': init
+}
 
 if __name__ == '__main__':
 
@@ -126,19 +228,18 @@ if __name__ == '__main__':
     elif len(os.listdir(opt.output)):
         exit("ERROR: This folder is not empty: " + opt.output)
 
-    print opt
+    # print opt
 
-    config = loadConfiguration(opt.config)
-    hosts = loadHosts(opt.hosts)
-
-    print config
-    print hosts
+    CONFIG = loadConfiguration(opt.config)
+    HOSTS = loadHosts(opt.hosts)
 
     # Popen(['command to run', 'some arguments'], stdout=PIPE, stderr=PIPE)
-    args = ['/bin/echo',  "Hello World"]
-    p = Popen(args)
-    print 'Popen running...'
+    hw = ['/bin/echo',  "Popen/OK"]
+    p = Popen(hw)
+    print 'Popen installed...'
     p.communicate()
-    print 'Popen wait finish.'
-
+    print '...'
+    COMMANDS['init']()
+    print '...'
     COMMANDS[opt.option]()  # command pattern
+
