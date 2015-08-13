@@ -127,7 +127,9 @@ def init():
 
 def start():
     print 'start'
-    preconfig(HOSTS)
+    preconfig(HOSTS)  # tell all the hosts to download BenchBox
+    setup(HOSTS) # tell all the hosts to install VirtualBox and Vagrant
+
 
 
 def stop():
@@ -149,7 +151,7 @@ def clean():
 # Advance functions
 
 def preconfig(hosts):
-    print 'preconfig: Setup vagrant and Virtualbox at the Slave hosts'
+    print 'preconfig: download BenchBox repo at the Slave hosts'
     for host in hosts:
         h = hosts[host]
         str = "" \
@@ -163,9 +165,28 @@ def preconfig(hosts):
               "git clone --recursive https://github.com/2XL/BenchBox.git; " \
               "fi;" \
               "" % h['passwd']
-        print str
+        # print str
         rpc(h['ip'], h['user'], h['passwd'], str)
     print 'preconfig/OK'
+
+
+def setup(hosts):
+
+    print 'setup: Setup vagrant and VirtualBox at the Slave hosts'
+    for host in hosts:
+        h = hosts[host]
+        str = "" \
+              "if [ -d BenchBox ]; then " \
+              "cd BenchBox;" \
+              "git pull; " \
+              "cd vagrant/scripts; " \
+              "echo '%s' | sudo -S ./installVagrantVBox.sh; " \
+              "fi;" \
+              "" % h['passwd']
+        print str
+        rpc(h['ip'], h['user'], h['passwd'], str)
+    print 'setup/OK'
+
 
 def summon():
     print 'summon'
