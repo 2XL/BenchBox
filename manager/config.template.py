@@ -6,7 +6,7 @@ import ConfigParser
 class Object(object):
     pass
 
-# General Configuration Setup
+# General Configuration Setup ##########################################################################################
 
 configAll = ConfigParser.RawConfigParser()
 
@@ -22,6 +22,7 @@ configAll.add_section('demo')
 configAll.add_section('profile')
 configAll.add_section('owncloud')
 configAll.add_section('stacksync')
+configAll.add_section('log_server')
 
 configAll.set('demo', 'url', 'https://wiki.python.org/moin/ConfigParserExamples')
 
@@ -42,21 +43,20 @@ configAll.set('stacksync', 'admin', '192.168.1.237:8081/admin')
 configAll.set('stacksync', 'user', 'swift')
 configAll.set('stacksync', 'passwd', 'urv')
 
+configAll.set('log_server', 'url', 'ds055822.mongolab.com:55822/benchbox')
+configAll.set('log_server', 'user', 'test')
+configAll.set('log_server', 'passwd', 'test')
+
+
 # Writing our configuration file to 'example.cfg'
 with open('config.all.ini', 'wb') as configfileAll:
     configAll.write(configfileAll)
 
-# Hosts Specific Configuration Setup
+# Hosts Specific Configuration Setup ###################################################################################
 
 configHosts = ConfigParser.RawConfigParser()
-'''
-configHosts.add_section('localhost')
-configHosts.set('localhost', 'user', 'anna')
-configHosts.set('localhost', 'passwd', 'joanna')
-configHosts.set('localhost', 'owncloud_credentials', 'user:pass')
-configHosts.set('localhost', 'stacksync_credentials', 'user:pass')
-'''
-# python defined hosts
+
+# CUSTOM SLAVE-HOSTS
 ast13 = {'user': 'milax', 'passwd': 'milax', 'ip': '192.168.1.227',
          'owncloud_login': 'milax:milax',
          'stacksync_login': 'milax:milax'}
@@ -88,22 +88,3 @@ for i in range(5):
 with open('config.hosts.ini', 'wb') as configfileHosts:
     configHosts.write(configfileHosts)
 
-
-
-'''
-[localhost]
-name = anna
-passwd = joanna
-owncloud_user = test
-owncloud_pass = test
-stacksync_user = test
-stacksync_pass = test
-
-[d###.lab.deim]
-name = d###@lab.deim
-passwd = milax
-ownlcoud_user = 'demo##'
-owncloud_pass = 'demo##'
-stacksync_user = 'demo##'
-stacksync_pass = 'demo##'
-'''
