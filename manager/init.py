@@ -6,6 +6,8 @@ from ConfigParser import SafeConfigParser
 
 from argparse import ArgumentParser
 import shlex
+import psycopg2
+
 from subprocess import Popen, PIPE
 import traceback, time, sys, os
 import random, numpy
@@ -129,14 +131,18 @@ def init():
 
 def start():
     print 'start'
-    #preconfig(HOSTS)  # tell all the hosts to download BenchBox
-    #setup(HOSTS)  # tell all the hosts to install VirtualBox and Vagrant
-    #summon(HOSTS)  # tell the hosts to download Vagrant box to use
-    #config(HOSTS, CONFIG)  # tell each hosts their profile
-    #run(HOSTS) # make vagrant up
-    scan()
+    preconfig(HOSTS)  # tell all the hosts to download BenchBox
+    setup(HOSTS)  # tell all the hosts to install VirtualBox and Vagrant
+    summon(HOSTS)  # tell the hosts to download Vagrant box to use
+    config(HOSTS, CONFIG)  # tell each hosts their profile
+    # credentials() # call conectar desde la mateixa maquina virtual xk no dona accés a hosts externs
+    run(HOSTS) # make vagrant up
+    print 'start/OK'
+
 def stop():
     print 'stop'
+    pause(HOSTS)
+
 
 
 def restart():
@@ -147,11 +153,6 @@ def restart():
 
 def status():
     print 'status: Retrieve for each hosts if they are Ready|Running|Stopped'
-
-
-
-def clean():
-    print 'clean'
 
 
 # Advance functions
@@ -210,7 +211,7 @@ def summon(hosts):
                   "./installDependencies.sh; " \
                   "fi;" \
                   ""
-        print str_cmd
+        #print str_cmd
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'summon/OK'
 
@@ -237,18 +238,34 @@ def config(hosts, config):
                   "echo '%s' > profile; "  \
                   "fi; " % p[idx]
 
-        print str_cmd
+        #print str_cmd
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
 
     print 'config/OK'
 
 
-def keygen():
-    print 'keygen'
+def keygen(ip = "192.168.1.240"):
+    print 'keygen: retrieve stacksync login credentials'
+    conn = psycopg2.connect(database="stacksync_db",
+                            user="stacksync_user",
+                            password="stacksync_pass",
+                            host=ip,
+                            port="5432")
+    cur = conn.cursor()
+    query = "select id, name, swift_account, swift_user, email from user1 where name ~ 'demo'";
+    outputquery = "COPY ({0}) TO STDOUT WITH CSV HEADER".format(query)
+    with open('stacksync_credentials.csv', 'w') as f:
+        cur.copy_expert(outputquery, f)
+    conn.close()
+    print 'keygen/OK'
+    # el allin one tiene este puerto bloqueado por ello no puedo acceder a esos datos.
 
 
 def credentials():
     print 'credentials'
+    keygen()  # stacksync
+    # keygen() # owncloud
+    # push the generated keys to each slave host
 
 
 def run(hosts):
@@ -303,13 +320,65 @@ def scan(subnet = '192.168.1.0-255', port = 22, output = 'hosts'):
         print err
     print 'scan/OK...'
 
-def destroy():
-    print 'destroy'
+
+def clean(hosts):
+    print 'clean: Remove the repository files'
+    for host in hosts:
+        h = hosts[host]
+        str_cmd = "" \
+                  "if [ -d BenchBox ]; then" \
+                  "rm -rf BenchBox; " \
+                  "else " \
+                  "echo 'Repo already clean'; " \
+                  "fi; "
+        print str_cmd
+        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    print 'clean/OK'
 
 
-def shutdown():
-    print 'shutdown'
+def destroy(hosts):
+    print 'destroy: Remove the repository files'
+    for host in hosts:
+        h = hosts[host]
+        str_cmd = "" \
+                  "if [ -d BenchBox ]; then" \
+                  "cd BenchBox; " \
+                  "vagrant destroy -f; " \
+                  "else " \
+                  "echo 'Repo already clean'; " \
+                  "fi; "
+        print str_cmd
+        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    print 'destroy/OK'
 
+
+def pause(hosts):
+    print 'pause: Pause the running vagrant machines'
+    for host in hosts:
+        h = hosts[host]
+        str_cmd = "" \
+                  "if [ -d BenchBox ]; then" \
+                  "cd BenchBox; " \
+                  "vagrant halt; " \
+                  "else " \
+                  "echo 'Repo does not exist!'; " \
+                  "fi; "
+        print str_cmd
+        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    print 'destroy/OK'
+
+
+def shutdown(hosts):
+    print 'shutdown: Power off the remote Hosts'
+    for host in hosts:
+        h = hosts[host]
+        str_cmd = "" \
+                  "echo 'Shutdown!!!';" \
+                  "echo '%s' | sudo -S shutdown -h 0 " \
+                  "" % h['passwd']
+        print str_cmd
+        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    print 'shutdown/OK'
 
 # -------------------------------------------------------------------------------
 # Main
