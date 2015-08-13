@@ -12,10 +12,11 @@ from subprocess import Popen, PIPE
 import traceback, time, sys, os
 import random, numpy
 from multiprocessing import Pool
+import csv
 import pxssh
 import getpass
 
-# sys.path.append('general') # hard-code :D
+# sys.path.append('general') # hard-code by cristian :D
 # global variables
 CONFIG = {}
 HOSTS = {}
@@ -131,18 +132,18 @@ def init():
 
 def start():
     print 'start'
-    preconfig(HOSTS)  # tell all the hosts to download BenchBox
-    setup(HOSTS)  # tell all the hosts to install VirtualBox and Vagrant
-    summon(HOSTS)  # tell the hosts to download Vagrant box to use
-    config(HOSTS, CONFIG)  # tell each hosts their profile
-    # credentials() # call conectar desde la mateixa maquina virtual xk no dona accés a hosts externs
-    run(HOSTS) # make vagrant up
+    # preconfig(HOSTS)  # tell all the hosts to download BenchBox
+    # setup(HOSTS)  # tell all the hosts to install VirtualBox and Vagrant
+    # summon(HOSTS)  # tell the hosts to download Vagrant box to use
+    # config(HOSTS, CONFIG)  # tell each hosts their profile
+    credentials(HOSTS) # call conectar desde la mateixa maquina virtual xk no dona accés a hosts externs
+    # run(HOSTS) # make vagrant up
     print 'start/OK'
+
 
 def stop():
     print 'stop'
     pause(HOSTS)
-
 
 
 def restart():
@@ -150,6 +151,7 @@ def restart():
     stop()
     start()
     print 'restart/OK'
+
 
 def status():
     print 'status: Retrieve for each hosts if they are Ready|Running|Stopped'
@@ -244,7 +246,7 @@ def config(hosts, config):
     print 'config/OK'
 
 
-def keygen(ip = "192.168.1.240"):
+def keygen(ip = "192.168.1.237"):
     print 'keygen: retrieve stacksync login credentials'
     conn = psycopg2.connect(database="stacksync_db",
                             user="stacksync_user",
@@ -261,11 +263,34 @@ def keygen(ip = "192.168.1.240"):
     # el allin one tiene este puerto bloqueado por ello no puedo acceder a esos datos.
 
 
-def credentials():
+def credentials(hosts):
     print 'credentials'
     keygen()  # stacksync
     # keygen() # owncloud
     # push the generated keys to each slave host
+    cred = []
+    with open("stacksync_credentials.csv", "rb") as infile:
+        reader = csv.reader(infile)
+        next(reader, None)  # skip the headers
+        for row in reader:
+            # process each row
+            cred.append(row)
+
+    for idx, host in enumerate(hosts):
+        key = ','.join(cred[idx])
+        ownkey = cred[idx][1]
+        h = hosts[host]
+        str_cmd = "" \
+                  "if [ -d BenchBox ]; then " \
+                  "cd BenchBox; " \
+                  "git pull; " \
+                  "cd vagrant; " \
+                  "echo '%s' > stacksync.key; " \
+                  "echo '%s' > owncloud.key; " \
+                  "fi; " % (key, ownkey)
+        print str_cmd
+        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    print 'credentials/OK'
 
 
 def run(hosts):
