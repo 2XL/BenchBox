@@ -24,7 +24,8 @@ forge "https://forgeapi.puppetlabs.com"
 # A module from Github pre-packaged tarball
 # mod 'puppetlabs-apache', '0.6.0', :github_tarball => 'puppetlabs/puppetlabs-apache'
 
-
+## The next three puppet modules are static in the BenchBox project, no longer use the following
+## repos because they may be uploaded manually later.
 mod "2xl/benchbox",
   :git => "git://github.com/2XL/2xl-benchbox.git"
 
@@ -33,6 +34,7 @@ mod "2xl/stacksync",
 
 mod "2xl/owncloud",
   :git => "git://github.com/2XL/2xl-owncloud.git"
+
 
 mod "nesi/git",
   :git => "git://github.com/nesi/puppet-git.git"
