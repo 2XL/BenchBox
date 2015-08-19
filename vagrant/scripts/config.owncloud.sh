@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 
 
-if [ "$#" -e 2 ]; then
-	sync_server_ip='192.168.1.237' # owncloud server_ip,
-else
-	sync_server_ip=$2
-fi
 [ -f owncloudsync.sh ] && rm owncloudsync.sh
 [ -f ../owncloudsync.sh ] && rm ../owncloudsync.sh
 
@@ -19,7 +14,20 @@ else
 fi
 
 
-if [ ! -f "$DIR/owncloud.key" ];
+
+if [ ! -f "$DIR/ss.owncloud.ip" ];
+then
+echo "File: not found!"
+sync_server_ip='192.168.1.240' # stacksync server_ip,
+exit;
+else
+echo "File: $2 exists!"
+fi
+
+line=($(<"$DIR/ss.owncloud.ip"))
+sync_server_ip=`echo $line | awk -F ' ' '{ print $4}' | awk -F ',' '{print $1}'`
+
+if [ ! -f "$DIR/ss.owncloud.key" ];
 then
 echo "File: not found!"
 exit;

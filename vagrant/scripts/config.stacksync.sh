@@ -2,6 +2,7 @@
 
 
 
+
 if [ "$#" -ne 0 ]; then
     echo "Illegal number of parameters"
     echo "use default root directory"
@@ -12,7 +13,19 @@ else
 fi
 
 
-if [ ! -f "$DIR/stacksync.key" ];
+if [ ! -f "$DIR/ss.stacksync.ip" ];
+then
+echo "File: not found!"
+sync_server_ip='192.168.1.240' # stacksync server_ip,
+exit;
+else
+echo "File: $2 exists!"
+fi
+line=($(<"$DIR/ss.stacksync.ip"))
+sync_server_ip=`echo $line | awk -F ' ' '{ print $2}' | awk -F ':' '{print $1}'`
+
+
+if [ ! -f "$DIR/ss.stacksync.key" ];
 then
 echo "File: not found!"
 exit;
@@ -40,7 +53,6 @@ EMAIL=${myarray[4]}
 
 
 
-sync_server_ip='10.30.232.39'
 swift_group='stacksync'
 swift_user=$SWIFT_USER
 username='vagrant'
