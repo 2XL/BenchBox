@@ -1,5 +1,8 @@
 # this puppet deploys a client with all the software dependencies - only owncloud
 
+# -------------------------------------------------------------------------------------------------------
+# benchBox
+# -------------------------------------------------------------------------------------------------------
 node 'benchBox' {
   class { 'apt':
     update => {
@@ -44,7 +47,9 @@ define download_file(
 
 }
 
-
+# -------------------------------------------------------------------------------------------------------
+# sandBox
+# -------------------------------------------------------------------------------------------------------
 node 'sandBox' {
   class { 'apt':
     update => {
@@ -83,7 +88,7 @@ node 'sandBox' {
   ->
   class{
     "owncloud":
-      ip => '192.168.1.237'
+      rmq_host => '192.168.1.237'
   }
   ->
   file {
@@ -94,6 +99,7 @@ node 'sandBox' {
       mode    => '0644',
       recurse => true
   }
+  ->
   exec {
     'launch_stacksync_client':
       command => 'sudo kill -9 $(ps -ef | grep -i owncloudsync.sh | grep -v \'grep\' | awk \'{print $2}\');

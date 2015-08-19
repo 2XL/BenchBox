@@ -17,8 +17,6 @@ sudo apt-get -y install debian-keyring debian-archive-keyring
 sudo apt-get update
 
 
-
-
 sudo apt-get build-dep owncloud-client
 sudo apt-get -y install owncloud-client
 

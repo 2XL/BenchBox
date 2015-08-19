@@ -1,4 +1,7 @@
 class owncloud::package::debian() {
+  include ::apt
+
+
 
   apt::key { 'owncloud':
     key        => 'BA684223',
@@ -9,8 +12,10 @@ class owncloud::package::debian() {
     repos       => '',
     release     => '/',
     include_src => false,
-    before      => Package['owncloud'],
-  }->
+    #before      => Package['owncloud'],
+  }
+
+  ->
   file {
     '/tmp/thescript':
       ensure => file,

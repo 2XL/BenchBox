@@ -1,4 +1,4 @@
-# Class: vsftpd::params
+# Class: stacksync::params
 #
 class stacksync::params {
 

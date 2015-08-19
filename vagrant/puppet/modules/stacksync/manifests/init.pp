@@ -88,7 +88,7 @@ class stacksync (
 
   host {
     'syncserver':
-      ip => '10.30.232.39'
+      ip => $rmq_host
   # dhcp :: mac( 08:00:27:1e:89:5e )
   }
 

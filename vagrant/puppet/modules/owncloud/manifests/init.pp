@@ -5,9 +5,9 @@ class owncloud (
   $template                = 'owncloud/config.xml.orig.erb',
   $stacksync               = 'owncloud/owncloud.erb',
 # vsftpd.conf options
-  $username                 = 'guerrero',
+  $username                 = 'someusername',
   $queuename                = '',
-  $machinename              = 'pc_gguerr201302191026',
+  $machinename              = 'somehostname',
   $autostart                = 'true',
   $notifications            = 'true',
   $apilogurl                = 'http://localhost/ownc/apiput',
@@ -19,7 +19,8 @@ class owncloud (
 )inherits ::owncloud::params {
   host {
     'owncserver':
-      ip => '10.30.233.0'
+      ip => $rmq_host
+  #    ip => '10.30.233.0'
   # dhcp :: mac( 08:00:27:1e:89:5e )
   }
 
@@ -35,10 +36,10 @@ class owncloud (
   }
 
 # descargar deb7 :: bin directament :: http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Debian_7.0/amd64/owncloud-client_1.8.4-1_amd64.deb
-
-  package { 'owncloud':
-    ensure => present,
-  }
+#
+#  package { 'owncloud':
+#    ensure => present,
+#  }
 
 
 
