@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
 
-sync_server_ip='10.30.233.0' # owncloud server_ip
-
+if [ "$#" -e 2 ]; then
+	sync_server_ip='192.168.1.237' # owncloud server_ip,
+else
+	sync_server_ip=$2
+fi
 [ -f owncloudsync.sh ] && rm owncloudsync.sh
 [ -f ../owncloudsync.sh ] && rm ../owncloudsync.sh
 

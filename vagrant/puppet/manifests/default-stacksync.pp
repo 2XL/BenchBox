@@ -1,4 +1,8 @@
 # this puppet deploys a client with all the software dependencies - only stacksync
+
+# -------------------------------------------------------------------------------------------------------
+# benchBox
+# -------------------------------------------------------------------------------------------------------
 node 'benchBox' {
 
   class { 'apt':
@@ -44,7 +48,9 @@ define download_file(
 
 }
 
-
+# -------------------------------------------------------------------------------------------------------
+# sandBox
+# -------------------------------------------------------------------------------------------------------
 node 'sandBox' {
   class { 'apt':
     update => {
@@ -86,6 +92,8 @@ node 'sandBox' {
     group  => "ftp",
     mode   => 755,
   }
+
+  /*
   ->
   class { "maven::maven":
     version => "3.2.5", # version to install
@@ -102,10 +110,14 @@ node 'sandBox' {
   # anything to add to MAVEN_OPTS in ~/.mavenrc
     maven_opts           => '-Xmx1384m',       # anything to add to MAVEN_OPTS in ~/.mavenrc
     maven_path_additions => "",      # anything to add to the PATH in ~/.mavenrc
-  }->
+  }
+  */
+
+  ->
   class {
     "stacksync":
-      ip => '192.168.1.240',
+      rmq_host                  => '192.168.1.240',
+      p_repo_connection_authurl => 'http://192.168.1.240:5000/v2.0/tokens'
   }->
 
   file {
