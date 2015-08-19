@@ -24,8 +24,8 @@ else
 echo "File: $2 exists!"
 fi
 
-line=($(<"$DIR/ss.owncloud.ip"))
-sync_server_ip=`echo $line | awk -F ' ' '{ print $4}' | awk -F ',' '{print $1}'`
+#line=($(<"$DIR/ss.owncloud.ip"))
+sync_server_ip=`more "$DIR/ss.owncloud.ip" | awk -F ' ' '{ print $4}' | awk -F ',' '{print $1}'`
 
 if [ ! -f "$DIR/ss.owncloud.key" ];
 then
