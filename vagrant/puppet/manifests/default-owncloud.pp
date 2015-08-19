@@ -88,7 +88,7 @@ node 'sandBox' {
   ->
   class{
     "owncloud":
-      rmq_host => '192.168.1.237'
+      rmq_host => '192.168.1.240'
   }
   ->
   file {
