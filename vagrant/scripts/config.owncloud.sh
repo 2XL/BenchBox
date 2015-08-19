@@ -18,7 +18,7 @@ fi
 if [ ! -f "$DIR/ss.owncloud.ip" ];
 then
 echo "File: not found!"
-sync_server_ip='192.168.1.240' # stacksync server_ip,
+sync_server_ip='192.168.1.240' # owncloud server_ip,
 exit;
 else
 echo "File: $2 exists!"

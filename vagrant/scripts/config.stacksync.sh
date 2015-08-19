@@ -33,7 +33,7 @@ else
 echo "File: $1 exists!"
 fi
 
-line=($(<"$DIR/stacksync.key"))
+line=($(<"$DIR/ss.stacksync.key"))
 
 
 mystring="466d654e-31a7-47ba-9085-65f08d8ae863,demo17,AUTH_5e446d39e4294b57831da7ce3dd0d2c2,stacksync_e373c1fd_demo17,demo17@ast.cat"
