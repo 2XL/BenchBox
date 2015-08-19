@@ -326,8 +326,8 @@ def run(hosts):
                   "VBoxManage --version; " \
                   "echo '-------------------------------'; " \
                   "VBoxManage list runningvms | wc -l > running; " \
-                  "vagrant up; " \
-                  "vagrant provision; " \
+                  "vagrant up sandBox; " \
+                  "vagrant provision sandBox; " \
                   "else " \
                   "echo 'Vagrant Project not Found!??'; " \
                   "fi;" \
