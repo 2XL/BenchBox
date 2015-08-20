@@ -131,11 +131,12 @@ node 'sandBox' {
   ->
   exec {
     'clear_previous_client':
-      command => 'sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk \'{print $2}\');',
+      command => 'sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk \'{print $2}\') || true;',
     # sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk '{print $2}')
       user    => 'vagrant',
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
+      returns => [0, 1]
   }
   ->
   exec {
