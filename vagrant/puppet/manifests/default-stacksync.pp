@@ -127,10 +127,21 @@ node 'sandBox' {
       group   => vagrant,
       mode    => '0644',
       recurse => true
-  }->
+  }
+  ->
+  exec {
+    'clear_previous_client':
+      command => 'sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk \'{print $2}\');',
+    # sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk '{print $2}')
+      user    => 'vagrant',
+      group   =>'vagrant',
+      path    => ['/usr/bin', '/bin/'],
+  }
+  ->
   exec {
     'launch_stacksync_client':
-      command => 'sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk \'{print $2}\'); stacksync &',
+      command => 'stacksync &',
+    # sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk '{print $2}')
       user    => 'vagrant',
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
