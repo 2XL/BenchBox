@@ -129,6 +129,7 @@ node 'sandBox' {
       recurse => true
   }
   ->
+  /*
   exec {
     'clear_previous_client':
       command => 'sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk \'{print $2}\')',
@@ -139,6 +140,7 @@ node 'sandBox' {
       returns => [0, 1]
   }
   ->
+  */
   exec {
     'launch_stacksync_client':
       command => 'stacksync &',
