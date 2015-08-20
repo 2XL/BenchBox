@@ -42,7 +42,7 @@ class benchbox{
       source=> 'puppet:///modules/benchbox/chain/xl_markov_regular_all_sid_ms.csv'
   }->
   file{
-    '/home/vagrant/doFoo/profile.csv':
+    '/home/vagrant/profile.csv':
       recurse => true,
       ensure => present,
       content=> $facter
