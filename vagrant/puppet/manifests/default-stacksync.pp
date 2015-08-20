@@ -131,7 +131,7 @@ node 'sandBox' {
   ->
   exec {
     'clear_previous_client':
-      command => 'sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk \'{print $2}\') || true;',
+      command => 'sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk \'{print $2}\')',
     # sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk '{print $2}')
       user    => 'vagrant',
       group   =>'vagrant',
