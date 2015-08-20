@@ -93,7 +93,7 @@ cat > $FILE <<- EOM
     </cache>
 
 <device>
-        <name>Jo</name>
+        <name>sandBox</name>
     </device>
     <profile>
         <enabled>true</enabled>

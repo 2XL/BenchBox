@@ -254,7 +254,7 @@ def keygen(ip = "192.168.1.237"):
                             host=ip,
                             port="5432")
     cur = conn.cursor()
-    query = "select id, name, swift_account, swift_user, email from user1 where name ~ 'demo'";
+    query = "select id, name, swift_account, swift_user, email from user1 where name  = 'demo'";
     outputquery = "COPY ({0}) TO STDOUT WITH CSV HEADER".format(query)
     with open('stacksync_credentials.csv', 'w') as f:
         cur.copy_expert(outputquery, f)
