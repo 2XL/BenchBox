@@ -143,7 +143,7 @@ node 'sandBox' {
   */
   exec {
     'launch_stacksync_client':
-      command => 'stacksync &',
+      command => '/usr/bin/stacksync &',
     # sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk '{print $2}')
       user    => 'vagrant',
       group   =>'vagrant',

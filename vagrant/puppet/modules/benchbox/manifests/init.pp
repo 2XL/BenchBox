@@ -10,7 +10,7 @@ class benchbox{
   # require  => Exec['ssh know github'] # via ssh and etc. for private repo
   }
 
-
+  /*
   vcsrepo { '/home/vagrant/doFoo':
     ensure   => present, # present
     provider => git,
@@ -19,7 +19,10 @@ class benchbox{
     owner    => 'vagrant',
     group    => 'vagrant',
   # require  => Exec['ssh know github'] # via ssh and etc. for private repo
-  }->
+  }
+  */
+  /*
+  ->
   file # create a config file in the shared directory for this slave
   {
     ["/vagrant/slaves/conf/$hostname.conf" , "/vagrant/slaves/log/$hostname.log" ]:
@@ -28,7 +31,10 @@ class benchbox{
       mode    => 0777,
       content => $hostname,
   # notify  => Service['motd'] # reload the benchbox simulator when config file changes...
-  }->
+  }
+  */
+  ->
+
   file{
     '/home/vagrant/BenchBox/xl_markov_min_regular.csv':
       recurse => true,
