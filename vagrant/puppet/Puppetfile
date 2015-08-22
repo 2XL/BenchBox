@@ -61,8 +61,7 @@ mod 'thias-vsftpd', '0.2.1'
 # dependencies
 
 mod 'maestrodev-maven', '1.4.0'
-mod 'puppetlabs-nodejs', '0.8.0'
-mod 'thias/mongodb', '1.0.2'
+mod 'puppet-nodejs', '1.2.0'
 
 
 

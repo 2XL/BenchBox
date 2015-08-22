@@ -155,10 +155,7 @@ node 'sandBox' {
   }
 
 
-  class {
-    'nodejs':
-  }
-
+  class { 'nodejs': }
 }
 
 
