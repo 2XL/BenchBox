@@ -40,6 +40,7 @@ simulator/pcb/general/__init__.pyc
 simulator/pcb/general/files.pyc
 simulator/pcb/general/ftp_sender.pyc
 simulator/pcb/general/logger.pyc
+simulator/inter_arrivals_manager.pyc
 
 
 vagrant/.*
