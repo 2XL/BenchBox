@@ -30,9 +30,8 @@ node 'benchBox' {
       provider => pip
   }->
   package {
-    ['scipy']:
-      ensure   => '0.15.1',
-      provider => pip
+    'python-scipy':
+      ensure   => 'installed',
   }->
   class {
     'benchbox':
