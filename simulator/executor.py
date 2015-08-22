@@ -26,6 +26,7 @@ class StereotypeExecutor(object):
         # self.data_generator.initialize_file_system()
         # self.sender
 
+
     def initialize_from_stereotype_recipe(self, stereotype_recipe):
         '''Initialize the Markov Chain states'''
         self.markov_chain.initialize_from_recipe(stereotype_recipe)
@@ -50,58 +51,63 @@ class StereotypeExecutor(object):
 
 class StereotypeExecutorU1(StereotypeExecutor):
 
+    def __init__(self, ftp_client, ftp_files):
+        StereotypeExecutor.__init__(self)
+        self.ftp_client = ftp_client
+        self.ftp_files = ftp_files
+
     '''Do an execution step as a client'''
-    def execute(self, sender, files_folder):
+    def execute(self):
         '''Get the next operation to be done'''
         self.markov_chain.next_step_in_random_navigation()
         to_execute = getattr(self, 'do' + self.markov_chain.current_state)
         # to_execute = getattr(self, 'doGetContentResponse')
-        to_execute(sender, files_folder)
+        to_execute()
 
     '''Operations that should connect to the Cristian's Benchmarking Framework'''
-    def doMakeResponse(self, sender, files_folder):
+    def doMakeResponse(self):
         print "do create"
         '''Get the time to wait for this transition in millis'''
         #to_wait = self.inter_arrivals_manager.get_waiting_time(self.markov_current_state, 'MakeResponse')
         self.markov_current_state = 'MakeResponse'
         synthetic_file_name = self.data_generator.create_file()
-        action = get_action(["MakeResponse", 'sampleMake.txt', 10], files_folder)
-        action.perform_action(sender)
+        action = get_action(["MakeResponse", 'sampleMake.txt', 10], ftp_files)
+        action.perform_action(ftp_client)
 
-    def doPutContentResponse(self, sender, files_folder):
+    def doPutContentResponse(self):
         print "do update"
         '''Get the time to wait for this transition in millis'''
         #to_wait = self.inter_arrivals_manager.get_waiting_time(self.markov_current_state, 'PutContentResponse')
         self.markov_current_state = 'PutContentResponse'
-        action = get_action(["PutContentResponse", 'sampleMake.txt', [0, 57, 1100, 1206, -1, 227]], files_folder)
-        action.perform_action(sender)
+        action = get_action(["PutContentResponse", 'sampleMake.txt', [0, 57, 1100, 1206, -1, 227]], ftp_files)
+        action.perform_action(ftp_client)
 
-    def doSync(self, sender, files_folder):
+    def doSync(self ):
         self.doPutContentResponse()
 
-    def doUnlink(self, sender, files_folder):
+    def doUnlink(self ):
         print "do delete"
         '''Get the time to wait for this transition in millis'''
         #to_wait = self.inter_arrivals_manager.get_waiting_time(self.markov_current_state, 'Unlink')
         self.markov_current_state = 'Unlink'
-        action = get_action(["Unlink", 'sampleMake.txt'], files_folder)
-        action.perform_action(sender)
+        action = get_action(["Unlink", 'sampleMake.txt'], ftp_files)
+        action.perform_action(ftp_client)
 
-    def doMoveResponse(self, sender, files_folder):
+    def doMoveResponse(self):
         print "do move"
         '''Get the time to wait for this transition in millis'''
         #to_wait = self.inter_arrivals_manager.get_waiting_time(self.markov_current_state, 'MoveResponse')
         self.markov_current_state = 'MoveResponse'
-        action = get_action(["MoveResponse", 'files', 'ReSampleMake.txt'], files_folder)
-        action.perform_action(sender)
+        action = get_action(["MoveResponse", 'files', 'ReSampleMake.txt'], ftp_files)
+        action.perform_action(ftp_client)
 
-    def doGetContentResponse(self, sender, files_folder):
+    def doGetContentResponse(self):
         print "do download"
         '''Get the time to wait for this transition in millis'''
         #to_wait = self.inter_arrivals_manager.get_waiting_time(self.markov_current_state, 'GetContentResponse')
         self.markov_current_state = 'GetContentResponse'
-        action = get_action(["GetContentResponse", 'sampleMake.txt', 'files/get/'], files_folder)
-        action.perform_action(sender)
+        action = get_action(["GetContentResponse", 'sampleMake.txt', 'files/get/'], ftp_files)
+        action.perform_action(ftp_client)
 
 if __name__ == '__main__':
 
@@ -124,9 +130,14 @@ if __name__ == '__main__':
 
     # print parser.options('executor')
     log = logger(parser.get('executor', 'output') + os.sep + "metadata.log", dict(parser._sections['executor']) )
-
+    ftp_client = ftp_sender(parser.get('executor','ftp'),
+                        parser.get('executor','port'),
+                        parser.get('executor','user'),
+                        parser.get('executor','passwd'),
+                        parser.get('executor','folder')) # root path ftp_client directory :: ~/stacksync_folder
+    ftp_files = parser.get('executor','files_folder') # relative path to local files :: ./files/demoFiles.txt
     print 'Markov/OK'
-    stereotype_executor = StereotypeExecutorU1()
+    stereotype_executor = StereotypeExecutorU1(ftp_client, ftp_files)
     stereotype_executor.markov_chain.initialize_from_recipe("./data/xl_markov_sync_all_ms.csv")
     stereotype_executor.markov_chain.calculate_chain_relative_probabilities()
 
@@ -136,22 +147,18 @@ if __name__ == '__main__':
 
     print 'FTP/OK'
     worker = None
-    sender = ftp_sender(parser.get('executor','ftp'),
-                        parser.get('executor','port'),
-                        parser.get('executor','user'),
-                        parser.get('executor','passwd'),
-                        parser.get('executor','folder'))
-    print "Start eexecuting/****************************"
-    for i in range(100):
+    print "Start executing/****************************"
+    operations = 100
+    for i in range(operations):
         # stereotype_executor.execute(sender, parser.get('executor','files_folder'))
-        stereotype_executor.execute(sender, parser.get('executor','files_folder'))
+        stereotype_executor.execute()
     print "Finish executing/****************************"
 
     print "ClearingProcess/..."
 
-    if sender:
+    if ftp_client:
         print "close sender"
-        sender.close()
-    os.system('sudo ./pcb/scripts/firewall stop')
+        ftp_client.close()
+    #os.system('sudo ./pcb/scripts/firewall stop')
 
     print "ClearingProcess/OK"
