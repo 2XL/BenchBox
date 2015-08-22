@@ -112,10 +112,10 @@ class StereotypeExecutorU1(StereotypeExecutor):
 if __name__ == '__main__':
 
     # Root permissions are needed, and some checks to save existing files
-    if not os.geteuid() == 0:
-        print "Only root can run this script"  # exit()
-    else:
-        print 'Config/OK'
+    # if not os.geteuid() == 0:
+    #     print "Only root can run this script"  # exit()
+    # else:
+    #     print 'Config/OK'
 
     parser = SafeConfigParser()
     parser.read('config.ini')
@@ -149,6 +149,7 @@ if __name__ == '__main__':
     worker = None
     print "Start executing/****************************"
     operations = 100
+    operations = 1
     for i in range(operations):
         # stereotype_executor.execute(sender, parser.get('executor','files_folder'))
         stereotype_executor.execute()
