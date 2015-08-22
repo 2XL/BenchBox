@@ -20,6 +20,7 @@ class StereotypeExecutor(object):
 
     def __init__(self):
         self.markov_chain = SimpleMarkovChain()
+        self.markov_current_state = 'MakeResponse' # there should be an initial state @ can be random
         self.inter_arrivals_manager = InterArrivalsManager()
         self.data_generator = DataGenerator()
         # self.data_generator.initialize_file_system()
@@ -61,7 +62,8 @@ class StereotypeExecutorU1(StereotypeExecutor):
     def doMakeResponse(self, sender, files_folder):
         print "do create"
         '''Get the time to wait for this transition in millis'''
-        to_wait = self.inter_arrivals_manager.get_waiting_time()
+        #to_wait = self.inter_arrivals_manager.get_waiting_time(self.markov_current_state, 'MakeResponse')
+        self.markov_current_state = 'MakeResponse'
         synthetic_file_name = self.data_generator.create_file()
         action = get_action(["MakeResponse", 'sampleMake.txt', 10], files_folder)
         action.perform_action(sender)
@@ -69,7 +71,8 @@ class StereotypeExecutorU1(StereotypeExecutor):
     def doPutContentResponse(self, sender, files_folder):
         print "do update"
         '''Get the time to wait for this transition in millis'''
-        to_wait = self.inter_arrivals_manager.get_waiting_time()
+        #to_wait = self.inter_arrivals_manager.get_waiting_time(self.markov_current_state, 'PutContentResponse')
+        self.markov_current_state = 'PutContentResponse'
         action = get_action(["PutContentResponse", 'sampleMake.txt', [0, 57, 1100, 1206, -1, 227]], files_folder)
         action.perform_action(sender)
 
@@ -79,21 +82,24 @@ class StereotypeExecutorU1(StereotypeExecutor):
     def doUnlink(self, sender, files_folder):
         print "do delete"
         '''Get the time to wait for this transition in millis'''
-        to_wait = self.inter_arrivals_manager.get_waiting_time()
+        #to_wait = self.inter_arrivals_manager.get_waiting_time(self.markov_current_state, 'Unlink')
+        self.markov_current_state = 'Unlink'
         action = get_action(["Unlink", 'sampleMake.txt'], files_folder)
         action.perform_action(sender)
 
     def doMoveResponse(self, sender, files_folder):
         print "do move"
         '''Get the time to wait for this transition in millis'''
-        to_wait = self.inter_arrivals_manager.get_waiting_time()
+        #to_wait = self.inter_arrivals_manager.get_waiting_time(self.markov_current_state, 'MoveResponse')
+        self.markov_current_state = 'MoveResponse'
         action = get_action(["MoveResponse", 'files', 'ReSampleMake.txt'], files_folder)
         action.perform_action(sender)
 
     def doGetContentResponse(self, sender, files_folder):
         print "do download"
         '''Get the time to wait for this transition in millis'''
-        to_wait = self.inter_arrivals_manager.get_waiting_time()
+        #to_wait = self.inter_arrivals_manager.get_waiting_time(self.markov_current_state, 'GetContentResponse')
+        self.markov_current_state = 'GetContentResponse'
         action = get_action(["GetContentResponse", 'sampleMake.txt', 'files/get/'], files_folder)
         action.perform_action(sender)
 
