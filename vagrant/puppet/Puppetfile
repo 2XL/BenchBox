@@ -26,14 +26,14 @@ forge "https://forgeapi.puppetlabs.com"
 
 ## The next three puppet modules are static in the BenchBox project, no longer use the following
 ## repos because they may be uploaded manually later.
-mod "2xl/benchbox",
-  :git => "git://github.com/2XL/2xl-benchbox.git"
+#mod "2xl/benchbox",
+#  :git => "git://github.com/2XL/2xl-benchbox.git"
 
-mod "2xl/stacksync",
-  :git => "git://github.com/2XL/2xl-stacksync.git"
+#mod "2xl/stacksync",
+#  :git => "git://github.com/2XL/2xl-stacksync.git"
 
-mod "2xl/owncloud",
-  :git => "git://github.com/2XL/2xl-owncloud.git"
+#mod "2xl/owncloud",
+#  :git => "git://github.com/2XL/2xl-owncloud.git"
 
 
 mod "nesi/git",
@@ -61,7 +61,8 @@ mod 'thias-vsftpd', '0.2.1'
 # dependencies
 
 mod 'maestrodev-maven', '1.4.0'
-
+mod 'puppetlabs/nodejs', '0.8.0'
+mod 'puppetlabs/mongodb', '1.0.2'
 
 
 

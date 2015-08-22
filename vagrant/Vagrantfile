@@ -7,7 +7,8 @@ box_url = box # check if file exists else download from remote path
 box_memory = "1024"
 box_cpu = "1"
 nodes = [
-    {:hostname => 'sandBox', :ip => '192.168.56.101', :box => box}, # this contains the pc-clients
+    {:hostname => 'sandBox', :ip => '192.168.56.101', :box => box, :shared_folder=>'../monitor',
+     :shared_folder_as=> '/home/vagrant/monitor'}, # contains the pc-clients && log monitor
     {:hostname => 'benchBox', :ip => '192.168.56.2', :box => box, :shared_folder=>'../simulator',
      :shared_folder_as=> '/home/vagrant/simulator'} # this contains the pc-benchmarking
 ]

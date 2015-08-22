@@ -21,3 +21,6 @@ mongolabs seria accessible desde qualsevol lloc
 
 share this folder with sandBox
 add a python script in this folder which monitors the cpu, ram, disk, network usage in a logs file. "append overwrite"
+
+add nodejs to the sandBox
+run this nodejs server,
