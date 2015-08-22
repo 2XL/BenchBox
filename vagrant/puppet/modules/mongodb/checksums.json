@@ -1,0 +1,18 @@
+{
+  "CHANGELOG.md": "3b3c007d0a88331ce1ac80f7b853c7db",
+  "LICENSE": "fc27fd7d224a7ef74929c66c67e6ab21",
+  "README.md": "d15a7ef54c17fa8a0f66acd770740d45",
+  "lib/facter/mongodb.rb": "b1a7222944abbc13b3cb194824a145ab",
+  "manifests/init.pp": "4f25e99c0800c3a34ab069eeb55b7049",
+  "manifests/key.pp": "d7976f41a0249582a6c68f5bc722a0c8",
+  "manifests/params.pp": "b52bf4c362025fb7033e1f1850e5fd13",
+  "metadata.json": "51e91f51166d86a2f244354b3317a9a2",
+  "templates/mongod-3.0.conf.erb": "396bf0e0c6ea25097f8acd4c52933874",
+  "templates/mongod-3.0.conf.orig": "c9466bad2ec40e2613630b7d49d58b2b",
+  "templates/mongodb-2.4.conf.erb": "7b4be254c02b1b5f2967838a2038768d",
+  "templates/mongodb-2.4.conf.orig": "16882d17755fa283677f7c533086c28b",
+  "templates/mongodb-2.6.conf.erb": "65e3b9d3d1e037b3ec077090f35976e7",
+  "templates/mongodb-2.6.conf.orig": "8b82ca06fbefac75b4aca711d7321b8b",
+  "tests/init.pp": "ef8beb854d0d41ad9b78a50f765dabf5",
+  "tests/key.pp": "8fe5bda3136c039761fac04747b7d1a2"
+}
