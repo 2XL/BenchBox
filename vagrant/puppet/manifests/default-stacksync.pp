@@ -31,7 +31,7 @@ node 'benchBox' {
   }->
   package {
     ['scipy']:
-      ensure   => '0.12.0',
+      ensure   => '0.15.1',
       provider => pip
   }->
   class {
