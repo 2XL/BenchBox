@@ -15,3 +15,9 @@ https://mongolab.com/databases/benchbox
 mongolabs seria accessible desde qualsevol lloc
 -- TODO exportar los logs en formato csv
 
+
+
+# TODO:
+
+share this folder with sandBox
+add a python script in this folder which monitors the cpu, ram, disk, network usage in a logs file. "append overwrite"

@@ -31,6 +31,17 @@ simulator/simulator
 simulator/build
 simulator/build/*
 
+
+simulator/markov_chain.pyc
+simulator/data_generator.pyc
+simulator/pcb/__init__.pyc
+simulator/pcb/actions.pyc
+simulator/pcb/general/__init__.pyc
+simulator/pcb/general/files.pyc
+simulator/pcb/general/ftp_sender.pyc
+simulator/pcb/general/logger.pyc
+
+
 vagrant/.*
 vagrant/slaves
 vagrant/slaves/*

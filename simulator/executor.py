@@ -121,8 +121,8 @@ if __name__ == '__main__':
 
     print 'Markov/OK'
     stereotype_executor = StereotypeExecutorU1()
-    stereotype_executor.markov_chain.initializeFromFile("./data/xl_markov_sync_all_ms.csv")
-    stereotype_executor.markov_chain.calculateChainRelativeProbabilities()
+    stereotype_executor.markov_chain.initialize_from_recipe("./data/xl_markov_sync_all_ms.csv")
+    stereotype_executor.markov_chain.calculate_chain_relative_probabilities()
 
     print 'IPTables/OK'
     # os.system('sudo ./pcb/scripts/firewall start')

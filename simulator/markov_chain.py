@@ -64,7 +64,9 @@ class SimpleMarkovChain(object):
 
     def initialize_from_recipe(self, file_name):
         for l in open(file_name, "r"):
-            state1, state2, num_transitions, fitting, fitting_params = l.split(",")
+            print l
+            #state1, state2, num_transitions, fitting, fitting_params = l.split(",")
+            state1, state2, num_transitions, fitting = l.split(",")
             self.add_transition(state1, state2, float(num_transitions))
 
     def print_states(self):
