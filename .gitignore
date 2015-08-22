@@ -28,6 +28,8 @@ simulator/data
 simulator/files
 simulator/output
 simulator/simulator
+simulator/build
+simulator/build/*
 
 vagrant/.*
 vagrant/slaves
