@@ -52,7 +52,7 @@ class StereotypeExecutorU1(StereotypeExecutor):
     '''Do an execution step as a client'''
     def execute(self, sender, files_folder):
         '''Get the next operation to be done'''
-        self.markov_chain.nextStepInRandomNavigation()
+        self.markov_chain.next_step_in_random_navigation()
         to_execute = getattr(self, 'do' + self.markov_chain.current_state)
         # to_execute = getattr(self, 'doGetContentResponse')
         to_execute(sender, files_folder)
