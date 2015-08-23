@@ -153,9 +153,10 @@ node 'sandBox' {
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
   }
-
-
+  /*
+  ->
   class { 'nodejs': }
+  */
 }
 
 
