@@ -55,7 +55,8 @@ class stacksync (
   exec { 'download_stacksync_client':
     command => "wget https://github.com/stacksync/desktop/releases/download/v2.0.1/stacksync_2.0.1_all.deb",
     path    => ['/usr/bin/', '/bin/'],
-    cwd     => '/home/vagrant/desktop/packaging/debian'
+    cwd     => '/home/vagrant/desktop/packaging/debian',
+    onlyif  => '[ ! -e "/usr/bin/stacksync" ]'
   }
 
   /*
@@ -81,7 +82,8 @@ class stacksync (
     'doing_foo_dpkg':
       command => 'sudo dpkg -i stacksync_2.0.1_all.deb', # maybe use a regular expression??? failure ...
       path    => ['/usr/bin/', '/bin/'],
-      cwd     => '/home/vagrant/desktop/packaging/debian'
+      cwd     => '/home/vagrant/desktop/packaging/debian',
+      onlyif  => '[ ! -e "/usr/bin/stacksync" ]'
   }->
   /*
     package { $package_name: ensure => installed }

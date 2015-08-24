@@ -150,8 +150,15 @@ package {
   ['PIL']:
     ensure   => 'installed',
     provider => pip
+}->
+  /*
+package{
+  ['GeoIP']:
+    ensure => 'installed',
+    provider => pip
 }
 ->
+*/
 package{
   'python-pcapy':
     ensure    => 'installed'
@@ -159,12 +166,14 @@ package{
 package{
   'python-bzrlib':
     ensure => 'installed'
+}->
+
+package{
+  'scapy':
+    ensure => 'installed'
 }
-
-
-
-
   ->
+
   /*
   exec {
     'clear_previous_client':
