@@ -65,7 +65,14 @@ node 'sandBox' {
   }->
   class {
     'git':
+  }->
+  class { 'python' :
+    version    => 'system',
+    pip        => true,
+    dev        => true,
+    virtualenv => true
   }
+
   ->
   class {
     'java':

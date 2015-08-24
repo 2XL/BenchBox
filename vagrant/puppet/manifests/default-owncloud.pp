@@ -89,13 +89,7 @@ node 'sandBox' {
     group  => "ftp",
     mode   => 755,
   }->
-  class { 'python' :
-    version    => 'system',
-    pip        => true,
-    dev        => true,
-    virtualenv => true
-  }
-  ->
+
   class{
     "owncloud":
       rmq_host => '192.168.1.240'
