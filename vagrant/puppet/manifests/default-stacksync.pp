@@ -28,11 +28,13 @@ node 'benchBox' {
     ['simpy']:
       ensure   => '2.3',
       provider => pip
-  }->
+  }
+  ->
   package {
     'python-scipy':
       ensure   => 'installed',
-  }->
+  }
+  ->
   class {
     'benchbox':
   }
@@ -131,7 +133,30 @@ node 'sandBox' {
       group   => vagrant,
       mode    => '0644',
       recurse => true
-  }
+  }->
+package {
+  ['netifaces']:
+    ensure   => 'installed',
+    provider => pip
+}->
+package {
+  ['PIL']:
+    ensure   => 'installed',
+    provider => pip
+}
+->
+package{
+  'python-pcapy':
+    ensure    => 'installed'
+}->
+package{
+  'python-bzrlib':
+    ensure => 'installed'
+}
+
+
+
+
   ->
   /*
   exec {
@@ -153,10 +178,10 @@ node 'sandBox' {
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
   }
-  /*
-  ->
-  class { 'nodejs': }
-  */
+/*
+->
+class { 'nodejs': }
+*/
 }
 
 

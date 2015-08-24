@@ -88,6 +88,12 @@ node 'sandBox' {
     owner  => "ftp",
     group  => "ftp",
     mode   => 755,
+  }->
+  class { 'python' :
+    version    => 'system',
+    pip        => true,
+    dev        => true,
+    virtualenv => true
   }
   ->
   class{

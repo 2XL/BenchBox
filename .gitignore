@@ -52,6 +52,9 @@ vagrant/puppet/manifests/test
 vagrant/puppet/manifests/test/*
 
 
+monitor/logger/test
+monitor/logger/plots/output
+
 # hide or ignore installation packages
 *.deb
 *.OLD.*
