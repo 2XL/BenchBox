@@ -4,9 +4,11 @@
 */*.iml
 .idea
 
+
 # do not upload boxes or the repo will get corrupted becuase of its size
 *.box
 */*.box
+
 
 # omit specific folders and files
 */hints
@@ -63,3 +65,5 @@ monitor/logger/post-process
 # hide or ignore installation packages
 *.deb
 *.OLD.*
+
+

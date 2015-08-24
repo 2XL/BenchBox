@@ -151,6 +151,11 @@ package {
     ensure   => 'installed',
     provider => pip
 }->
+  package{
+    ['psutil']:
+      ensure => 'installed',
+      provider => pip
+  }->
   /*
 package{
   ['GeoIP']:
