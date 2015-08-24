@@ -54,6 +54,11 @@ vagrant/puppet/manifests/test/*
 
 monitor/logger/test
 monitor/logger/plots/output
+monitor/logger/capture
+monitor/logger/matlab_scripts
+monitor/logger/parser
+monitor/logger/post-process
+
 
 # hide or ignore installation packages
 *.deb
