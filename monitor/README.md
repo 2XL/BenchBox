@@ -27,3 +27,6 @@ add nodejs to the sandBox  -> run this nodejs server, :: nodejs puppet module no
 	cpu_monitor.py
 
 ## cpu, ram, network, disk usage::
+
+
+## refactor the traffic flow and the network interface capabilities {testing machine as router for the client}

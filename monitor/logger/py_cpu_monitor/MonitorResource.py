@@ -1,5 +1,6 @@
 
-class MonitorResource:
+class MonitorResource():
+
     def prepareMonitoring(self):
         pass
     def captureValue(self):

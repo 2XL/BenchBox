@@ -1,11 +1,8 @@
 
+from MonitorResource import MonitorResource
 
-
-
-class CPUMonitor:
+class CPUMonitor(MonitorResource):
     'CPUMonitor class'
-
-
 
     def __init__(self, processes):
         print 'constructor'

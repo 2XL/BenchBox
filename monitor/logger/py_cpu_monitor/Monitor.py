@@ -8,6 +8,7 @@ from time import sleep
 
 
 
+
 class Monitor:
     def __init__(self):
         self.finish = False # Boolean
