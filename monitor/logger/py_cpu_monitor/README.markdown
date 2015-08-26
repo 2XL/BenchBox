@@ -7,7 +7,7 @@
 # Refactor Status:
 
 
---------------------------------------------------------- [SandBox code]
+## --------------------------------------------------------- [SandBox code]
 Diagnostics.py --> psutil
 
 CPUMonitor.py
@@ -19,8 +19,8 @@ Monitor.py
 MonitorResource.py --> interface
 
 SocketListener.py --> socket server
--------------------------------------------------------- [BenchBox code]
+## -------------------------------------------------------- [BenchBox code]
 cpu_monitor.py --> socket client
 
--------------------------------------------------------- [Misc code]
+## -------------------------------------------------------- [Misc code]
 resolveDNS.py

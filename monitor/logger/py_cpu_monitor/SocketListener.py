@@ -16,7 +16,7 @@ def worker():
 
 
 
-
+# http://code.activestate.com/recipes/408859-socketrecv-three-ways-to-turn-it-into-recvall/, THIS IS TO BE DONE TOMMOROW
 
 class SocketListener():
 
@@ -56,7 +56,7 @@ class SocketListener():
                 print 'Waiting for a connection...'
                 conn, client_addr = listener.accept()
                 print 'Connection from: {}'.format(client_addr)
-                dataBuffer = ''
+                dataBuffer = []
                 while True:
                     data = conn.recv(1024)
                     if '<EOF>' not in data:
@@ -67,11 +67,21 @@ class SocketListener():
 
                         print 'recv: {} END'.format(data)
                         break
-                    dataBuffer += data
+                    dataBuffer.append(str(data))
                     time.sleep(1)
 
                 print 'Text recv: {}'.format(dataBuffer)
-                # an incomming connection needs to be processed
+
+                print 'dataBuffer'
+                print dataBuffer
+
+                if 'start' in dataBuffer:
+                    print 'StartMonitoring'
+                    # self.startMonitoring()
+                elif 'stop' in dataBuffer:
+                    print 'StopMonitoring'
+                    self.stopMonitoring()
+                        # an incomming connection needs to be processed
                 #while True:
                 #    bytes = listener.recv(1024)
                 #    print bytes
@@ -83,10 +93,7 @@ class SocketListener():
             # clean up the connection
             listener.close()
 
-            if 'start' in dataBuffer:
-                self.startMonitoring()
-            elif 'stop' in dataBuffer:
-                self.stopMonitoring()
+
 
         print 'SocketListener, QUIT!'
 
