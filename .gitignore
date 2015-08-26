@@ -60,7 +60,7 @@ monitor/logger/capture
 monitor/logger/matlab_scripts
 monitor/logger/parser
 monitor/logger/post-process
-
+monitor/logger/py_cpu_monitor/*.pyc
 
 # hide or ignore installation packages
 *.deb
