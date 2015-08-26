@@ -28,7 +28,21 @@ class CPUMonitor():
     
     def send_something(self, msg):
         self.connect()
+        # send data
         self.sock.sendall(msg)
+        # look for response
+        try:
+            while True :
+                data = self.sock.recv(1024)
+                if data:
+                    print "recv: {}".format(data)
+                else:
+                    break
+        except:
+            print 'Exception Unhandled'
+        finally:
+            self.sock.close()
+
         
 import sys
         

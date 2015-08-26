@@ -44,40 +44,74 @@ class SocketListener():
         # create a TCP/IP socket
         listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        # bind the socket to the local endpoint and listen for incomming connections
+        # bind the socket to the local endpoint and
+        # listen for incoming connections.
         try:
             max_connections = 10
             listener.bind(localEndPoint)
             listener.listen(max_connections)
 
+            # start listening for connections
             while True:
                 print 'Waiting for a connection...'
                 conn, client_addr = listener.accept()
-
                 print 'Connection from: {}'.format(client_addr)
+                dataBuffer = ''
+                while True:
+                    data = conn.recv(1024)
+                    if '<EOF>' not in data:
+                        print 'recv: {}'.format(data)
+                        # send back data to client
+                        conn.sendall(data)
+                    else:
 
-                data = conn.recv(1024)
-                if data:
-                    print 'recv: {}'.format(data)
-                else:
-                    print 'recv:END'
-                    break
-                time.sleep(1)
+                        print 'recv: {} END'.format(data)
+                        break
+                    dataBuffer += data
+                    time.sleep(1)
 
+                print 'Text recv: {}'.format(dataBuffer)
                 # an incomming connection needs to be processed
                 #while True:
                 #    bytes = listener.recv(1024)
                 #    print bytes
 
-
         except:
             print "Unexpected error:", sys.exc_info()[0]
             raise
+        finally:
+            # clean up the connection
+            listener.close()
+
+            if 'start' in dataBuffer:
+                self.startMonitoring()
+            elif 'stop' in dataBuffer:
+                self.stopMonitoring()
+
+        print 'SocketListener, QUIT!'
 
 
-    def startMonitoring(self):
+    def startMonitoring(self, command):
         # this...
         print 'Start Monitoring'
+        # start monitoring a specific process
+        command = command.replace('<EOF>', '')
+        parameters = command.split(' ')
+        interval = int(parameters[1])
+        filename = str(parameters[2])
+        processes = list()
+
+        for i in range(3, len(parameters)):
+            processes.append(parameters[i])
+
+        self.monitor.setInterval(interval)
+        self.monitor.setFilename(filename)
+        self.monitor.setProcess(processes)
+        self.monitor.prepareMonitoring()
+
+        self.monitorThread = threading(processes=self.monitor)
+        self.monitorThread.start()
+
 
 
     def stopMonitoring(self):
