@@ -4,10 +4,18 @@ import threading
 import socket
 import sys
 import asyncore
+import time
+import SocketServer, subprocess
+
+HOST = ''
+PORT = 11000
 
 
 def worker():
     print 'This is a thread job'
+
+
+
 
 
 class SocketListener():
@@ -42,16 +50,24 @@ class SocketListener():
             listener.bind(localEndPoint)
             listener.listen(max_connections)
 
-
             while True:
                 print 'Waiting for a connection...'
-                handler = listener.accept()
-                data = None
+                conn, client_addr = listener.accept()
+
+                print 'Connection from: {}'.format(client_addr)
+
+                data = conn.recv(1024)
+                if data:
+                    print 'recv: {}'.format(data)
+                else:
+                    print 'recv:END'
+                    break
+                time.sleep(1)
 
                 # an incomming connection needs to be processed
-                while True:
-                    bytes = bytes(1024)
-                    bytesRec = handler.rec
+                #while True:
+                #    bytes = listener.recv(1024)
+                #    print bytes
 
 
         except:
