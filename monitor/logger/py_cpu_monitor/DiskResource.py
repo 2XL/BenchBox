@@ -53,7 +53,7 @@ class DiskResource(MonitorResource):
         file = os.open('disk_' + filename, os.O_APPEND|os.O_CREAT) # maybe it has to be append instead of crete and
         # write
         os.write(file, str(os.getpid()))
-        for it in self.cpuValues: # float iterator
+        for it in self.diskValues: # float iterator
             while it:
                 os.write(file, it.pop(1))
         os.close(file)
