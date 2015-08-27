@@ -39,16 +39,17 @@ class DiskResource(MonitorResource):
     def prepareMonitoring(self):
         print 'DISK:prepareMonitor'
         self.diskValues = list() # float
-
+        self.diskCounter = PerformanceCounter('Disk', 'Available MBytes', True)
 
     def captureValue(self):
+        self.diskValues.append(self.diskCounter.NextValue())
+        '''
         for d in self.allDrives: # DriveInfo
             if 'c' in d.Name: # en aquest cas ... xD ke faig???
                 print 'success'
-
             if d.IsReady == True:
                 self.diskValues.AddLast(d.TotalFreeSpace)
-
+        '''
     def saveResults(self, filename):
         # open a file
         file = os.open('disk_' + filename, os.O_APPEND|os.O_CREAT) # maybe it has to be append instead of crete and

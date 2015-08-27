@@ -33,7 +33,7 @@ class CPUMonitor(MonitorResource):
         cpu = 0;
         for counter in self.cpuCounter: # counter is  PerformanceCounter
             cpu += counter.NextValue()
-        self.cpuValues.AddLast(cpu)
+        self.cpuValues.append(cpu)
 
 
 

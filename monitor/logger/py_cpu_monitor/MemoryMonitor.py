@@ -21,6 +21,7 @@ class MemoryMonitor(MonitorResource):
         self.ramValues = list() # Floats
 
     def captureValue(self):
+
         self.ramValues.append(self.ramCounter.NextValue())
 
     def saveResults(self, filename):

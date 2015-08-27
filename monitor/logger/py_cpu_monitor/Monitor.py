@@ -28,7 +28,7 @@ class Monitor:
             print 'sleep:{}'.format(self.interval)
             for resource in self.resources:
                 print 'captureValue:{}'.format(resource)
-                # resource.caputureValue()
+                resource.captureValue()
             sleep(self.interval)
 
     def stop(self):
