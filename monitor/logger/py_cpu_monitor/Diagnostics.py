@@ -8,7 +8,7 @@ class PerformanceCounter:
     Type = None
 
 
-    def __init__(self, type):
+    def __init__(self, type, spec, bool):
         print 'constructor'
         self.Type = type # memory or processes or disk or network
 

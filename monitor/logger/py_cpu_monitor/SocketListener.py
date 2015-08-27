@@ -7,6 +7,8 @@ import asyncore
 import time
 import SocketServer, subprocess
 
+
+
 HOST = ''
 PORT = 11000
 
@@ -20,11 +22,12 @@ def worker():
 
 class SocketListener():
 
-    #monitor = Monitor()
-    monitorThread = threading.Thread(target=worker, args=None)
+    monitor = Monitor()
+    monitorThread = None  # = threading.Thread(target=worker, args=None)
 
     def __init__(self, monitor = None):
-        self.monitor = monitor
+        print '__init__: SocketListener'
+        # self.monitor = monitor
 
     def recv_data(self, sock): # incoming data from the client
         total_data=[]
@@ -92,10 +95,10 @@ class SocketListener():
 
                 if 'start' in data:
                     print 'StartMonitoring'
-                    # self.startMonitoring()
+                    self.startMonitoring(data)
                 elif 'stop' in data:
                     print 'StopMonitoring'
-                    self.stopMonitoring()
+                    # self.stopMonitoring()
                         # an incomming connection needs to be processed
                 #while True:
                 #    bytes = listener.recv(1024)
@@ -115,7 +118,7 @@ class SocketListener():
 
     def startMonitoring(self, command):
         # this...
-        print 'Start Monitoring'
+        print 'Start Monitoring: {}'.format(command)
         # start monitoring a specific process
         command = command.replace('<EOF>', '')
         parameters = command.split(' ')
@@ -126,13 +129,16 @@ class SocketListener():
         for i in range(3, len(parameters)):
             processes.append(parameters[i])
 
+
+        print parameters, interval, filename, processes
+
         self.monitor.setInterval(interval)
         self.monitor.setFilename(filename)
         self.monitor.setProcess(processes)
         self.monitor.prepareMonitoring()
 
-        self.monitorThread = threading(processes=self.monitor)
-        self.monitorThread.start()
+        #self.monitorThread = threading(processes=self.monitor)
+        #self.monitorThread.start()
 
 
 

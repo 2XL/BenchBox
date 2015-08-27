@@ -17,6 +17,7 @@ class MemoryMonitor(MonitorResource):
         self.ramCounter = PerformanceCounter('Memory', 'Available MBytes', True)
 
     def prepareMonitoring(self):
+        print 'RAM:prepareMonitor'
         self.ramValues = list() # Floats
 
     def captureValue(self):

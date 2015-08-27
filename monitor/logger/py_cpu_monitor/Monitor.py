@@ -12,10 +12,10 @@ from time import sleep
 class Monitor:
     def __init__(self):
         self.finish = False # Boolean
-        self.interval # int, sleep interval
-        self.filename # string
-        self.processes # list{string}
-        self.resources # list{MonitorResource}
+        self.interval = None# int, sleep interval
+        self.filename = None# string
+        self.processes = None# list{string}
+        self.resources = None# list{MonitorResource}
 
     def ThreadProc(self):
         self.start()
@@ -33,10 +33,11 @@ class Monitor:
             resource.saveResults(self.filename)
 
     def prepareMonitoring(self): # attribute setter...
-        self.resources = [] # list{MonitorResource}
-        self.resources += MemoryMonitor()
-        self.resources += DiskResource()
-        self.resources += CPUMonitor(self.processes)
+        print 'Monitor:prepareMonitoring'
+        self.resources = list() # list{MonitorResource}
+        self.resources.append(MemoryMonitor())
+        self.resources.append(DiskResource())
+        self.resources.append(CPUMonitor(self.processes))
 
         for resource in self.resources: # MonitorResource
             resource.prepareMonitoring()

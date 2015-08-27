@@ -37,6 +37,7 @@ class DiskResource(MonitorResource):
         self.allDrives.GetDrives()
 
     def prepareMonitoring(self):
+        print 'DISK:prepareMonitor'
         self.diskValues = list() # float
 
 

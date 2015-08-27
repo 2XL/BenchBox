@@ -12,19 +12,20 @@ class CPUMonitor(MonitorResource):
 
     def __init__(self, processes):
         print 'constructor'
-        self.cpuValues # float, LinkedList
+        self.cpuValues = None# float, LinkedList
         self.processes = processes # string, LinkedList
-        self.cpuCounter = PerformanceCounter() # PerformanceCounter, LinkedList
+        self.cpuCounter = None # PerformanceCounter, LinkedList
 
 
     # vale hay processes porque lo implementan para cada personal cloud. pero eso no deberia afectar el traffico??? nose
 
     def prepareMonitoring(self):
+        print 'CPU:prepareMonitor'
         self.cpuValues = list() # list of floats
         self.cpuCounter = list() # list of performanceCounter
 
         for process in self.processes:
-            self.cpuCounter.AddLast('Process', '% Process Time', process)
+            self.cpuCounter.append(PerformanceCounter('Process', '% Process Time', process))
 
 
     def captureValue(self):

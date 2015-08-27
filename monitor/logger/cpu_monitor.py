@@ -23,7 +23,7 @@ class CPUMonitor():
         time.sleep(5)
     
     def stop_monitor(self):
-        msg = "stop<EOF>"
+        msg = "stop <EOF>"
         self.send_something(msg)
     
     def send_something(self, msg):
@@ -36,8 +36,8 @@ class CPUMonitor():
                 data = self.sock.recv(1024)
                 if data:
                     print "recv: {}".format(data)
-                else:
-                    break
+
+                break
         except:
             print 'Exception Unhandled'
         finally:
