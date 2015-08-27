@@ -17,15 +17,19 @@ class Monitor:
         self.processes = None# list{string}
         self.resources = None# list{MonitorResource}
 
-    def ThreadProc(self):
+    def ThreadProc(self): # aquesta funcio bucle infinit en un thread...
+        print 'Started/ThreadProc'
         self.start()
 
     def start(self):
+        print 'Started/MonitorCapture {}'.format((self.interval, self.resources, self.filename))
         self.finish = False
         while not self.finish:
-            sleep(self.interval)
+            print 'sleep:{}'.format(self.interval)
             for resource in self.resources:
-                resource.caputureValue()
+                print 'captureValue:{}'.format(resource)
+                # resource.caputureValue()
+            sleep(self.interval)
 
     def stop(self):
         self.finish = True
@@ -38,8 +42,10 @@ class Monitor:
         self.resources.append(MemoryMonitor())
         self.resources.append(DiskResource())
         self.resources.append(CPUMonitor(self.processes))
-
+        x=0
         for resource in self.resources: # MonitorResource
+            x+=1
+            print x
             resource.prepareMonitoring()
 
     def setInterval(self, interval): # int

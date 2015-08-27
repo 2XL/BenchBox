@@ -9,7 +9,7 @@ class PerformanceCounter:
 
 
     def __init__(self, type, spec, bool):
-        print 'constructor'
+        print '//constructor:PerformanceCounter'
         self.Type = type # memory or processes or disk or network
 
 

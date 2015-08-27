@@ -25,6 +25,7 @@ class CPUMonitor(MonitorResource):
         self.cpuCounter = list() # list of performanceCounter
 
         for process in self.processes:
+            print 'CPUMonitor:{}'.format(process)
             self.cpuCounter.append(PerformanceCounter('Process', '% Process Time', process))
 
 

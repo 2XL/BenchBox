@@ -137,8 +137,10 @@ class SocketListener():
         self.monitor.setProcess(processes)
         self.monitor.prepareMonitoring()
 
-        #self.monitorThread = threading(processes=self.monitor)
-        #self.monitorThread.start()
+        print 'DefineMonitorThread...'
+        self.monitorThread = threading(target=self.monitor.ThreadProc())
+        self.monitorThread.start()
+        print 'MonitorThreadRunning!!'
 
 
 
