@@ -26,8 +26,31 @@ class SocketListener():
     def __init__(self, monitor = None):
         self.monitor = monitor
 
-    def data(self): # incoming data from the client
-        return None
+    def recv_data(self, sock): # incoming data from the client
+        total_data=[]
+        while True:
+            data = sock.recv(1024)
+            if not data: break
+            total_data.append(data)
+        return ''.join(total_data)
+
+    End = '<EOF>' # something useable as an end marker
+    def recv_end(self, the_socket):
+        total_data=[];data=''
+        while True:
+            data=the_socket.recv(1024)
+            if self.End in data:
+                total_data.append(data[:data.find(self.End)])
+                break
+            total_data.append(data)
+            if len(total_data)>1:
+                #check if end_of_data was split
+                last_pair=total_data[-2]+total_data[-1]
+                if self.End in last_pair:
+                    total_data[-2]=last_pair[:last_pair.find(self.End)]
+                    total_data.pop()
+                    break
+        return ''.join(total_data)
 
     def startListening(self):
         # data buffer for the incoming data
@@ -56,29 +79,21 @@ class SocketListener():
                 print 'Waiting for a connection...'
                 conn, client_addr = listener.accept()
                 print 'Connection from: {}'.format(client_addr)
-                dataBuffer = []
-                while True:
-                    data = conn.recv(1024)
-                    if '<EOF>' not in data:
-                        print 'recv: {}'.format(data)
-                        # send back data to client
-                        conn.sendall(data)
-                    else:
 
-                        print 'recv: {} END'.format(data)
-                        break
-                    dataBuffer.append(str(data))
-                    time.sleep(1)
+                data = self.recv_end(conn)
+                conn.sendall(data)
 
-                print 'Text recv: {}'.format(dataBuffer)
+                time.sleep(1)
+
+                print 'Text recv: {}'.format(data)
 
                 print 'dataBuffer'
-                print dataBuffer
+                print data
 
-                if 'start' in dataBuffer:
+                if 'start' in data:
                     print 'StartMonitoring'
                     # self.startMonitoring()
-                elif 'stop' in dataBuffer:
+                elif 'stop' in data:
                     print 'StopMonitoring'
                     self.stopMonitoring()
                         # an incomming connection needs to be processed
