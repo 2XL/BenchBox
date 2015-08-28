@@ -26,13 +26,18 @@ class MemoryMonitor(MonitorResource):
 
     def saveResults(self, filename):
         # open a file
-        file = os.open('mem_' + filename, os.O_APPEND|os.O_CREAT) # maybe it has to be append instead of crete and
+        file = open('mem_' + filename, 'w+') # maybe it has to be append instead of crete and
         # write
+        '''
         os.write(file, str(os.getpid()))
         for it in self.ramValues: # float iterator
             while it:
                 os.write(file, it.pop(1))
-        os.close(file)
+        '''
+        for value in enumerate(self.ramValues):
+            print value
+            file.write(str(value[1])+'\n' )
+        file.close()
 
 
 if __name__ == '__main__':

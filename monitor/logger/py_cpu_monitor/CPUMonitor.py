@@ -39,12 +39,17 @@ class CPUMonitor(MonitorResource):
 
     def saveResults(self, filename):
         # open a file
-        file = os.open('cpu_' + filename, os.O_APPEND|os.O_CREAT) # maybe it has to be append instead of crete and write
-        os.write(file, str(os.getpid()))
+        file = open('cpu_' + filename, 'w+') # maybe it has to be append instead of crete and write
+
+        '''
         for it in self.cpuValues: # float iterator
             while it:
                 os.write(file, it.pop(1))
-        os.close(file)
+        '''
+        for value in enumerate(self.cpuValues):
+            print value
+            file.write(str(value[1])+'\n' )
+        file.close()
 
     def setProcess(self, processes):
         self.processes = processes

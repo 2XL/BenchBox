@@ -52,13 +52,17 @@ class DiskResource(MonitorResource):
         '''
     def saveResults(self, filename):
         # open a file
-        file = os.open('disk_' + filename, os.O_APPEND|os.O_CREAT) # maybe it has to be append instead of crete and
+        file = open('disk_' + filename, 'w+') # maybe it has to be append instead of crete and
         # write
-        os.write(file, str(os.getpid()))
+        '''
         for it in self.diskValues: # float iterator
             while it:
                 os.write(file, it.pop(1))
-        os.close(file)
+        '''
+        for value in enumerate(self.diskValues):
+            print value
+            file.write(str(value[1])+'\n' )
+        file.close()
 
 
 
