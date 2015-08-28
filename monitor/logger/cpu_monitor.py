@@ -25,23 +25,24 @@ class CPUMonitor():
     def stop_monitor(self):
         msg = "stop <EOF>"
         self.send_something(msg)
+        print 'sendStop_msg'
     
     def send_something(self, msg):
         self.connect()
         # send data
         self.sock.sendall(msg)
         # look for response
-        try:
-            while True :
-                data = self.sock.recv(1024)
-                if data:
-                    print "recv: {}".format(data)
+        if msg != "stop <EOF>":
+            try:
+                while True :
+                    data = self.sock.recv(1024)
+                    if data:
+                        print "recv: {}".format(data)
 
-                break
-        except:
-            print 'Exception Unhandled'
-        finally:
-            self.sock.close()
+                    break
+            except:
+                print 'Exception Unhandled'
+        self.sock.close()
 
         
 import sys
@@ -56,7 +57,7 @@ if __name__ == '__main__':
     #monitor = CPUMonitor('10.30.230.56', 11000)
     monitor = CPUMonitor(socket.gethostbyname(socket.gethostname()), 11000)
     if sys.argv[1] == "start":
-        interval = 3 # segons
+        interval = 30 # segons
         log_filename = "local.txt"
         proc_name = "Python"
         monitor.start_monitor(interval, log_filename, proc_name)

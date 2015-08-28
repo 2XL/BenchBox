@@ -1,6 +1,6 @@
 
 from Monitor import Monitor
-import threading
+from threading import Thread
 import socket
 import sys
 import asyncore
@@ -98,7 +98,7 @@ class SocketListener():
                     self.startMonitoring(data)
                 elif 'stop' in data:
                     print 'StopMonitoring'
-                    # self.stopMonitoring()
+                    self.stopMonitoring()
                         # an incomming connection needs to be processed
                 #while True:
                 #    bytes = listener.recv(1024)
@@ -138,8 +138,9 @@ class SocketListener():
         self.monitor.prepareMonitoring()
 
         print 'DefineMonitorThread...'
-        self.monitorThread = threading(target=self.monitor.ThreadProc())
-        self.monitorThread.start()
+        self.monitorThread = Thread(target=self.monitor.ThreadProc)
+        print 'LaunchMonitorThread...'
+        self.monitorThread.start() # aqui perd lo control <-- bug linea anterior xD
         print 'MonitorThreadRunning!!'
 
 
@@ -147,6 +148,7 @@ class SocketListener():
     def stopMonitoring(self):
         print 'Stop Monitoring'
         self.monitor.stop()
+        #
 
 
 if __name__ == '__main__':

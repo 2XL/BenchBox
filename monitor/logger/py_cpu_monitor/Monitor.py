@@ -32,9 +32,11 @@ class Monitor:
             sleep(self.interval)
 
     def stop(self):
+        print 'Stop/MonitorCapture {}'
         self.finish = True
         for resource in self.resources:
             resource.saveResults(self.filename)
+            print 'saveResults({})'.format(resource)
 
     def prepareMonitoring(self): # attribute setter...
         print 'Monitor:prepareMonitoring'
