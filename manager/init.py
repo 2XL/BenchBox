@@ -195,7 +195,7 @@ def setup(hosts):
                   "cd vagrant/scripts; " \
                   "echo '%s' | sudo -S ./installVagrantVBox.sh; " \
                   "fi;" \
-                  "" % h['passwd']
+                  "" % (h['passwd'],h['passwd'])
         #print str_cmd
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'setup/OK'
