@@ -132,12 +132,12 @@ def init():
 
 def start():
     print 'start'
-    # preconfig(HOSTS)  # tell all the hosts to download BenchBox
-    # setup(HOSTS)  # tell all the hosts to install VirtualBox and Vagrant
-    # summon(HOSTS)  # tell the hosts to download Vagrant box to use
-    # config(HOSTS, CONFIG)  # tell each hosts their profile
+    preconfig(HOSTS)  # tell all the hosts to download BenchBox
+    setup(HOSTS)  # tell all the hosts to install VirtualBox and Vagrant
+    summon(HOSTS)  # tell the hosts to download Vagrant box to use
+    config(HOSTS, CONFIG)  # tell each hosts their profile
     credentials(HOSTS) # call conectar desde la mateixa maquina virtual xk no dona accés a hosts externs
-    # sserver(HOSTS,CONFIG) # tell each host where the sync servers are located
+    sserver(HOSTS,CONFIG) # tell each host where the sync servers are located
     # run(HOSTS) # make vagrant up
     print 'start/OK'
 

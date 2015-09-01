@@ -79,7 +79,7 @@ for hostname in li:
 offset_hostname = 200 # DEIM lab ip ranges 100:200:300
 offset_ip = 5
 hosts = 24 # num of hosts
-hosts_available = 2 # probar... # total: 12
+hosts_available = 5 # probar... # total: 12
 for i in range(hosts_available):
     hostname = 'd'+str(i+offset_hostname+offset_ip)+'.lab.deim'
     configHosts.add_section(hostname)
