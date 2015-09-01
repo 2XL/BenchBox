@@ -26,20 +26,21 @@ configAll.add_section('log_server')
 
 configAll.set('demo', 'url', 'https://wiki.python.org/moin/ConfigParserExamples')
 
-configAll.set('profile', 'sync', '3')
-configAll.set('profile', 'backup', '5')
-configAll.set('profile', 'cdn', '9')
+configAll.set('profile', 'sync', '1')
+configAll.set('profile', 'backup', '1')
+configAll.set('profile', 'cdn', '1')
 configAll.set('profile', 'regular', '1')
 configAll.set('profile', 'idle', '1')
 
-configAll.set('owncloud', 'ip', '192.168.1.240')
+# configAll.set('owncloud', 'ip', '192.168.1.240')
+configAll.set('owncloud', 'ip', '10.21.2.4')
 configAll.set('owncloud', 'port', '80')
 configAll.set('owncloud', 'user', 'user')
 configAll.set('owncloud', 'passwd', 'bitnami')
 
-configAll.set('stacksync', 'ip', '192.168.1.237')
+configAll.set('stacksync', 'ip', '10.21.2.3')
 configAll.set('stacksync', 'port', '80')
-configAll.set('stacksync', 'admin', '192.168.1.237:8081/admin')
+configAll.set('stacksync', 'admin', '10.21.2.3:8081/admin')
 configAll.set('stacksync', 'user', 'swift')
 configAll.set('stacksync', 'passwd', 'urv')
 
@@ -55,12 +56,12 @@ with open('config.all.ini', 'wb') as configfileAll:
 # Hosts Specific Configuration Setup ###################################################################################
 
 configHosts = ConfigParser.RawConfigParser()
-
+'''
 # CUSTOM SLAVE-HOSTS
-ast13 = {'user': 'milax', 'passwd': 'milax', 'ip': '192.168.1.227',
+ast13 = {'user': 'milax', 'passwd': 'milax', 'ip': '10.21.2.5',
          'owncloud_login': 'milax:milax',
          'stacksync_login': 'milax:milax'}
-localhost = {'user': 'anna', 'passwd': 'joanna', 'ip': '192.168.1.160',
+localhost = {'user': 'anna', 'passwd': 'joanna', 'ip': '10.30.236.141',
              'owncloud_login': 'anna:anna',
              'stacksync_login': 'anna:anna'}
 
@@ -72,17 +73,19 @@ for hostname in li:
     print li[hostname]
     for key in ast13.keys():
         configHosts.set(hostname, key, li[hostname][key])
-
 '''
+
 # python domain of hosts
-offset = 100 # DEIM lab ip ranges 100:200:300
+offset_hostname = 200 # DEIM lab ip ranges 100:200:300
+offset_ip = 5
 hosts = 24 # num of hosts
-for i in range(5):
-    hostname = 'd'+str(i+offset)+'.lab.deim'
+hosts_available = 2 # probar... # total: 12
+for i in range(hosts_available):
+    hostname = 'd'+str(i+offset_hostname+offset_ip)+'.lab.deim'
     configHosts.add_section(hostname)
     configHosts.set(hostname,'user', 'milax')
     configHosts.set(hostname,'passwd', 'milax')
-'''
+    configHosts.set(hostname,'ip', '10.21.2.'+str(offset_ip+i))
 
 # Writing our configuration file to 'example.cfg'
 with open('config.hosts.ini', 'wb') as configfileHosts:
