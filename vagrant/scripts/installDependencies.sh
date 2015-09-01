@@ -6,16 +6,16 @@
 
 echo "Inicializar instalación de dependencias en los Hosts"
 
-if [ -f PuppetEssential/debian-7.0-amd64.box ]; then
+if [ -f BenchBox/vagrant/debian-7.0-amd64.box ]; then
 	echo 'box/OK';
 else
 	echo 'no..., check if other path';
 
-	if [ -f debian-7.0-amd64.box ]; then
+	if [ -f BenchBox/debian-7.0-amd64.box ]; then
 		echo 'box/OK';
-		cp debian-7.0-amd64.box PuppetEssential/
+		cp debian-7.0-amd64.box ../
 	else
-		cd PuppetEssential;
+		cd vagrant;
 		wget https://www.dropbox.com/s/si19tbftilcuipz/debian-7.0-amd64.box;
 		cp debian-7.0-amd64.box ../
 		cd;
