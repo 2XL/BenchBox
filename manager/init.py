@@ -138,7 +138,7 @@ def start():
     config(HOSTS, CONFIG)  # tell each hosts their profile
     credentials(HOSTS) # call conectar desde la mateixa maquina virtual xk no dona accés a hosts externs
     sserver(HOSTS,CONFIG) # tell each host where the sync servers are located
-    # run(HOSTS) # make vagrant up
+    run(HOSTS) # make vagrant up
     print 'start/OK'
 
 
@@ -246,7 +246,7 @@ def config(hosts, config):
     print 'config/OK'
 
 
-def keygen(ip = "192.168.1.237"):
+def keygen(ip = "10.21.2.3"):
     print 'keygen: retrieve stacksync login credentials'
     conn = psycopg2.connect(database="stacksync_db",
                             user="stacksync_user",
@@ -254,7 +254,7 @@ def keygen(ip = "192.168.1.237"):
                             host=ip,
                             port="5432")
     cur = conn.cursor()
-    query = "select id, name, swift_account, swift_user, email from user1 where name  = 'demo'";
+    query = "select id, name, swift_account, swift_user, email from user1 where name  ~ 'demo' order by email asc";
     outputquery = "COPY ({0}) TO STDOUT WITH CSV HEADER".format(query)
     with open('stacksync_credentials.csv', 'w') as f:
         cur.copy_expert(outputquery, f)
