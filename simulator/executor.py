@@ -163,7 +163,7 @@ if __name__ == '__main__':
     worker = None
     print "Start executing/****************************"
     # start monitoring
-    sandBoxSocketIpPort = ('192.168.56.101',11000)
+    sandBoxSocketIpPort = '192.168.56.101',11000
     monitor = CPUMonitor(sandBoxSocketIpPort)
     interval = 1
     log_filename = 'local.csv'
