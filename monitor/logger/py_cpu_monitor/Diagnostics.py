@@ -6,17 +6,24 @@ import datetime
 class PerformanceCounter:
 
     Type = None
+    # have a live log appended
+
 
 
     def __init__(self, type, spec, bool):
         print '//constructor:PerformanceCounter'
         self.Type = type # memory or processes or disk or network
+        self.log_file = self.Type + '_append.log'
+        self.logger = open(self.log_file, 'w').close() # clear the file
 
 
     def NextValue(self):
         to_execute = getattr(self, 'do'+self.Type)
         value = to_execute()
         print value
+        with open(self.log_file, 'a') as file:
+            file.write(value) # append text
+            file.write('\n') # new line
         return value
 
 
