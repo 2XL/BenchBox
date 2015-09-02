@@ -238,6 +238,14 @@ package{
   ->
   class { 'nodejs':
     version => 'v0.10.25',
+    target_dir => '/bin' # add binary to bin
+  }
+
+  # installing npm packages
+
+  package{
+    'torrentjs':
+      provider => npm
   }
 
 }
