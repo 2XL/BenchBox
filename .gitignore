@@ -27,7 +27,7 @@ test
 
 
 # simulator/data
-simulator/files
+# simulator/files
 simulator/output
 simulator/simulator
 simulator/build
