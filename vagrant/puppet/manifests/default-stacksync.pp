@@ -235,6 +235,7 @@ package{
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
   }
+  /*
   ->
   class { 'nodejs':
     version => 'stable',
@@ -247,7 +248,7 @@ package{
     'torrentjs':
       provider => npm
   }
-
+  */
 }
 
 
