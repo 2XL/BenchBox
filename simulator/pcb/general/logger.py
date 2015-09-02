@@ -2,12 +2,16 @@
 # -*- coding: iso-8859-1 -*-
 
 import time
+import os
 
 #-------------------------------------------------------------------------------
 # create a log file to output experiment metadata
 #-------------------------------------------------------------------------------
 class logger():
     def __init__(self, fname, opt):
+        directory = 'output'
+        if not os.path.exists(directory):
+            os.makedirs(directory)
         try:
             opts = vars(opt)
         except Exception as e:

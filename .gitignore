@@ -26,7 +26,7 @@ manager/*.csv
 test
 
 
-simulator/data
+# simulator/data
 simulator/files
 simulator/output
 simulator/simulator
