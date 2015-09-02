@@ -228,11 +228,18 @@ package{
   }
 
 ->
-  package {
-    'nodejs':
-      ensure => 'installed'
+  exec {
+    'fix_debian keyring':
+      command => 'sudo aptitude install debian-keyring debian-archive-keyring',
+      user    => 'vagrant',
+      group   =>'vagrant',
+      path    => ['/usr/bin', '/bin/'],
   }
-
+  ->
+  package { 'nodejs':
+    ensure              => present,
+    manage_package_repo => true,
+  }
 
 }
 
