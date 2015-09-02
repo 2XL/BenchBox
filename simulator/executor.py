@@ -163,8 +163,8 @@ if __name__ == '__main__':
     worker = None
     print "Start executing/****************************"
     # start monitoring
-    sandBoxSocketIpPort = '192.168.56.101',11000
-    monitor = CPUMonitor(sandBoxSocketIpPort)
+    #sandBoxSocketIpPort = '192.168.56.101',11000
+    monitor = CPUMonitor('192.168.56.101',11000)
     interval = 1
     log_filename = 'local.csv'
     proc_name = 'java' # if its stacksync
