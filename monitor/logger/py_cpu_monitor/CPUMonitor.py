@@ -46,6 +46,8 @@ class CPUMonitor(MonitorResource):
             while it:
                 os.write(file, it.pop(1))
         '''
+        # write csv. header
+        file.write('{} {} {}'.format('process','timestamp', 'usage'))
         for value in enumerate(self.cpuValues):
             print value
             file.write(str(value[1])+'\n' )
