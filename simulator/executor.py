@@ -18,6 +18,8 @@ from pcb.general.ftp_sender import ftp_sender
 from pcb.general.logger import logger
 from pcb.actions import get_action, MakeResponse, PutContentResponse, Unlink, MoveResponse, GetContentResponse
 
+from cpu_monitor import CPUMonitor
+
 class StereotypeExecutor(object):
 
     def __init__(self):
@@ -160,11 +162,20 @@ if __name__ == '__main__':
     print 'FTP/OK'
     worker = None
     print "Start executing/****************************"
+    # start monitoring
+    sandBoxSocketIpPort = ('192.168.56.101',11000)
+    monitor = CPUMonitor(sandBoxSocketIpPort)
+    interval = 1
+    log_filename = 'local.csv'
+    proc_name = 'java' # if its stacksync
+    monitor.start_monitor(interval, log_filename, proc_name)
     operations = 100
     operations = 1000
     for i in range(operations):
         # stereotype_executor.execute(sender, parser.get('executor','files_folder'))
         stereotype_executor.execute()
+    # stop monitoring
+    monitor.stop_monitor()
     print "Finish executing/****************************"
 
     print "ClearingProcess/..."

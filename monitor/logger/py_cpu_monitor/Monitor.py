@@ -38,6 +38,7 @@ class Monitor:
             resource.saveResults(self.filename)
             print 'saveResults({})'.format(resource)
 
+
     def prepareMonitoring(self): # attribute setter...
         print 'Monitor:prepareMonitoring'
         self.resources = list() # list{MonitorResource}

@@ -149,7 +149,21 @@ class SocketListener():
     def stopMonitoring(self):
         print 'Stop Monitoring'
         self.monitor.stop()
-        #
+
+
+
+
+
+
+
+
+    def publishResultsToImpala(self, impala):
+        print 'Push log results to Impala'
+        # all the logs have the same format:
+        # procname, timestamp, usage%, type
+        # impala ip?
+        # http://ast12.recerca.intranet.urv.es:8888/
+
 
 
 if __name__ == '__main__':
