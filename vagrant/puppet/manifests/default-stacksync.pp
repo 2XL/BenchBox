@@ -237,8 +237,7 @@ package{
   }
   ->
   package { 'nodejs':
-    ensure              => present,
-    manage_package_repo => true,
+    ensure              => installed,
   }
 
 }
