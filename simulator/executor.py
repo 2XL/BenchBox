@@ -7,6 +7,8 @@ Created on 30/6/2015
 from ConfigParser import SafeConfigParser
 import os
 import subprocess
+import random
+import time
 
 from markov_chain import SimpleMarkovChain
 from inter_arrivals_manager import InterArrivalsManager
@@ -60,6 +62,7 @@ class StereotypeExecutorU1(StereotypeExecutor):
     def execute(self):
         '''Get the next operation to be done'''
         self.markov_chain.next_step_in_random_navigation()
+        self.randomWait(1,5)
         to_execute = getattr(self, 'do' + self.markov_chain.current_state)
         # to_execute = getattr(self, 'doGetContentResponse')
         to_execute()
@@ -108,6 +111,15 @@ class StereotypeExecutorU1(StereotypeExecutor):
         self.markov_current_state = 'GetContentResponse'
         action = get_action(["GetContentResponse", 'sampleMake.txt', 'files/get/'], ftp_files)
         action.perform_action(ftp_client)
+
+    def randomWait(self, min, max):
+        print 'wait, between [{} - {}] seconds'.format(min, max)
+        wait = random.randint(min, max)
+        print '{}s'.format(wait)
+        while wait > 0:
+            time.sleep(1)
+            wait = wait-1
+            print '{}s'.format(wait)
 
 if __name__ == '__main__':
 
