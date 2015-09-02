@@ -1,2 +1,6 @@
 #!/bin/bash
+
+echo 'clear existing stacksync processes'
+kill -9 $(ps -ef | grep -i stacksync | grep -v 'grep' | awk '{print $2}')
+echo 'start stackyncClient'
 cd /usr/lib/stacksync/ && java -jar Stacksync.jar -d -c <%= @confdir %>

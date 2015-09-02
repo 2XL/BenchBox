@@ -178,6 +178,33 @@ package{
     ensure => 'installed'
 }
   ->
+  package {
+    ['bitarray']:
+      ensure => 'installed',
+      provider => pip
+  }
+
+  ->
+  package {
+    ['thrift']:
+      ensure => 'installed',
+      provider => pip
+  }
+  /*
+  ->
+  exec {
+    'upagrade pip setup tools with include operation...':
+      command => 'pip install -U setuptools'
+  }
+  */
+  ->
+  package {
+    ['impyla']:
+      ensure => 'installed',
+      provider => pip
+  }
+
+  ->
 
   /*
   exec {
