@@ -58,7 +58,7 @@ if __name__ == '__main__':
     monitor = CPUMonitor(socket.gethostbyname(socket.gethostname()), 11000)
     if sys.argv[1] == "start":
         interval = 5 # segons
-        log_filename = "local.txt"
+        log_filename = "local.csv" # se podria añadir mas prefijos
         proc_name = "Python"
         monitor.start_monitor(interval, log_filename, proc_name)
     else:
