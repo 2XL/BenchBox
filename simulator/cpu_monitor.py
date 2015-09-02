@@ -55,7 +55,8 @@ if __name__ == '__main__':
         sys.exit()
     
     #monitor = CPUMonitor('10.30.230.56', 11000)
-    monitor = CPUMonitor(socket.gethostbyname(socket.gethostname()), 11000)
+    #monitor = CPUMonitor(socket.gethostbyname(socket.gethostname()), 11000)
+    monitor = CPUMonitor('192.168.56.101', 11000) # sandBox ip
     if sys.argv[1] == "start":
         interval = 5 # segons
         log_filename = "local.txt"

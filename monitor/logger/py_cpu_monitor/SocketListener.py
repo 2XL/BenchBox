@@ -62,8 +62,9 @@ class SocketListener():
         # establish the local endpoint for the socked
         # dns.gethostname return the name of the host running the application
         staticPort = 11000
-        ipHostInfo = socket.gethostname()
-        ipAddress =  socket.gethostbyname(ipHostInfo)
+        #ipHostInfo = socket.gethostname()
+        #ipAddress =  socket.gethostbyname(ipHostInfo)
+        ipAddress =  '192.168.56.101'
         localEndPoint = ipAddress, staticPort
         print localEndPoint
 
