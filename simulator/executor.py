@@ -161,7 +161,7 @@ if __name__ == '__main__':
     worker = None
     print "Start executing/****************************"
     operations = 100
-    operations = 1
+    operations = 1000
     for i in range(operations):
         # stereotype_executor.execute(sender, parser.get('executor','files_folder'))
         stereotype_executor.execute()
