@@ -8,7 +8,7 @@ box_memory = "1024"
 box_cpu = "1"
 nodes = [
     {:hostname => 'sandBox', :ip => '192.168.56.101', :box => box, :shared_folder=>'../monitor',
-     :shared_folder_as=> '/home/vagrant/monitor'}, # contains the pc-clients && log monitor
+     :shared_folder_as=> '/home/vagrant/monitor', :port_fwd=> 12345}, # contains the pc-clients && log monitor
     {:hostname => 'benchBox', :ip => '192.168.56.2', :box => box, :shared_folder=>'../simulator',
      :shared_folder_as=> '/home/vagrant/simulator'} # this contains the pc-benchmarking
 ]
@@ -36,6 +36,12 @@ Vagrant.configure("2") do |config|
       else
         puts "no sharing folder"
       end
+
+      if node[:port_fwd]
+        puts "fwd port"
+        nodeconfig.vm.network "forward_port", guest: node[:port_fwd], host: node[:port_fwd]
+      end
+
       nodeconfig.vm.provision :shell, inline: "echo 'Sara is my Cat & Tor is my Dog!' > /etc/motd"
 
 
