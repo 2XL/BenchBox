@@ -12,4 +12,4 @@ port = 5000
 server.listen(5000);
 
 // Put a friendly message on the terminal
-console.log("Server running at http://192.168.56.101:5000/");
+console.log("Server running at http://localhost:5000/");
