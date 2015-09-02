@@ -100,9 +100,10 @@ def greet(who):
 def rpc(hostname, login, passwd, cmd, callback=None):
     while True:
         try:
-            options={"StrictHostKeyChecking": "no", "UserKnownHostsFile": "/dev/null"}
+            options={"StrictHostKeyChecking": "no", "UserKnownHostsFile": "/dev/null", "timeout": "3600"}
             s = pxssh.pxssh()
             s.login(hostname, login, passwd)
+            s.timeout = 3600 # set timeout to one hour
             s.sendline(cmd) # run a command
             s.prompt() # match the prompt
             print s.before # print everyting before the prompt
@@ -202,7 +203,7 @@ def setup(hosts):
 
 
 def summon(hosts):
-    print 'summon: Download vagrant box dependencies at hte Slave hosts'
+    print 'summon: Download vagrant box dependencies at the Slave hosts'
     for host in hosts:
         h = hosts[host]
         str_cmd = "" \
