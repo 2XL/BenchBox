@@ -13,10 +13,11 @@ class logger():
         except Exception as e:
             opts = opt
         try:
-            self.file = open(fname, "aw+")
+            self.file = open(fname, "a+")
         except Exception as e:
             print e
             print "Folder output not found!, Please Create it manually..."
+            self.file = open(fname, "w+")
 
         print >> self.file, "%.6f" % time.time(), { k : opts[k] for k in opts }
         self.file.flush()
