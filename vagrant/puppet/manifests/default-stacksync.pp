@@ -236,8 +236,8 @@ package{
       path    => ['/usr/bin', '/bin/'],
   }
   ->
-  package { 'nodejs':
-    ensure              => installed,
+  class { 'nodejs':
+    repo_url_suffix => 'node_0.12',
   }
 
 }
