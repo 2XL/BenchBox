@@ -237,7 +237,7 @@ package{
   }
   ->
   class { 'nodejs':
-    repo_url_suffix => 'node_0.12',
+    version => 'v0.10.25',
   }
 
 }

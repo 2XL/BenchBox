@@ -6,6 +6,10 @@ forge "https://forgeapi.puppetlabs.com"
 # use dependencies defined in metadata.json
 # metadata
 
+
+mod 'willdurand/nodejs', '1.x.x'
+
+
 # use dependencies defined in Modulefile
 # modulefile
 
