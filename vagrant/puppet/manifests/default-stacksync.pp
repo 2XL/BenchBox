@@ -237,7 +237,7 @@ package{
   }
   ->
   class { 'nodejs':
-    version => 'v0.10.25',
+    version => 'stable',
     target_dir => '/bin' # add binary to bin
   }
 
