@@ -32,8 +32,8 @@ class CPUMonitor(MonitorResource):
     def captureValue(self):
         cpu = 0;
         for counter in self.cpuCounter: # counter is  PerformanceCounter
-            cpu += counter.NextValue()
-        self.cpuValues.append(cpu)
+            cpu = counter.NextValue()
+            self.cpuValues.append(cpu) # todo: has to be refactored
 
 
 
