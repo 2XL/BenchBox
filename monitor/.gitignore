@@ -5,3 +5,5 @@
 #views
 #app.js
 #package.json
+py_cpu_monitor/*.txt
+py_cpu_monitor/*.log
