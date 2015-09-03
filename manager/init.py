@@ -429,6 +429,14 @@ def shutdown(hosts):
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'shutdown/OK'
 
+def monitor(hosts):
+    print 'run the nodejs monitor server at each Dummy Host'
+    for host in hosts:
+        h = hosts[host]
+        str_cmd = "cd ~/BenchBox/monitor; " \
+                  "/usr/local/bin/node helloworld.js; "
+        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+        print 'nodeserver running at {}:{}'.format(h['ip'], '5000')
 # -------------------------------------------------------------------------------
 # Main
 # -------------------------------------------------------------------------------
@@ -440,7 +448,8 @@ COMMANDS = {
     'restart': restart,
     'clean': clean,
     'init': init,
-    'scan': scan
+    'scan': scan,
+    'monitor': monitor
 }
 
 if __name__ == '__main__':
