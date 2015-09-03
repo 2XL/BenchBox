@@ -159,6 +159,9 @@ def status():
     print 'status: Retrieve for each hosts if they are Ready|Running|Stopped'
 
 
+def monitor():
+    print 'monitor: start dummy node server'
+    start_node_server(HOSTS)
 # Advance functions
 
 def preconfig(hosts):
@@ -429,7 +432,7 @@ def shutdown(hosts):
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'shutdown/OK'
 
-def monitor(hosts):
+def start_node_server(hosts):
     print 'run the nodejs monitor server at each Dummy Host'
     for host in hosts:
         h = hosts[host]
