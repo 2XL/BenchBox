@@ -3,6 +3,7 @@
 
 echo 'start/monitoring'
 
-/usr/local/bin/npm test &
+pwd
+/usr/local/bin/npm start &
 
 echo 'monitor/ON'
