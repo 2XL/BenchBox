@@ -437,7 +437,7 @@ def start_node_server(hosts):
     for host in hosts:
         h = hosts[host]
         str_cmd = "cd ~/BenchBox/monitor; " \
-                  "/usr/local/bin/node helloworld.js &; "
+                  "/usr/local/bin/node helloworld.js & "
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
         print 'nodeserver running at {}:{}'.format(h['ip'], '5000')
 # -------------------------------------------------------------------------------
