@@ -436,8 +436,8 @@ def start_node_server(hosts):
     print 'run the nodejs monitor server at each Dummy Host'
     for host in hosts:
         h = hosts[host]
-        str_cmd = "cd ~/BenchBox/monitor; " \
-                  "/usr/local/bin/npm monitor & "
+        str_cmd = "cd BenchBox/monitor; " \
+                  "./startApp.sh; "
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
         print 'nodeserver running at {}:{}'.format(h['ip'], '5000')
 # -------------------------------------------------------------------------------
