@@ -26,14 +26,14 @@ app.use('/data',express.static(path.join(__dirname, 'logger/py_cpu_monitor'))); 
 app.use('/', routes);
 app.use('/users', users);
 
-
+/*
 fs .readFile('logger/py_cpu_monitor/Memory_append.log', 'utf8', function(err, data){
     if(err){
         return console.log(err)
     }
     console.log(data)
 });
-
+*/
 
 
 

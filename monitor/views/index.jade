@@ -7,5 +7,12 @@ block content
   p monitoring.. memory, cpu and hdd usage real time: using XXXX_append.log
 
   div
-      canvas#chart(width=500, height=500)
-
+      p ram
+      canvas#chart_ram(width=100, height=100)
+      // there should be one canvas for each type of monitoring
+  div
+      p cpu
+      canvas#chart_cpu
+  div
+      p hdd
+      canvas#chart_hdd
