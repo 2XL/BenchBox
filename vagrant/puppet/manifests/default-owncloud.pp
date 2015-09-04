@@ -92,7 +92,7 @@ node 'sandBox' {
 
   class{
     "owncloud":
-      rmq_host => '10.21.2.4'
+      rmq_host => '10.30.236.140'
   }
   ->
   file {

@@ -129,8 +129,8 @@ node 'sandBox' {
   ->
   class {
     "stacksync":
-      rmq_host                  => '10.21.2.3',
-      p_repo_connection_authurl => 'http://10.21.2.3:5000/v2.0/tokens'
+      rmq_host                  => '10.30.232.196',
+      p_repo_connection_authurl => 'http://10.30.232.196:5000/v2.0/tokens'
   }->
 
   file {

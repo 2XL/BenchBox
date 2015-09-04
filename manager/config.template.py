@@ -33,14 +33,14 @@ configAll.set('profile', 'regular', '1')
 configAll.set('profile', 'idle', '1')
 
 # configAll.set('owncloud', 'ip', '192.168.1.240')
-configAll.set('owncloud', 'ip', '10.21.2.4')
+configAll.set('owncloud', 'ip', '10.30.236.140')
 configAll.set('owncloud', 'port', '80')
 configAll.set('owncloud', 'user', 'user')
 configAll.set('owncloud', 'passwd', 'bitnami')
 
-configAll.set('stacksync', 'ip', '10.21.2.3')
+configAll.set('stacksync', 'ip', '10.30.232.196')
 configAll.set('stacksync', 'port', '80')
-configAll.set('stacksync', 'admin', '10.21.2.3:8081/admin')
+configAll.set('stacksync', 'admin', '10.30.232.196:8081/admin')
 configAll.set('stacksync', 'user', 'swift')
 configAll.set('stacksync', 'passwd', 'urv')
 
