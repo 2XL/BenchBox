@@ -55,12 +55,12 @@ function processDataLatest(allText, type) {
     var lines = allText.split('\n')
     // console.log(lines)
     var last = lines[lines.length - 1]
-    if (last === '') {
-        var rdm = Math.floor(Math.random() * (lines.length - 1))
-        last = lines[rdm].split(' ')
-    }else{
+    //if (last === '') {
+    //    var rdm = Math.floor(Math.random() * (lines.length - 1))
+    //    last = lines[rdm].split(' ')
+    //}else{
         last = last.split(' ')
-    }
+    //}
     console.log(last, type)
     renderGraph(parseFloat(last[2]), type)
 }
