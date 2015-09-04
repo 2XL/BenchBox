@@ -198,6 +198,7 @@ package{
   }
   */
   ->
+  /*
   package {
     ['impyla']:
       ensure => 'installed',
@@ -205,7 +206,7 @@ package{
   }
 
   ->
-
+*/
   /*
   exec {
     'clear_previous_client':

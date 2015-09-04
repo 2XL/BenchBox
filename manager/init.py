@@ -269,7 +269,7 @@ def keygen(ip = "10.30.232.196"):
 
 def sserver(hosts, conf):
     print 'sserver'
-    print config
+    # print config
     owncloud_ip = conf['ss']['owncloud']
     stacksync_ip = conf['ss']['stacksync']
     for idx, host in enumerate(hosts):
@@ -280,7 +280,7 @@ def sserver(hosts, conf):
                   "echo '%s' > ss.stacksync.ip; " \
                   "echo '%s' > ss.owncloud.ip; " \
                   "fi; " % (stacksync_ip, owncloud_ip)
-        print str_cmd
+        # print str_cmd
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'sserver/OK'
 
@@ -315,7 +315,7 @@ def credentials(hosts):
                   "./config.stacksync.sh; " \
                   "echo 'clients configuration files generated'; " \
                   "fi; " % (key, ownkey)
-        print str_cmd
+        # print str_cmd
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'credentials/OK'
 
@@ -341,7 +341,7 @@ def run(hosts):
                   "echo 'Vagrant Project not Found!??'; " \
                   "fi;" \
                   ""
-        print str_cmd
+        # print str_cmd
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'run/OK'
 
@@ -356,7 +356,7 @@ def keepalive(hosts):
                   "else" \
                   "echo 'File not found!'; " \
                   "fi; " % h['passwd']
-        print str_cmd
+        # print str_cmd
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'keepalive/OK'
 

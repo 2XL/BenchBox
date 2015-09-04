@@ -7,3 +7,11 @@ cd /usr/lib/stacksync/ && java -jar Stacksync.jar -d -c <%= @confdir %>
 # if this is called java...
 #echo 'clear existing stacksync processes'
 #kill -9 $(ps -ef | grep -i stacksync | grep -v 'grep' | awk '{print $2}')
+
+echo 'start socketListener'
+if [ -d monitor ]; then
+cd monitor/logger/py_cpu_monitor && python SocketListener.py
+echo 'stacksync client and monitor started'
+else
+echo 'stacksync client monitoring not available'
+fi
