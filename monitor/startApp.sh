@@ -4,6 +4,6 @@
 echo 'start/monitoring'
 
 pwd
-/usr/local/bin/npm start &
+nohup /usr/local/bin/npm start &
 
 echo 'monitor/ON'
