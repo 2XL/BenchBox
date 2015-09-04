@@ -106,7 +106,7 @@ def rpc(hostname, login, passwd, cmd, callback=None):
             s.timeout = 3600 # set timeout to one hour
             s.sendline(cmd) # run a command
             s.prompt() # match the prompt
-            print s.before # print everyting before the prompt
+            #print s.before # print everyting before the prompt
             # s.sendline ('uptime;df -h') # running multiple lines
             s.logout()
         except pxssh.ExceptionPxssh, e:
@@ -337,6 +337,8 @@ def run(hosts):
                   "VBoxManage list runningvms | wc -l > running; " \
                   "vagrant up sandBox; " \
                   "vagrant provision sandBox; " \
+                  "vagrant up benchBox; " \
+                  "vagrant provision benchBox; " \
                   "else " \
                   "echo 'Vagrant Project not Found!??'; " \
                   "fi;" \

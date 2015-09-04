@@ -128,7 +128,7 @@ echo "$FILE is empty."
 fi ;
 ls -l $FILE
 echo 'New credentials generated successfully!!'
-cat $FILE
+# cat $FILE
 mv $FILE ../$FILE
 
 

@@ -75,6 +75,6 @@ ls -l $FILE
 echo 'New credentials generated successfully!!'
 chmod u+x $FILE
 ls $FILE # assign run credentials
-cat $FILE
+# cat $FILE
 mv $FILE ../$FILE
 
