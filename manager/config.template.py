@@ -58,34 +58,43 @@ with open('config.all.ini', 'wb') as configfileAll:
 configHosts = ConfigParser.RawConfigParser()
 '''
 # CUSTOM SLAVE-HOSTS
+'''
+'''
 ast13 = {'user': 'milax', 'passwd': 'milax', 'ip': '10.21.2.5',
          'owncloud_login': 'milax:milax',
          'stacksync_login': 'milax:milax'}
 localhost = {'user': 'anna', 'passwd': 'joanna', 'ip': '10.30.236.141',
              'owncloud_login': 'anna:anna',
              'stacksync_login': 'anna:anna'}
+'''
+ast10 = {'user': 'user', 'passwd': 'lab144', 'ip': '10.30.102.186',
+             'owncloud_login': 'anna:anna',
+             'stacksync_login': 'anna:anna'}
 
-li = {'ast13': ast13, }
+li = {'ast10': ast10, }
 
 
 for hostname in li:
     configHosts.add_section(hostname)
     print li[hostname]
-    for key in ast13.keys():
+    for key in ast10.keys():
         configHosts.set(hostname, key, li[hostname][key])
-'''
 
+
+'''
 # python domain of hosts
 offset_hostname = 200 # DEIM lab ip ranges 100:200:300
 offset_ip = 5
 hosts = 24 # num of hosts
-hosts_available = 1 # probar... # total: 12
+hosts_available = 0 # probar... # total: 12
 for i in range(hosts_available):
     hostname = 'd'+str(i+offset_hostname+offset_ip)+'.lab.deim'
     configHosts.add_section(hostname)
     configHosts.set(hostname,'user', 'milax')
     configHosts.set(hostname,'passwd', 'milax')
     configHosts.set(hostname,'ip', '10.21.2.'+str(offset_ip+i))
+
+'''
 
 # Writing our configuration file to 'example.cfg'
 with open('config.hosts.ini', 'wb') as configfileHosts:
