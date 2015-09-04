@@ -54,7 +54,7 @@ function processDataLatest(allText, type) {
     // console.log(allText)
     var lines = allText.split('\n')
     // console.log(lines)
-    var last = lines[lines.length - 1]
+    var last = lines[lines.length - 2] // no mostrar ultimo siempre el penultimo porque el ultimo es un ""
     //if (last === '') {
     //    var rdm = Math.floor(Math.random() * (lines.length - 1))
     //    last = lines[rdm].split(' ')
