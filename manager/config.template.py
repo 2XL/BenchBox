@@ -38,9 +38,9 @@ configAll.set('owncloud', 'port', '80')
 configAll.set('owncloud', 'user', 'user')
 configAll.set('owncloud', 'passwd', 'bitnami')
 
-configAll.set('stacksync', 'ip', '10.30.232.196')
+configAll.set('stacksync', 'ip', '10.30.239.198')
 configAll.set('stacksync', 'port', '80')
-configAll.set('stacksync', 'admin', '10.30.232.196:8081/admin')
+configAll.set('stacksync', 'admin', '10.30.239.198:8081/admin')
 configAll.set('stacksync', 'user', 'swift')
 configAll.set('stacksync', 'passwd', 'urv')
 
@@ -71,13 +71,17 @@ ast10 = {'user': 'user', 'passwd': 'lab144', 'ip': '10.30.102.186',
              'owncloud_login': 'anna:anna',
              'stacksync_login': 'anna:anna'}
 
-li = {'ast10': ast10, }
+ast3 = {'user': 'milax', 'passwd': 'milax', 'ip': '10.30.103.95',
+         'owncloud_login': 'anna:anna',
+         'stacksync_login': 'anna:anna'}
+
+li = {'ast3': ast3, }
 
 
 for hostname in li:
     configHosts.add_section(hostname)
     print li[hostname]
-    for key in ast10.keys():
+    for key in li[hostname].keys():
         configHosts.set(hostname, key, li[hostname][key])
 
 

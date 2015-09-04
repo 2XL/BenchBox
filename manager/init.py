@@ -250,7 +250,7 @@ def config(hosts, config):
     print 'config/OK'
 
 
-def keygen(ip = "10.30.232.196"):
+def keygen(ip = "10.30.239.198"):
     print 'keygen: retrieve stacksync login credentials'
     conn = psycopg2.connect(database="stacksync_db",
                             user="stacksync_user",
