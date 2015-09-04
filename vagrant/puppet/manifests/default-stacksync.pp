@@ -227,7 +227,7 @@ package{
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
   }
-
+/*
 ->
   exec {
     'fix_debian keyring':
@@ -236,6 +236,7 @@ package{
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
   }
+  */
   /*
   ->
   class { 'nodejs':
