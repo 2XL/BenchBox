@@ -3,6 +3,8 @@
 
 echo 'start stackyncClient'
 cd /usr/lib/stacksync/ && java -jar Stacksync.jar -d -c <%= @confdir %>
+echo $! > /tmp/stacksync.pid
+
 # they should not allow runnin more than one instance of this, how can i know the which procedure to monitor???,
 # if this is called java...
 #echo 'clear existing stacksync processes'

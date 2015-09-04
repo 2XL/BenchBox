@@ -439,7 +439,7 @@ def start_node_server(hosts):
     for host in hosts:
         h = hosts[host]
         str_cmd = "cd BenchBox/monitor; " \
-                  "./startApp.sh "
+                  "nohup /usr/local/bin/npm start & "
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
         print 'nodeserver running at {}:{}'.format(h['ip'], '5000')
 # -------------------------------------------------------------------------------
