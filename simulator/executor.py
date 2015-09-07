@@ -167,7 +167,7 @@ if __name__ == '__main__':
     monitor = CPUMonitor('192.168.56.101',11000)
     interval = 1
     log_filename = 'local.csv'
-    proc_name = 'java' # if its stacksync
+    proc_name = 'StackSync' # if its stacksync
     monitor.start_monitor(interval, log_filename, proc_name)
     operations = 100
     operations = 1000

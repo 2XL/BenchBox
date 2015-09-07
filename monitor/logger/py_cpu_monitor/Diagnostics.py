@@ -7,7 +7,7 @@ class PerformanceCounter:
 
     Type = None
     # have a live log appended
-    pid = None # process id to monitor
+    processPid = None # process id to monitor
 
 
     def __init__(self, type, type_spec, processName):
@@ -16,7 +16,7 @@ class PerformanceCounter:
         self.processName = processName
         self.log_file = self.Type + '_append.log'
         self.logger = open(self.log_file, 'w').close() # clear the file
-
+        self.setProcId()
 
     def NextValue(self):
         to_execute = getattr(self, 'do'+self.Type)
@@ -65,11 +65,19 @@ class PerformanceCounter:
         return '{} {} {}'.format(process, tstamp, psutil.virtual_memory().percent)
 
 
-    def getProcId(self):
+    def setProcId(self):
         # loop through all the process psutil and seek for its pid.
         # for p in psutil.get_process_list():
         #    print 'PID: {}'.format(self.processName)
-        print 'how to handle process with the same name?'
+        try :
+            with open('/tmp/'+self.processName+'.pid', 'r') as f:
+                read_data = f.read()
+                print read_data
+                self.processPid = read_data
+        except Exception as e:
+            print 'handle exception: {}'.format(e)
+        finally:
+            print 'how to handle process with the same name?'
 
 
 if __name__ == '__main__':
