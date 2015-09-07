@@ -4,9 +4,9 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-    console.log("Index monitor index")
+    console.log("CPU monitor index")
 
-  res.render('index', { title: 'Cpu Monitor ' });
+    res.render('cpu', { title: 'Cpu Monitor' });
 });
 
 module.exports = router;

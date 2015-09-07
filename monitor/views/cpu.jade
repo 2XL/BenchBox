@@ -1,0 +1,16 @@
+extends layout
+block content
+    h1= title
+    p Welcome to #{title}
+    p Hello World!
+    p monitoring.. memory, cpu and hdd usage real time: using XXXX_append.log
+    div
+        p ram
+        canvas#chart_ram(width=300, height=300)
+        // there should be one canvas for each type of monitoring
+    div
+        p cpu
+        canvas#chart_cpu
+    div
+        p hdd
+        canvas#chart_hdd
