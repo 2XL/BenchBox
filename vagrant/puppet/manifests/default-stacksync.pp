@@ -229,6 +229,17 @@ package{
   }
   ->
   */
+
+  exec {"check_presence_of_previous_execution":
+    command => 'kill -9 $(head -n 1 /tmp/StackSync.pid)',
+    onlyif => 'test -e /tmp/StackSync.pid',
+    user    => 'vagrant',
+    group   =>'vagrant',
+    path    => ['/usr/bin', '/bin/'],
+  }
+  ->
+
+
   exec {
     'launch_stacksync_client':
       command => '/usr/bin/stacksync &',
