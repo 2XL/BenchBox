@@ -38,6 +38,16 @@ node 'benchBox' {
   class {
     'benchbox':
   }
+  ->
+  exec {
+    'launch_benchbox_simulator':
+      command => 'python /home/vagrant/simulator/executor.py &',
+    # sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk '{print $2}')
+      user    => 'vagrant',
+      group   =>'vagrant',
+      path    => ['/usr/bin', '/bin/'],
+  }
+
 }
 
 define download_file(
