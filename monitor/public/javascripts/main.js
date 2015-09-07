@@ -90,7 +90,7 @@ function renderGraph(value, type) {
     console.log("Updating Chart: ", value);
     var canvasname = "chart_"+type;
     // Replace the chart canvas element
-    $('#'+canvasname).replaceWith("<canvas id=\""+canvasname+"\" width=\"100\" height=\"100\"></canvas>"); // at each refreash clean...
+    $('#'+canvasname).replaceWith("<canvas id=\""+canvasname+"\" width=\"300\" height=\"300\"></canvas>"); // at each refreash clean...
 
     var ctx = $('#'+canvasname).get(0).getContext("2d");
     new Chart(ctx)
