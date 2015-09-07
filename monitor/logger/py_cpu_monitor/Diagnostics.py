@@ -39,8 +39,7 @@ class PerformanceCounter:
         print 'doProcess'
         # en el de cristian se pilla de todos los cores por separado luego se juntan...
         tstamp =  datetime.datetime.now().isoformat()
-        return '{} {} {}'.format(self.processName, tstamp, psutil.Process(self.processPid).cpu_percent(interval=None,
-                                                                                            percpu=False))
+        return '{} {} {}'.format(self.processName, tstamp, psutil.Process(self.processPid).cpu_percent())
 
 
     def doDisk(self): # input output % time {write/read unit}
@@ -84,7 +83,7 @@ class PerformanceCounter:
 
 
     def setDiskMonitorPath(self): # disc usage monitoring dependent
-        path = None
+        path = '/stacksync_folder'
         home = os.path.expanduser("~")
         #folder_path = home + '/stacksync_folder'
         if self.processName == 'StackSync':
@@ -95,23 +94,23 @@ class PerformanceCounter:
 
 
 
-def get_size(self, path = '.'):
-    total_size = 0
-    try:
-        path = self.diskPath
-    except:
-        print 'diskPath not defined!'
-        path = '.'
+    def get_size(self, path = '.'):
+        total_size = 0
+        try:
+            path = self.diskPath
+        except:
+            print 'diskPath not defined!'
+            path = '.'
 
-    for dirpath, dirnames, filenames in os.walk(path):
-        for f in filenames:
-            fp = os.path.join(dirpath, f)
-            total_size += os.path.getsize(fp)
-    return total_size
+        for dirpath, dirnames, filenames in os.walk(path):
+            for f in filenames:
+                fp = os.path.join(dirpath, f)
+                total_size += os.path.getsize(fp)
+        return total_size
 
 
 if __name__ == '__main__':
     print 'Test main program returning values'
     home = os.path.expanduser("~")
     folder_path = home + '/stacksync_folder'
-    print 'Size: {} {} '.format(get_size(folder_path), 'Bytes')
+    # print 'Size: {} {} '.format(get_size(folder_path), 'Bytes')

@@ -5,6 +5,6 @@
 #views
 #app.js
 #package.json
-py_cpu_monitor/*.txt
-py_cpu_monitor/*.log
+logger/py_cpu_monitor/*.txt
+logger/py_cpu_monitor/*.log
 npm-debug.log
