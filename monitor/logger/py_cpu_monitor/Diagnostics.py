@@ -72,7 +72,7 @@ class PerformanceCounter:
         #    print 'PID: {}'.format(self.processName)
         try :
             with open('/tmp/'+self.processName+'.pid', 'r') as f:
-                read_data = f.read()
+                read_data = f.readline().splitlines()[0]
                 print read_data
                 self.processPid = read_data
         except Exception as e:
