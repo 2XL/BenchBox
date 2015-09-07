@@ -7,12 +7,13 @@ class PerformanceCounter:
 
     Type = None
     # have a live log appended
+    pid = None # process id to monitor
 
 
-
-    def __init__(self, type, spec, bool):
-        print '//constructor:PerformanceCounter'
+    def __init__(self, type, type_spec, processName):
+        print '//constructor:PerformanceCounter {} {} {}'.format(type, type_spec, processName)
         self.Type = type # memory or processes or disk or network
+        self.processName = processName
         self.log_file = self.Type + '_append.log'
         self.logger = open(self.log_file, 'w').close() # clear the file
 
@@ -64,6 +65,11 @@ class PerformanceCounter:
         return '{} {} {}'.format(process, tstamp, psutil.virtual_memory().percent)
 
 
+    def getProcId(self):
+        # loop through all the process psutil and seek for its pid.
+        # for p in psutil.get_process_list():
+        #    print 'PID: {}'.format(self.processName)
+        print 'how to handle process with the same name?'
 
 
 if __name__ == '__main__':
