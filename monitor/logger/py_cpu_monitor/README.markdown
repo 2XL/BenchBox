@@ -1,26 +1,23 @@
-# the main is located at SocketListener
 
+# py_cpu_monitor is based on: [https://github.com/Cotes/CPUMonitor]
 
-# what is namespaces?
-
+definition:  this python module gathers the cpu, ram, network and disk resource usage
 
 # Refactor Status:
 
-
-## --------------------------------------------------------- [SandBox code]
+- [SandBox code]
 Diagnostics.py --> psutil
-
 CPUMonitor.py
-DiskResource.py
+DiskMonitor.py
 MemoryMonitor.py
-
+NetworkMonitor.py
 Monitor.py
-
 MonitorResource.py --> interface
-
 SocketListener.py --> socket server
-## -------------------------------------------------------- [BenchBox code]
+
+- [BenchBox code]
 cpu_monitor.py --> socket client
 
-## -------------------------------------------------------- [Misc code]
+
+- [Misc code]
 resolveDNS.py
