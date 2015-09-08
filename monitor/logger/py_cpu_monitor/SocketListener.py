@@ -9,7 +9,7 @@ import SocketServer, subprocess
 
 
 
-HOST = ''
+HOST = '192.168.56.101'
 PORT = 11000
 
 
@@ -61,12 +61,16 @@ class SocketListener():
 
         # establish the local endpoint for the socked
         # dns.gethostname return the name of the host running the application
-        staticPort = 11000
+        staticPort = PORT
         #ipHostInfo = socket.gethostname()
-        #ipAddress =  socket.gethostbyname(ipHostInfo)
-        ipAddress =  '192.168.56.101'
+        if socket.gethostname() == 'Jo':
+            ipAddress = socket.gethostbyname(socket.gethostname())
+            #ipAddress =  socket.gethostbyname(ipHostInfo)
+        else:
+            ipAddress =  HOST
         localEndPoint = ipAddress, staticPort
         print localEndPoint
+
 
         # create a TCP/IP socket
         listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -129,15 +133,21 @@ class SocketListener():
 
         for i in range(3, len(parameters)):
             processes.append(parameters[i])
-
+        # [1 2 3 p1 p2 p3 p4...]
 
         print parameters, interval, filename, processes
 
         self.monitor.setInterval(interval)
         self.monitor.setFilename(filename)
         self.monitor.setProcess(processes)
-        self.monitor.prepareMonitoring()
 
+        '''
+        self.monitor.prepareMonitoring({'CPU': processes,
+                                        'Memory': processes,
+                                        'Disk': 'stacksync_folder',
+                                        'Network': 'eth0'})
+        '''
+        self.monitor.prepareMonitoring()
         print 'DefineMonitorThread...'
         self.monitorThread = Thread(target=self.monitor.ThreadProc)
         print 'LaunchMonitorThread...'

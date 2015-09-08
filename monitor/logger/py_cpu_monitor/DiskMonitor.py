@@ -1,6 +1,7 @@
 
 from Diagnostics import PerformanceCounter
 from MonitorResource import MonitorResource
+import utility
 import os
 import threading
 import time
@@ -25,7 +26,7 @@ class DriveInfo():
 
 
 
-class DiskResource(MonitorResource):
+class DiskMonitor(MonitorResource):
     ''
 
     allDrives = DriveInfo() # DriveInfo
@@ -67,7 +68,7 @@ class DiskResource(MonitorResource):
 
 
 if __name__ == '__main__':
-    disk = DiskResource('stacksync_folder')
+    disk = DiskMonitor('stacksync_folder')
     for x in range(100):
         disk.captureValue()
         time.sleep(2)

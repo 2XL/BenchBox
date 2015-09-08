@@ -10,19 +10,23 @@ class MemoryMonitor(MonitorResource):
     ramCounter = None # PerformanceCounter
     ramValues = list()
 
-    def __init__(self, diskPath):
+    def __init__(self, processes):
         print 'constructor'
-        self.ramCounter # Memory, Available MBytes, true
+        self.processes = processes # string, LinkedList
         self.ramValues = list() # list {float}
-        self.ramCounter = PerformanceCounter('Memory', 'Available MBytes', diskPath)
+        self.ramCounter = list()
+        for process in self.processes:
+            print 'CPUMonitor:{}'.format(process)
+            self.ramCounter.append(PerformanceCounter('Memory', 'Available MBytes', process))
 
     def prepareMonitoring(self):
         print 'RAM:prepareMonitor'
         self.ramValues = list() # Floats
 
     def captureValue(self):
-
-        self.ramValues.append(self.ramCounter.NextValue())
+        for counter in self.ramCounter: # counter is  PerformanceCounter
+            ram = counter.NextValue()
+            self.ramValues.append(ram) # todo: has to be refactored
 
     def saveResults(self, filename):
         # open a file
@@ -41,7 +45,7 @@ class MemoryMonitor(MonitorResource):
 
 
 if __name__ == '__main__':
-    memory = MemoryMonitor('StackSync')
+    memory = MemoryMonitor(['StackSync'])
     for x in range(1000):
         memory.captureValue();
         time.sleep(1) # 1s

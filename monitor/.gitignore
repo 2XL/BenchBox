@@ -7,4 +7,5 @@
 #package.json
 logger/py_cpu_monitor/*.txt
 logger/py_cpu_monitor/*.log
+logger/*.log
 npm-debug.log

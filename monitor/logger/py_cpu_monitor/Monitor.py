@@ -1,7 +1,7 @@
 
 
 from MemoryMonitor import MemoryMonitor
-from DiskResource import DiskResource
+from DiskMonitor import DiskMonitor
 from CPUMonitor import CPUMonitor
 from NetworkMonitor import NetworkMonitor
 from time import sleep
@@ -40,12 +40,23 @@ class Monitor:
 
 
     def prepareMonitoring(self): # attribute setter...
+
         print 'Monitor:prepareMonitoring'
         self.resources = list() # list{MonitorResource}
+
+
+        if self.processes[0] == 'StackSync':
+            folder_sync_client = 'stacksync_folder'
+
+        if self.processes[0] == 'OwnCloud':
+            folder_sync_client = 'owncloud_folder'
+
+
         self.resources.append(MemoryMonitor(self.processes))
-        self.resources.append(DiskResource(self.processes))
+        self.resources.append(DiskMonitor(folder_sync_client))
         self.resources.append(CPUMonitor(self.processes))
-        self.resources.append(NetworkMonitor(self.processes))
+        self.resources.append(NetworkMonitor('eth0'))
+
         x=0
         for resource in self.resources: # MonitorResource
             x+=1
@@ -59,7 +70,7 @@ class Monitor:
         self.filename = filename
 
     def setProcess(self, processes): # list{string}
-        self.processes  = processes
+        self.processes = processes
 
 
     '''
