@@ -15,9 +15,26 @@ Pre: have nodejs installed at the dummyHost, there is a install node-install.sh 
 
 ### Use:
 
+run node app
+
 ```sh
 npm start
 ```
+
+
+* generating monitor data for the server
+
+start the socketListener
+
+```sh
+python logger/py_cpu_monitor/socketListerer.py
+```
+
+tell the socketServer to start monitoring
+```sh
+pythno logger/cpu_monitor.py start
+```
+
 
 
 
