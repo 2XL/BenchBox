@@ -1,9 +1,9 @@
 
-# py_cpu_monitor is based on: [https://github.com/Cotes/CPUMonitor]
+#### py_cpu_monitor is based on: [https://github.com/Cotes/CPUMonitor]
 
 definition:  this python module gathers the cpu, ram, network and disk resource usage
 
-# Refactor Status:
+### Refactor Status:
 
 - [SandBox code]
 Diagnostics.py --> psutil
