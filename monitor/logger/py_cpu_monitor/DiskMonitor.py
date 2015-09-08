@@ -1,7 +1,6 @@
 
 from Diagnostics import PerformanceCounter
 from MonitorResource import MonitorResource
-import utility
 import os
 import threading
 import time

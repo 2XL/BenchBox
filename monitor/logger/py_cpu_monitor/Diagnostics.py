@@ -28,8 +28,7 @@ class PerformanceCounter:
         value = to_execute()
         print value
         with open(self.log_file, 'a') as file:
-            file.write(value) # append text
-            file.write('\n') # new line
+            file.write(value+'\n') # append text
         return value
 
 
@@ -48,7 +47,9 @@ class PerformanceCounter:
         print 'doProcess'
         # en el de cristian se pilla de todos los cores por separado luego se juntan...
         tstamp =  datetime.datetime.now().isoformat()
-        return '{} {} {}'.format(self.processName, tstamp, psutil.Process(self.processPid).cpu_percent())
+        #print self.processPid
+        p = psutil.Process(self.processPid)
+        return '{} {} {}'.format(self.processName, tstamp, p.cpu_percent(interval=1))
 
 
     def doDisk(self): # input output % time {write/read unit}

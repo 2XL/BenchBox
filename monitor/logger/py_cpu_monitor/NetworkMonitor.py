@@ -34,7 +34,7 @@ class NetworkMonitor(MonitorResource):
             while it:
                 os.write(file, it.pop(1))
         '''
-        for value in enumerate(self.netValues):
+        for value in enumerate(self.networkValues):
             print value
             file.write(str(value[1])+'\n' )
         file.close()

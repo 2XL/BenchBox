@@ -10,6 +10,9 @@ from time import sleep
 
 
 class Monitor:
+
+
+
     def __init__(self):
         self.finish = False # Boolean
         self.interval = None# int, sleep interval
@@ -27,16 +30,19 @@ class Monitor:
         while not self.finish:
             print 'sleep:{}'.format(self.interval)
             for resource in self.resources:
-                print 'captureValue:{}'.format(resource)
+                # print 'captureValue:{}'.format(resource)
                 resource.captureValue()
             sleep(self.interval)
 
     def stop(self):
         print 'Stop/MonitorCapture {}'
         self.finish = True
-        for resource in self.resources:
-            resource.saveResults(self.filename)
-            print 'saveResults({})'.format(resource)
+        if self.resources is None:
+            print 'Not Monitoring Anything...'
+        else:
+            for resource in self.resources:
+                resource.saveResults(self.filename)
+                print 'saveResults({})'.format(resource)
 
 
     def prepareMonitoring(self): # attribute setter...
