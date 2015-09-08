@@ -12,11 +12,20 @@ this step generates the configuration files defined at the [config.template.py]
 
     * ./config.hosts.ini
     * ./config.all.ini
-    
+
+
+before running the tests having the pc-syncservers running and testing client account generated for each dummy
+client, for each personal cloud:
+ * owncloud: with prefix such as demo#:demo#, as logging and password [user and pass has to match]
+ * stacksync: generate a list of demo# users with random credentials
+
+
+
 ### Use:
 
+
 ```sh
-python init.py [args...]
+python init.py -o start [args...]
 ```
 
     - start     # setup each dummy hosts with appropriate tools to run the simulator
