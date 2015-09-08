@@ -1,0 +1,4 @@
+# ignore generated config.*.ini files
+
+config.all.ini
+config.hosts.ini
