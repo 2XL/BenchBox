@@ -9,3 +9,4 @@ logger/py_cpu_monitor/*.txt
 logger/py_cpu_monitor/*.log
 logger/*.log
 npm-debug.log
+logger/py_cpu_monitor/*.csv
