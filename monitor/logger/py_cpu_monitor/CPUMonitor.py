@@ -4,6 +4,7 @@ from Diagnostics import PerformanceCounter
 from MonitorResource import MonitorResource
 import os
 import threading
+import time
 
 
 class CPUMonitor(MonitorResource):
@@ -12,25 +13,20 @@ class CPUMonitor(MonitorResource):
 
     def __init__(self, processes):
         print 'constructor'
-        self.cpuValues = None# float, LinkedList
         self.processes = processes # string, LinkedList
-        self.cpuCounter = None # PerformanceCounter, LinkedList
-
-
+        self.cpuValues = list() # list of floats
+        self.cpuCounter = list() # list of performanceCounter
+        for process in self.processes:
+            print 'CPUMonitor:{}'.format(process)
+            self.cpuCounter.append(PerformanceCounter('Process', '% Process Time', process))
     # vale hay processes porque lo implementan para cada personal cloud. pero eso no deberia afectar el traffico??? nose
 
     def prepareMonitoring(self):
         print 'CPU:prepareMonitor'
         self.cpuValues = list() # list of floats
-        self.cpuCounter = list() # list of performanceCounter
-
-        for process in self.processes:
-            print 'CPUMonitor:{}'.format(process)
-            self.cpuCounter.append(PerformanceCounter('Process', '% Process Time', process))
 
 
     def captureValue(self):
-        cpu = 0;
         for counter in self.cpuCounter: # counter is  PerformanceCounter
             cpu = counter.NextValue()
             self.cpuValues.append(cpu) # todo: has to be refactored
@@ -60,11 +56,10 @@ class CPUMonitor(MonitorResource):
 
 
 if __name__ == '__main__':
-    monitor = CPUMonitor()
-    t = threading.Thread()
-    t.start()
-    threading.sleep(1) # 1s
-    monitor.end()
+    monitor = CPUMonitor(['StackSync'])
+    for x in range(1000):
+        monitor.captureValue();
+        time.sleep(1) # 1s
 
 
 

@@ -11,11 +11,11 @@ class NetworkMonitor(MonitorResource):
     networkCounter = None # PerformanceCounter
     networkValues = list()
 
-    def __init__(self):
+    def __init__(self, nic):
         print 'constructor'
         self.networkCounter # Memory, Available MBytes, true
         self.networkValues = list() # list {float}
-        self.networkCounter = PerformanceCounter('Network', 'UpAndDown MBytes', 'eth0')
+        self.networkCounter = PerformanceCounter('Network', 'UpAndDown bytes', nic)
 
     def prepareMonitoring(self):
         print 'NET:prepareMonitor'
@@ -41,8 +41,8 @@ class NetworkMonitor(MonitorResource):
 
 
 if __name__ == '__main__':
-    network = NetworkMonitor()
+    network = NetworkMonitor('eth0')
     for x in range(10):
         network.captureValue();
-        print network.networkValues
-        time.sleep(10) # 1s
+        network.networkValues[len(network.networkValues)-1]
+        time.sleep(1) # 1s

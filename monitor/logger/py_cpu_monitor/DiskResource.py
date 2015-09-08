@@ -3,7 +3,7 @@ from Diagnostics import PerformanceCounter
 from MonitorResource import MonitorResource
 import os
 import threading
-
+import time
 
 class DriveInfo():
     name = None
@@ -31,15 +31,15 @@ class DiskResource(MonitorResource):
     allDrives = DriveInfo() # DriveInfo
     diskValues = list() # list {float}
 
-    def __init__(self):
+    def __init__(self, diskPath):
         print 'constructor'
-
         self.allDrives.GetDrives()
+        self.diskValues = list() # float
+        self.diskCounter = PerformanceCounter('Disk', 'Available MBytes', diskPath)
 
     def prepareMonitoring(self):
         print 'DISK:prepareMonitor'
         self.diskValues = list() # float
-        self.diskCounter = PerformanceCounter('Disk', 'Available MBytes', True)
 
     def captureValue(self):
         self.diskValues.append(self.diskCounter.NextValue())
@@ -67,8 +67,8 @@ class DiskResource(MonitorResource):
 
 
 if __name__ == '__main__':
-    disk = DiskResource()
+    disk = DiskResource('stacksync_folder')
     for x in range(100):
         disk.captureValue()
-        threading.sleep(100)
+        time.sleep(2)
 

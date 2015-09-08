@@ -3,18 +3,18 @@ from Diagnostics import PerformanceCounter
 from MonitorResource import MonitorResource
 import os
 import threading
-
+import time
 
 class MemoryMonitor(MonitorResource):
     ''
     ramCounter = None # PerformanceCounter
     ramValues = list()
 
-    def __init__(self):
+    def __init__(self, diskPath):
         print 'constructor'
         self.ramCounter # Memory, Available MBytes, true
         self.ramValues = list() # list {float}
-        self.ramCounter = PerformanceCounter('Memory', 'Available MBytes', True)
+        self.ramCounter = PerformanceCounter('Memory', 'Available MBytes', diskPath)
 
     def prepareMonitoring(self):
         print 'RAM:prepareMonitor'
@@ -41,9 +41,9 @@ class MemoryMonitor(MonitorResource):
 
 
 if __name__ == '__main__':
-    memory = MemoryMonitor()
+    memory = MemoryMonitor('StackSync')
     for x in range(1000):
         memory.captureValue();
-        threading.sleep(10) # 1s
+        time.sleep(1) # 1s
 
 
