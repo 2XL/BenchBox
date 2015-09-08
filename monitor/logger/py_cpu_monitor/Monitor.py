@@ -3,7 +3,7 @@
 from MemoryMonitor import MemoryMonitor
 from DiskResource import DiskResource
 from CPUMonitor import CPUMonitor
-
+from NetworkMonitor import NetworkMonitor
 from time import sleep
 
 
@@ -42,9 +42,10 @@ class Monitor:
     def prepareMonitoring(self): # attribute setter...
         print 'Monitor:prepareMonitoring'
         self.resources = list() # list{MonitorResource}
-        self.resources.append(MemoryMonitor())
-        self.resources.append(DiskResource())
+        self.resources.append(MemoryMonitor(self.processes))
+        self.resources.append(DiskResource(self.processes))
         self.resources.append(CPUMonitor(self.processes))
+        self.resources.append(NetworkMonitor(self.processes))
         x=0
         for resource in self.resources: # MonitorResource
             x+=1
