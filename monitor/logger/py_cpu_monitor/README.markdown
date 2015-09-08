@@ -6,13 +6,14 @@ definition:  this python module gathers the cpu, ram, network and disk resource 
 ### Refactor Status:
 
 - [SandBox code]
-Diagnostics.py --> psutil
-CPUMonitor.py
-DiskMonitor.py
-MemoryMonitor.py
-NetworkMonitor.py
-Monitor.py
-MonitorResource.py --> interface
+* Diagnostics.py    -> psutil
+* Monitor.py        -> resource manager
+* MonitorResource.py  -> interface
+* CPUMonitor.py
+* DiskMonitor.py
+* MemoryMonitor.py
+* NetworkMonitor.py
+
 SocketListener.py --> socket server
 
 - [BenchBox code]
