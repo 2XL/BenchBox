@@ -21,7 +21,6 @@ class NetworkMonitor(MonitorResource):
         self.networkValues = list() # Floats
 
     def captureValue(self):
-
         self.networkValues.append(self.networkCounter.NextValue())
 
     def saveResults(self, filename):
@@ -42,6 +41,7 @@ class NetworkMonitor(MonitorResource):
 
 if __name__ == '__main__':
     network = NetworkMonitor()
-    for x in range(1000):
+    for x in range(10):
         network.captureValue();
+        print network.networkValues
         threading.sleep(10) # 1s

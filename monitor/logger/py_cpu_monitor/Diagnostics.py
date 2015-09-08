@@ -33,7 +33,12 @@ class PerformanceCounter:
     def doNetwork(self): # network traffic , in / out  {unit}
         print 'doNetwork'
         tstamp =  datetime.datetime.now().isoformat()
-        return '{} {} {}'.format(self.processName, tstamp, psutil.Process(self.processPid).cpu_percent())
+        net_io = psutil.net_io_counters(pernic=True)
+        result=''
+        for nic in net_io:
+            if nic == 'eth0':
+                result+=nic+'/'+net_io[nic].bytes_recv+'/'+net_io[nic].bytes_send
+        return '{} {} {}'.format(self.processName, tstamp, result)
 
 
     def doProcess(self): # cpu time %
@@ -109,6 +114,26 @@ class PerformanceCounter:
                 fp = os.path.join(dirpath, f)
                 total_size += os.path.getsize(fp)
         return total_size
+
+
+
+def bytes2human(n):
+    # From sample script for psutils
+    """
+    >>> bytes2human(10000)
+    '9.8 K'
+    >>> bytes2human(100001221)
+    '95.4 M'
+    """
+    symbols = ('K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y')
+    prefix = {}
+    for i, s in enumerate(symbols):
+        prefix[s] = 1 << (i + 1) * 10
+    for s in reversed(symbols):
+        if n >= prefix[s]:
+            value = float(n) / prefix[s]
+            return '%.2f %s' % (value, s)
+    return '%.2f B' % n
 
 
 if __name__ == '__main__':
