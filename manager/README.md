@@ -1,28 +1,19 @@
 
-TODO,
-
-0th download
-https://github.com/2XL/PuppetEssential.git
-
-
-1st make ssh push to list of clients
-https://github.com/2XL/PuppetEssential
-
 ###
 
 
 Pre Requisites:
 
-- setup: config.template.py & run it inorder to generate the config.all.ini and config.hosts.ini file
+# setup:
+pre:
+define the syncservers, and the dummy hosts at [config.template.py]
+run
+>python config.template.py
+this step generates the configuration files defined at the [config.template.py]
 
-Use cases:
-
-
+# use:
 python init.py [args...]
 	start
-	stop
-	status
-	restart
 
 
 
@@ -30,25 +21,11 @@ python init.py [args...]
 
 
 
-## -> this has to be refactored to python...
-# thread invocation unviable and unhandleble
 
+# TODO
 
-
--- Aquest modul s'encarrega de gestionar el rang de hosts a manipular
-	-- els hosts poden provindre de diferents fonts
+handle different kind of dummy hosts
 		-- aws
 		-- deim
-		-- altres
+		-- others
 
-	-- fitxer de configuració
-		-- ip's hosts
-		-- ip log server (mongodb)
-		-- ip owncloud server
-		-- ip stacksync server
-
-	-- operacions
-		-- setup
-		-- configure
-		-- start
-		-- finish
