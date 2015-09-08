@@ -17,8 +17,11 @@ class PerformanceCounter:
         self.processName = processName
         self.log_file = self.Type + '_append.log'
         self.logger = open(self.log_file, 'w').close() # clear the file
-        self.setProcId()
-        self.setDiskMonitorPath()
+
+        if type == 'Process' or type == 'Memory':
+            self.setProcId()
+        if type == 'Disk':
+            self.setDiskMonitorPath()
 
     def NextValue(self):
         to_execute = getattr(self, 'do'+self.Type)
@@ -36,8 +39,8 @@ class PerformanceCounter:
         net_io = psutil.net_io_counters(pernic=True)
         result=''
         for nic in net_io:
-            if nic == 'eth0':
-                result+=nic+'/'+net_io[nic].bytes_recv+'/'+net_io[nic].bytes_send
+            if nic == self.processName:
+                result+= '{}/{}/{}'.format(nic, net_io[nic].bytes_recv,net_io[nic].bytes_sent)
         return '{} {} {}'.format(self.processName, tstamp, result)
 
 

@@ -2,6 +2,7 @@
 from Diagnostics import PerformanceCounter
 from MonitorResource import MonitorResource
 import os
+import time
 import threading
 
 
@@ -14,7 +15,7 @@ class NetworkMonitor(MonitorResource):
         print 'constructor'
         self.networkCounter # Memory, Available MBytes, true
         self.networkValues = list() # list {float}
-        self.networkCounter = PerformanceCounter('Network', 'UpAndDown MBytes', True)
+        self.networkCounter = PerformanceCounter('Network', 'UpAndDown MBytes', 'eth0')
 
     def prepareMonitoring(self):
         print 'NET:prepareMonitor'
@@ -44,4 +45,4 @@ if __name__ == '__main__':
     for x in range(10):
         network.captureValue();
         print network.networkValues
-        threading.sleep(10) # 1s
+        time.sleep(10) # 1s
