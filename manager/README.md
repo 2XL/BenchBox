@@ -1,4 +1,7 @@
 # BenchBox/manager [http://dillinger.io/]
+
+definition: this module manages the dummy hosts for the simulation
+
 ## Pre Requisites:
 ### Testing:
 Pre: define the syncservers, and the dummy hosts at [config.template.py], run:
@@ -30,25 +33,21 @@ python init.py [args...]
 
 ### Tech
 
-Dillinger uses a number of open source projects to work properly:
+BenchBox/manager uses a number of open source projects to work properly:
 
-* [AngularJS] - HTML enhanced for web apps! 
-* [Marked] - a super fast port of Markdown to JavaScript 
-* [node.js] - evented I/O for the backend
-* [Express] - fast node.js network app framework [@tjholowaychuk] 
-* [jQuery] - duh
+* [Python]
+
+
 * [Vagrant]
 * [VirtualBox]
 * [Hadoop]
-* [Jade]
-* [Puppet]
-* [Python]
+
 
  
  
 ### Plugins
 
-BenchBox is currently extended with the following plugins
+BenchBox/manager is currently extended with the following plugins (personal cloud)
 
 * Owncloud
 * StackSync
@@ -66,7 +65,7 @@ Want to contribute? Great!
 
 BenchBox uses GitHub!!!
 
- 
+
 ### Todos
 - handle different kind of dummy hosts
 	* aws

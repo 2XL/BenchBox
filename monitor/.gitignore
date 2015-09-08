@@ -10,3 +10,7 @@ logger/py_cpu_monitor/*.log
 logger/*.log
 npm-debug.log
 logger/py_cpu_monitor/*.csv
+
+helloworld.js
+main.js
+startApp.sh

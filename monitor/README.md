@@ -1,32 +1,86 @@
--- aquest modul s'encarrega de realitzar visualitzacions carregant les dades del servidor mongodb remot
+# BenchBox/monitor [http://dillinger.io/]
+
+Definition: this module contains 3 main features:
+	1. runs a socket server at each sandBox Machine, this server calls psutil utilities to gather the cpu, ram... sats
+	2. contains a node app that manitorize in real time the sandBox personal cloud client process
+	3. TODO: redirect the monitor output to an datastore backend, such as Impala
+
+# Pre Requisites:
+### Testing:
+
+Pre: have nodejs installed at the dummyHost, there is a install node-install.sh script if its not installed
+```sh
+./node-install.sh
+```
+
+### Use:
+
+```sh
+npm start
+```
 
 
--- exemple de servidor mongodb disponible
-
-https://mongolab.com/databases/benchbox
-
-## To connect using the shell:
-	mongo ds055822.mongolab.com:55822/benchbox -u <dbuser> -p <dbpassword>
-## To connect using a driver via the standard URI (what's this?):
-    mongodb://<dbuser>:<dbpassword>@ds055822.mongolab.com:55822/benchbox
-
-
--- el mongo server podria trobarse aqui, pero nomes seria accessible en proves locals, encanvi si estiguesi en
-mongolabs seria accessible desde qualsevol lloc
--- TODO exportar los logs en formato csv
 
 
 
-# TODO:
 
-share this folder with sandBox
-add a python script in this folder which monitors the cpu, ram, disk, network usage in a logs file. "append overwrite"
-add nodejs to the sandBox  -> run this nodejs server, :: nodejs puppet module not working
+### Version
+0.0.1
 
-## monitor/logger/
-	cpu_monitor.py
+### Tech
 
-## cpu, ram, network, disk usage::
+BenchBox/monitor uses a number of open source projects to work properly:
+
+* [node.js] - evented I/O for the backend
+* [Express] - fast node.js network app framework [@tjholowaychuk]
+* [AngularJS] - HTML enhanced for web apps!
+* [Jade]
+* [Impala]
+* [jQuery] - duh
+* [Python]
 
 
-## refactor the traffic flow and the network interface capabilities {testing machine as router for the client}
+
+
+### Plugins
+
+BenchBox/monitor is currently storing monitor output to the following datastore
+
+ * TODO, Impala
+
+
+### Development
+
+Want to contribute? Great!
+
+BenchBox uses GitHub!!!
+
+
+
+ ### Todos
+ - redirect SocketLister results on simulator stop
+ 	* impala
+ - Write Tests
+ - Rethink Github Save
+
+
+ License
+ ----
+
+ MIT
+
+
+ **Free Software, Hell Yeah!**
+
+ - [john gruber](http://daringfireball.net)
+ - [@thomasfuchs](http://twitter.com/thomasfuchs)
+ - [marked](https://github.com/chjj/marked)
+ - [Ace Editor](http://ace.ajax.org)
+ - [node.js](http://nodejs.org)
+ - [Twitter Bootstrap](http://twitter.github.com/bootstrap/)
+ - [keymaster.js](https://github.com/madrobby/keymaster)
+ - [jQuery](http://jquery.com)
+ - [@tjholowaychuk](http://twitter.com/tjholowaychuk)
+ - [express](http://expressjs.com)
+ - [AngularJS](http://angularjs.org)
+ - [Gulp](http://gulpjs.com)
