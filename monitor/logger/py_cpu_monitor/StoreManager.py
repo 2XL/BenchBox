@@ -1,14 +1,6 @@
 
-from Monitor import Monitor
-from threading import Thread
-import socket
-import sys
-import asyncore
-import time
-import SocketServer, subprocess
-from impala.dbapi import connect
-import dbms
 
+from impala.dbapi import connect
 
 
 HOST = '192.168.56.101'
@@ -54,7 +46,10 @@ class StoreManager():
                 print 'No results xD {}'.format(e)
             '''
 
-
+    def quit(self):
+        self.curr.close()
+        self.conn.close()
+        print 'Client Quit Successfully!'
 
 
 
@@ -68,11 +63,33 @@ if __name__ == '__main__':
                       'lab144',
                       'lab144')
     sm.connect()
-    sm.execute('use default')
-    print sm.execute('select * from download limit 10')
+    # asume that there is a benchbox database in impala
+    sm.execute('use benchbox')
+    # create table if not exists
+
+
+
+    create_logger = "create table if not exists logger ( time TIMESTAMP ,type string, key string, value bigint  ) stored as parquet"
+
+    fetch_logger = "select * from logger limit 10"
+
+    print sm.execute(create_logger)
+    print sm.execute(fetch_logger)
     print sm.curr.fetchall()
 
 
+'''
+
+create table logger (
+time TIMESTAMP ,
+type string,
+key string, # process name, disk path, nic...
+value bigint,
+) stored as parquet;
+
+
+
+'''
 
 # references:
 '''
@@ -83,6 +100,8 @@ http://gethue.com/tutorial-executing-hive-or-impala-queries-with-python/
 $HUE_HOME: whereis hue :: /etc/hue && /usr/lib/hue
 
 https://github.com/cloudera/impyla/tree/master/examples/logr
+
+http://blog.cloudera.com/blog/2014/04/a-new-python-client-for-impala/
 
 '''
 

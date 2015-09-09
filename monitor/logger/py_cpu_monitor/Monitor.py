@@ -32,6 +32,10 @@ class Monitor:
             for resource in self.resources:
                 # print 'captureValue:{}'.format(resource)
                 resource.captureValue()
+                '''
+                todo: refactor to none blocking, instead of blocking, due to cpu_percentatge and network bandwidth
+                capture
+                '''
             sleep(self.interval)
 
     def stop(self):
@@ -41,8 +45,10 @@ class Monitor:
             print 'Not Monitoring Anything...'
         else:
             for resource in self.resources:
-                resource.saveResults(self.filename)
-                print 'saveResults({})'.format(resource)
+                #resource.saveResults(self.filename)
+                # print 'saveResults({})'.format(resource)
+                resource.pushToLogger()
+
 
 
     def prepareMonitoring(self): # attribute setter...
