@@ -8,7 +8,6 @@ from time import sleep
 
 
 
-
 class Monitor:
 
 
@@ -31,6 +30,7 @@ class Monitor:
             print 'sleep:{}'.format(self.interval)
             for resource in self.resources:
                 # print 'captureValue:{}'.format(resource)
+
                 resource.captureValue()
                 '''
                 todo: refactor to none blocking, instead of blocking, due to cpu_percentatge and network bandwidth
