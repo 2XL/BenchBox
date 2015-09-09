@@ -24,6 +24,7 @@ configAll.add_section('owncloud')
 configAll.add_section('stacksync')
 configAll.add_section('log_server')
 
+
 configAll.set('demo', 'url', 'https://wiki.python.org/moin/ConfigParserExamples')
 
 configAll.set('profile', 'sync', '1')
@@ -44,10 +45,15 @@ configAll.set('stacksync', 'admin', '10.30.239.198:8081/admin')
 configAll.set('stacksync', 'user', 'swift')
 configAll.set('stacksync', 'passwd', 'urv')
 
-configAll.set('log_server', 'url', 'ds055822.mongolab.com:55822/benchbox')
-configAll.set('log_server', 'user', 'test')
-configAll.set('log_server', 'passwd', 'test')
+# configAll.set('log_server', 'url', 'ds055822.mongolab.com:55822/benchbox')
+# configAll.set('log_server', 'user', 'test')
+# configAll.set('log_server', 'passwd', 'test')
 
+configAll.set('log_server', 'type', 'impala')
+configAll.set('log_server', 'user', 'lab144')
+configAll.set('log_server', 'passwd', 'lab144')
+configAll.set('log_server', 'url', 'ast12.recerca.intranet.urv.es')
+configAll.set('log_server', 'port', '8888')
 
 # Writing our configuration file to 'example.cfg'
 with open('config.all.ini', 'wb') as configfileAll:
