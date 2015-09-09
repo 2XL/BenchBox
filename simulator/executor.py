@@ -152,7 +152,15 @@ if __name__ == '__main__':
     ftp_files = parser.get('executor','files_folder') # relative path to local files :: ./files/demoFiles.txt
     print 'Markov/OK'
     stereotype_executor = StereotypeExecutorU1(ftp_client, ftp_files)
-    stereotype_executor.markov_chain.initialize_from_recipe("./data/xl_markov_sync_all_ms.csv")
+
+    # read the line /vagrant/profile and use it
+
+    with open('/vagrant/profile') as f:
+        profile_type= f.read().split('\n')[0]
+    profile = "./data/xl_markov_{}_all_ms.csv".format()
+
+
+    stereotype_executor.markov_chain.initialize_from_recipe(profile)
     stereotype_executor.markov_chain.calculate_chain_relative_probabilities()
 
     print 'IPTables/OK'
