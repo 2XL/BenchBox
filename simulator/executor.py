@@ -157,9 +157,9 @@ if __name__ == '__main__':
 
     with open('/vagrant/profile') as f:
         profile_type= f.read().split('\n')[0]
-    profile = "./data/xl_markov_{}_all_ms.csv".format()
+    profile = './data/xl_markov_{}_all_ms.csv'.format(profile_type)
 
-
+    print profile
     stereotype_executor.markov_chain.initialize_from_recipe(profile)
     stereotype_executor.markov_chain.calculate_chain_relative_probabilities()
 

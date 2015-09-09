@@ -248,6 +248,7 @@ package{
       user    => 'vagrant',
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
+      cwd => '/home/vagrant/simulator'
   }
 /*
 ->
