@@ -46,6 +46,7 @@ node 'benchBox' {
       user    => 'vagrant',
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
+      cwd => '/home/vagrant/simulator'
   }
 
 }
@@ -151,19 +152,19 @@ node 'sandBox' {
       mode    => '0644',
       recurse => true
   }->
-package {
-  ['netifaces']:
-    ensure   => 'installed',
-    provider => pip
-}->
-package {
-  ['PIL']:
-    ensure   => 'installed',
-    provider => pip
-}->
+  package {
+    ['netifaces']:
+      ensure   => 'installed',
+      provider => pip
+  }->
+  package {
+    ['PIL']:
+      ensure   => 'installed',
+      provider => pip
+  }->
   package{
     ['psutil']:
-      ensure => 'installed',
+      ensure   => 'installed',
       provider => pip
   }->
   /*
@@ -174,30 +175,30 @@ package{
 }
 ->
 */
-package{
-  'python-pcapy':
-    ensure    => 'installed'
-}->
-package{
-  'python-bzrlib':
-    ensure => 'installed'
-}->
+  package{
+    'python-pcapy':
+      ensure    => 'installed'
+  }->
+  package{
+    'python-bzrlib':
+      ensure => 'installed'
+  }->
 
-package{
-  'scapy':
-    ensure => 'installed'
-}
+  package{
+    'scapy':
+      ensure => 'installed'
+  }
   ->
   package {
     ['bitarray']:
-      ensure => 'installed',
+      ensure   => 'installed',
       provider => pip
   }
 
   ->
   package {
     ['thrift']:
-      ensure => 'installed',
+      ensure   => 'installed',
       provider => pip
   }
 
@@ -205,16 +206,16 @@ package{
   exec {
     'upagrade pip setup tools with include operation...':
       command => 'sudo pip install -U setuptools',
-      user => 'vagrant',
-      group => 'vagrant',
-      path => ['/usr/bin']
+      user    => 'vagrant',
+      group   => 'vagrant',
+      path    => ['/usr/bin']
   }
 
   ->
 
   package {
     ['impyla']:
-      ensure => 'installed',
+      ensure   => 'installed',
       provider => pip
   }
   ->
@@ -234,7 +235,7 @@ package{
   exec {
     "check_presence_of_previous_execution":
       command => 'kill -9 $(head -n 1 /tmp/StackSync.pid)',
-      onlyif => 'test -e /tmp/StackSync.pid',
+      onlyif  => 'test -e /tmp/StackSync.pid',
       user    => 'vagrant',
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
@@ -261,20 +262,20 @@ package{
       path    => ['/usr/bin', '/bin/'],
   }
   */
-  /*
-  ->
-  class { 'nodejs':
-    version => 'stable',
-    target_dir => '/bin' # add binary to bin
-  }
+/*
+->
+class { 'nodejs':
+  version => 'stable',
+  target_dir => '/bin' # add binary to bin
+}
 
-  # installing npm packages
+# installing npm packages
 
-  package{
-    'torrentjs':
-      provider => npm
-  }
-  */
+package{
+  'torrentjs':
+    provider => npm
+}
+*/
 }
 
 
