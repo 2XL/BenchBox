@@ -52,10 +52,12 @@ class StoreManager():
             '''
 
     def quit(self):
-        if self.conn is None or self.curr is None:
-            self.curr.close()
+        if self.conn is None:
             self.conn.close()
-            print 'Client Quit Successfully!'
+            print 'Client connection closed Successfully!'
+            if self.curr is None:
+                self.curr.close()
+                print 'Client cursor closed Successfully!'
         else:
             print 'No Connection to close!'
 
