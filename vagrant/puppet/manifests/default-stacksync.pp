@@ -226,10 +226,11 @@ package{
       provider => pip
   }->
   package {
-    ['logbook']:
+    ['logbook','trollius', 'lxml', 'mock', 'pytest']:
       ensure => 'installed',
       provider => pip
   }
+
   ->
 
   /*
