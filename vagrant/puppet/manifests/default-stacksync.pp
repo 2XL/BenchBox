@@ -208,15 +208,13 @@ package{
   }
   */
   ->
-  /*
+
   package {
     ['impyla']:
       ensure => 'installed',
       provider => pip
   }
-
   ->
-*/
   /*
   exec {
     'clear_previous_client':
