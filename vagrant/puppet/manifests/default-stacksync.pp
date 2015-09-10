@@ -227,8 +227,13 @@ package{
   }
   ->
   package {
-  ['libxml2-dev','libxslt1-dev ']:
-    ensure => 'installed'
+  ['libxml2-dev']:
+    ensure => installed
+  }
+  ->
+  package{
+    ['libxslt1-dev ']:
+      ensure => installed
   }
   ->
   package {
