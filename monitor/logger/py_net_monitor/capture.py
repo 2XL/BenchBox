@@ -29,9 +29,11 @@ class pcap_capture(Thread):
         promsc = 1
         to_ms = 100
 
-        self.pcap = pcapy.open_live(iface, snaplen, promsc, to_ms)
-        self.pcap.setfilter(my_filter)
-        self.dumper = self.pcap.dump_open(pcap_name)
+        self.pcap = pyshark.LiveCapture(interface=iface, bpf_filter=my_filter, output_file=pcap_name,
+                                        only_summaries=True)
+        #self.pcap = pcapy.open_live(iface, snaplen, promsc, to_ms)
+        #self.pcap.setfilter(my_filter)
+        #self.dumper = self.pcap.dump_open(pcap_name)
 
     def stop_flag(self):
         return self.stopit

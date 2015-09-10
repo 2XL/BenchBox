@@ -231,6 +231,11 @@ package{
       ensure => installed
   }
   ->
+  package{
+    ['tshark']:
+      ensure => installed
+  }
+  ->
 
   package {
     ['logbook','trollius', 'mock', 'pytest', 'lxml']:
