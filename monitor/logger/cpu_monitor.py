@@ -20,7 +20,7 @@ class CPUMonitor():
     def start_monitor(self, interval, filename, process_name):
         msg = "start " + str(interval) + " " + str(filename) + " " + process_name +"<EOF>"
         self.send_something(msg)
-        time.sleep(5)
+        time.sleep(interval)
     
     def stop_monitor(self):
         msg = "stop <EOF>"
