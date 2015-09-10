@@ -1,6 +1,7 @@
 from general import files
 import os
 import shutil
+from file_sys_operator import FileSysOperator
 
 
 class Action(object): # Herencia en python
@@ -9,6 +10,7 @@ class Action(object): # Herencia en python
         self.name = name
         self.folder = folder
         self.path = self.folder + os.sep + self.name
+        self.fs_operator = FileSysOperator()
         
     def get_name(self):
         return self.name

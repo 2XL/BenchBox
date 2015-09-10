@@ -67,7 +67,7 @@ class Monitor:
         self.resources.append(MemoryMonitor(self.processes))
         self.resources.append(DiskMonitor(folder_sync_client))
         self.resources.append(CPUMonitor(self.processes))
-        self.resources.append(NetworkMonitor('eth0'))
+        #self.resources.append(NetworkMonitor('eth0'))
 
         x=0
         for resource in self.resources: # MonitorResource
