@@ -225,6 +225,11 @@ package{
       ensure   => 'installed',
       provider => pip
   }->
+  package {
+    ['logbook']:
+      ensure => 'installed',
+      provider => pip
+  }
 
   /*
   exec {
