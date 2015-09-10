@@ -4,8 +4,8 @@
 from threading import Thread
 import netifaces as ni
 import time, traceback, sys
-# import pcapy
-import pyshark
+import pcapy
+
 #-------------------------------------------------------------------------------
 # Thread to capture the packets
 #-------------------------------------------------------------------------------
@@ -24,16 +24,9 @@ class pcap_capture(Thread):
         self.done = False
         self.bytes = 0
         self.packets = 0
-
-        snaplen = 1600
-        promsc = 1
-        to_ms = 100
-
-        self.pcap = pyshark.LiveCapture(interface=iface, bpf_filter=my_filter, output_file=pcap_name,
-                                        only_summaries=True)
-        #self.pcap = pcapy.open_live(iface, snaplen, promsc, to_ms)
-        #self.pcap.setfilter(my_filter)
-        #self.dumper = self.pcap.dump_open(pcap_name)
+        self.pcap = pcapy.open_live(iface, 1600, 1, 100)
+        self.pcap.setfilter(my_filter)
+        self.dumper = self.pcap.dump_open(pcap_name)
 
     def stop_flag(self):
         return self.stopit
@@ -67,11 +60,10 @@ class pcap_capture(Thread):
 if __name__ == '__main__':
 
     # start capturing the traffic
-    # have to give superuser permission to capture
     worker = None
     try:
-        filename = "/tmp/test.cap"
-        worker = pcap_capture('eth0', filename)
+        p = "/tmp/test.pcap"
+        worker = pcap_capture(sys.argv[1], p)
         worker.daemon = True
         worker.start()
         time.sleep(5)
@@ -79,11 +71,6 @@ if __name__ == '__main__':
     except:
         traceback.print_exc(file=sys.stderr)
     while not worker.stop(): pass
-
-    print 'Post process'
-    cap = pyshark.FileCapture(filename)
-    print cap
-
 
 
 
