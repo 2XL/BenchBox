@@ -46,7 +46,7 @@ node 'benchBox' {
       user    => 'vagrant',
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
-      cwd => '/home/vagrant/simulator'
+      cwd     => '/home/vagrant/simulator'
   }
 
 }
@@ -195,12 +195,6 @@ package{
       provider => pip
   }
 
-  ->
-  package {
-    ['pyshark']:
-      ensure => 'installed',
-      provider => pip
-  }
 
   ->
   package {
@@ -226,6 +220,12 @@ package{
       provider => pip
   }
   ->
+  package {
+    ['pyshark']:
+      ensure   => 'installed',
+      provider => pip
+  }->
+
   /*
   exec {
     'clear_previous_client':
