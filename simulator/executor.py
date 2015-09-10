@@ -178,7 +178,7 @@ if __name__ == '__main__':
     proc_name = 'StackSync' # if its stacksync
     monitor.start_monitor(interval, log_filename, proc_name)
     operations = 100
-    operations = 30
+    operations = 10
     for i in range(operations):
         # stereotype_executor.execute(sender, parser.get('executor','files_folder'))
         stereotype_executor.execute()

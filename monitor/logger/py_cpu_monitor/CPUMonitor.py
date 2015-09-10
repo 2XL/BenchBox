@@ -69,7 +69,7 @@ class CPUMonitor(MonitorResource):
             print value
             items = value[1].split(' ')
             insert_into_logger = "insert into logger values ('{}', '{}', '{}', {})".format(items[1], 'CPU', items[0],
-                                                                                           items[2])
+                                                                                           round(int(items[2])))
             # StackSync 2015-09-08T17:35:10.455244 475340800
             sm.execute(insert_into_logger)
         sm.quit()
