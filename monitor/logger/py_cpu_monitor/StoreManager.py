@@ -29,16 +29,21 @@ class StoreManager():
 
     def connect(self):
         # Get a handle to the API client
-        self.conn = connect(
-            host=self.hostname,
-            port=self.port)
-            # ldap_user=self.login,
-            # ldap_password = self.passwd)
-        self.curr = self.conn.cursor()
+        try:
+            self.conn = connect(
+                host=self.hostname,
+                port=self.port)
+                # ldap_user=self.login,
+                # ldap_password = self.passwd)
+            self.curr = self.conn.cursor()
+        except Exception as e:
+            print "Could not connect!!!, {}".format(e)
 
     def execute(self, query):
         if self.curr is not None:
             self.curr.execute(query)
+        else:
+            print 'No connection'
             '''
             try:
                 return self.curr.description, self.curr.fetchall()
