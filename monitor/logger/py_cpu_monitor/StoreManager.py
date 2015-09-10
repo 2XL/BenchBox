@@ -38,6 +38,8 @@ class StoreManager():
             self.curr = self.conn.cursor()
         except Exception as e:
             print "Could not connect!!!, {}".format(e)
+            self.conn = None
+            self.curr = None
 
     def execute(self, query):
         if self.curr is not None:
