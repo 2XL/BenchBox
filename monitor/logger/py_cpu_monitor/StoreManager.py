@@ -54,10 +54,10 @@ class StoreManager():
             '''
 
     def quit(self):
-        if self.conn is None:
+        if self.conn is not None:
             self.conn.close()
             print 'Client connection closed Successfully!'
-            if self.curr is None:
+            if self.curr is not None:
                 self.curr.close()
                 print 'Client cursor closed Successfully!'
         else:
