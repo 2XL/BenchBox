@@ -205,8 +205,8 @@ package{
   exec {
     'upagrade pip setup tools with include operation...':
       command => 'pip install -U setuptools',
-      user => 'vagrant',
-      group => 'vagrant',
+      user => 'root',
+      group => 'root',
       path => ['/usr/bin']
   }
 
