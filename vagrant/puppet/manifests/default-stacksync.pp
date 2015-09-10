@@ -200,13 +200,16 @@ package{
       ensure => 'installed',
       provider => pip
   }
-  /*
+
   ->
   exec {
     'upagrade pip setup tools with include operation...':
-      command => 'pip install -U setuptools'
+      command => 'pip install -U setuptools',
+      user => 'vagrant',
+      group => 'vagrant',
+      path => ['/usr/bin']
   }
-  */
+
   ->
 
   package {
@@ -235,6 +238,7 @@ package{
       user    => 'vagrant',
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
+      returns => [0,1]
   }
   ->
 
