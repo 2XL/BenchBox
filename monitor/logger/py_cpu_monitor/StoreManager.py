@@ -31,9 +31,9 @@ class StoreManager():
         # Get a handle to the API client
         self.conn = connect(
             host=self.hostname,
-            port=self.port,
-            ldap_user=self.login,
-            ldap_password = self.passwd)
+            port=self.port)
+            # ldap_user=self.login,
+            # ldap_password = self.passwd)
         self.curr = self.conn.cursor()
 
     def execute(self, query):
