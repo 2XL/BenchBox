@@ -60,10 +60,11 @@ class pcap_capture(Thread):
 if __name__ == '__main__':
 
     # start capturing the traffic
+    # have to give superuser permission to capture
     worker = None
     try:
-        p = "/tmp/test.pcap"
-        worker = pcap_capture(sys.argv[1], p)
+        filename = "/tmp/test.pcap"
+        worker = pcap_capture('eth0', filename)
         worker.daemon = True
         worker.start()
         time.sleep(5)

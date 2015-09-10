@@ -197,6 +197,13 @@ package{
 
   ->
   package {
+    ['pyshark']:
+      ensure => 'installed',
+      provider => pip
+  }
+
+  ->
+  package {
     ['thrift']:
       ensure   => 'installed',
       provider => pip

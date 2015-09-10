@@ -64,7 +64,7 @@ class StereotypeExecutorU1(StereotypeExecutor):
     def execute(self):
         '''Get the next operation to be done'''
         self.markov_chain.next_step_in_random_navigation()
-        self.randomWait(1,5)
+        self.randomWait(1,2)
         to_execute = getattr(self, 'do' + self.markov_chain.current_state)
         # to_execute = getattr(self, 'doGetContentResponse')
         to_execute()
