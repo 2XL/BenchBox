@@ -204,9 +204,9 @@ package{
   ->
   exec {
     'upagrade pip setup tools with include operation...':
-      command => 'pip install -U setuptools',
-      user => 'root',
-      group => 'root',
+      command => 'sudo pip install -U setuptools',
+      user => 'vagrant',
+      group => 'vagrant',
       path => ['/usr/bin']
   }
 
@@ -249,8 +249,7 @@ package{
     # sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk '{print $2}')
       user    => 'vagrant',
       group   =>'vagrant',
-      path    => ['/usr/bin', '/bin/'],
-      cwd => '/home/vagrant/simulator'
+      path    => ['/usr/bin', '/bin/']
   }
 /*
 ->
