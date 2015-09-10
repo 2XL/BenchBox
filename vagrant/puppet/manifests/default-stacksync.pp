@@ -230,6 +230,7 @@ package{
       ensure => 'installed',
       provider => pip
   }
+  ->
 
   /*
   exec {
