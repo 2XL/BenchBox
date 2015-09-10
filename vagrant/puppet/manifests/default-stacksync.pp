@@ -219,23 +219,24 @@ package{
       ensure   => 'installed',
       provider => pip
   }
+
   ->
   package {
-    ['logbook','trollius', 'mock', 'pytest']:
-      ensure => 'installed',
-      provider => pip
-  }
-  ->
-  package {
-  ['libxml2-dev']:
-    ensure => installed
-  }
-  ->
-  package{
-    ['libxslt1-dev ']:
+    ['libxml2-dev']:
       ensure => installed
   }
   ->
+  package{
+    ['libxslt1-dev']:
+      ensure => installed
+  }
+  ->
+
+  package {
+    ['logbook','trollius', 'mock', 'pytest', 'lxml']:
+      ensure   => 'installed',
+      provider => pip
+  }->
   package {
     ['pyshark']:
       ensure   => 'installed',
