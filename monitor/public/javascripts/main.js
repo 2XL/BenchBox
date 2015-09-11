@@ -78,9 +78,9 @@ window.chartOptions = {
 
 $(document).ready(function () {
     setTimeout(function () {
-        renderLastValue('Memory_append.log', 1000) // starting with 0 # this can infer with the real results average, but this is just for monitor
-        renderLastValue('Process_append.log', 1000)
-        renderLastValue('Disk_append.log', 1000)
+    //    renderLastValue('Memory_append.log', 1000) // starting with 0 # this can infer with the real results average, but this is just for monitor
+    //    renderLastValue('Process_append.log', 1000)
+    //    renderLastValue('Disk_append.log', 1000)
     }, 1000); // 1000ms delay from starting
 })
 
