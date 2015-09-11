@@ -6,6 +6,7 @@
 import pcapy
 import dpkt
 import socket
+from StoreManager import StoreManager
 
 
 class pcapDumper():
@@ -16,6 +17,15 @@ class pcapDumper():
 
     def dumpToImpala(self, pcap_data,  src='/tmp/test.pcap'):
         print 'dumpToImpala'
+
+
+        sm = StoreManager('ast12.recerca.intranet.urv.es',
+                          21050,
+                          'lab144',
+                          'lab144')
+        sm.connect()
+        sm.execute('use benchbox')
+
         for idx, data in pcap_data:
             ts = '{},{}'.format(idx.getts()[0], idx.getts()[1] )
             ether =  dpkt.ethernet.Ethernet(data)
@@ -25,9 +35,27 @@ class pcapDumper():
             dst = socket.inet_ntoa(ip.dst)
             src = socket.inet_ntoa(ip.src)
             udp = ip.data
-            print ts, src, udp.sport, dst, udp.dport, ip.v, ip.len
+            line = (ts, src, udp.sport, dst, udp.dport, ip.v, ip.len)
+            insert_into_logger = "insert into logger values ('{}', '{}', '{}', '{}', {}, {}, {})".format(line)
+            sm.execute(insert_into_logger)
+
+        sm.quit()
 
 
+
+    '''
+
+    create table if not EXISTS logger_pcap (
+    ts TIMESTAMP,
+    ip_src string,
+    ip_tgt string,
+    port_src int,
+    port_tgt int,
+    protocol int,
+    len int
+    ) stored as parquet
+
+    '''
 
 
 #-------------------------------------------------------------------------------
