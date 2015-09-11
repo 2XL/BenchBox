@@ -4,8 +4,9 @@
 from threading import Thread
 import netifaces as ni
 import time, traceback, sys
-# import pcapy
+import pcapy
 import pyshark
+
 #-------------------------------------------------------------------------------
 # Thread to capture the packets
 #-------------------------------------------------------------------------------
@@ -59,28 +60,41 @@ class pcap_capture(Thread):
         self.stopit = True
         return self.done
 
+    def show_results(self):
+        print 'Show Results'
+
 #-------------------------------------------------------------------------------
 # Main - For testing purposes
 #-------------------------------------------------------------------------------
 if __name__ == '__main__':
-
     # start capturing the traffic
     # have to give superuser permission to capture
     worker = None
+
     try:
         filename = "/tmp/test.cap"
-        worker = pcap_capture('eth0', filename)
+        worker = pcap_capture('wlan0', filename)
         worker.daemon = True
         worker.start()
         time.sleep(5)
         print "packets:", worker.get_packets(), "bytes:", worker.get_bytes()
-    except:
+    except Exception as e:
         traceback.print_exc(file=sys.stderr)
     while not worker.stop(): pass
-
     print 'Post process'
-    cap = pyshark.FileCapture(filename)
+
+    worker.join()
+    cap = pyshark.FileCapture(filename, only_summaries=True)
     print cap
+    num = len(cap)
+    # num of packets captured
+    print num
+    print 'show packets'
+    for pkt in cap:
+        print pkt
+    print 'finish packets'
+
+
 
 
 

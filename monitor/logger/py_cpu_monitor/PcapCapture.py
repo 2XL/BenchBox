@@ -5,12 +5,15 @@ from threading import Thread
 import netifaces as ni
 import time, traceback, sys
 import pcapy
+import dpkt
+import socket
+from PcapParser import pcapDumper
 
 #-------------------------------------------------------------------------------
 # Thread to capture the packets
 #-------------------------------------------------------------------------------
 class pcap_capture(Thread):
-    def __init__(self, iface, pcap_name):
+    def __init__(self, iface = 'eth0', pcap_name = '/tmp/test.pcap'):
         Thread.__init__(self)
 
         #TODO: Parameters!
@@ -27,6 +30,8 @@ class pcap_capture(Thread):
         self.pcap = pcapy.open_live(iface, 1600, 1, 100)
         self.pcap.setfilter(my_filter)
         self.dumper = self.pcap.dump_open(pcap_name)
+        self.dumper_list = list()
+        self.pcap_dumper = pcapDumper()
 
     def stop_flag(self):
         return self.stopit
@@ -41,6 +46,7 @@ class pcap_capture(Thread):
         self.packets += 1
         self.bytes += header.getlen()
         self.dumper.dump(header, data)
+        self.dumper_list.append((header, data))
 
     def capture(self):
         while not self.stopit:
@@ -54,6 +60,12 @@ class pcap_capture(Thread):
         self.stopit = True
         return self.done
 
+
+def dump(obj, name):
+    for attr  in dir(obj):
+        print "%s => obj.%s = %s" % (name, attr, getattr(obj, attr))
+        #print obj.attr()
+
 #-------------------------------------------------------------------------------
 # Main - For testing purposes
 #-------------------------------------------------------------------------------
@@ -63,14 +75,15 @@ if __name__ == '__main__':
     worker = None
     try:
         p = "/tmp/test.pcap"
-        worker = pcap_capture(sys.argv[1], p)
+        worker = pcap_capture('wlan0' )
         worker.daemon = True
         worker.start()
         time.sleep(5)
         print "packets:", worker.get_packets(), "bytes:", worker.get_bytes()
     except:
         traceback.print_exc(file=sys.stderr)
-    while not worker.stop(): pass
+    finally:
+        while not worker.stop(): pass
 
-
-
+    worker.join()
+    worker.pcap_dumper.dumpToImpala(worker.dumper_list)

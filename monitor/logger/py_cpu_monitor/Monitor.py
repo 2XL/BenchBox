@@ -5,7 +5,7 @@ from DiskMonitor import DiskMonitor
 from CPUMonitor import CPUMonitor
 from NetworkMonitor import NetworkMonitor
 from time import sleep
-
+from PcapCapture import pcap_capture
 
 
 class Monitor:
@@ -18,6 +18,8 @@ class Monitor:
         self.filename = None# string
         self.processes = None# list{string}
         self.resources = None# list{MonitorResource}
+        self.pcapCapturer = pcap_capture('eth0')
+        self.pcapCapturer.daemon = True
 
     def ThreadProc(self): # aquesta funcio bucle infinit en un thread...
         print 'Started/ThreadProc'
@@ -25,6 +27,8 @@ class Monitor:
 
     def start(self):
         print 'Started/MonitorCapture {}'.format((self.interval, self.resources, self.filename))
+        # start pcapturer
+        self.pcapCapturer.start()
         self.finish = False
         while not self.finish:
             print 'sleep:{}'.format(self.interval)
@@ -49,6 +53,10 @@ class Monitor:
                 # print 'saveResults({})'.format(resource)
                 resource.pushToLogger()
 
+        while not self.pcapCapturer.stop(): pass
+
+        self.pcapCapturer.join()
+        self.pcapCapturer.pcap_dumper.dumpToImpala(self.pcapCapturer.dumper_list)
 
 
     def prepareMonitoring(self): # attribute setter...
@@ -68,6 +76,7 @@ class Monitor:
         self.resources.append(DiskMonitor(folder_sync_client))
         self.resources.append(CPUMonitor(self.processes))
         #self.resources.append(NetworkMonitor('eth0'))
+        self.pcapCapturer = pcap_capture()
 
         x=0
         for resource in self.resources: # MonitorResource
