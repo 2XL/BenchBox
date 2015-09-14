@@ -5,7 +5,9 @@ Created on 30/6/2015
 @author: Raul
 '''
 from ConfigParser import SafeConfigParser
-import os
+from argparse import ArgumentParser
+
+import os, sys
 import subprocess
 import random
 import time
@@ -19,6 +21,35 @@ from pcb.general.logger import logger
 from pcb.actions import get_action, MakeResponse, PutContentResponse, Unlink, MoveResponse, GetContentResponse
 
 from cpu_monitor import CPUMonitor
+
+
+def process_opt():
+    parser = ArgumentParser()
+
+    parser.add_argument("-p", dest="profile", default=20, help="Option: profile sync|cdn|backup|idle|regular"
+                                                               "example: ./executor.py -p ")
+
+    parser.add_argument("-o", dest="ops", default=None, help="Option: ops #"
+                                                             "example: ./executor.py -o ")
+
+    parser.add_argument("-t", dest="itv", default=1, help="Option: itv #"
+                                                             "example: ./executor.py -t 5")
+
+    parser.add_argument("--out", dest="output", default='output', help="Folder for output files")
+    opt = parser.parse_args()
+
+    if not opt.option:
+
+        parser.print_help()
+        print 'Example: ./executor.py -o 100 -p sync -t 1'
+        sys.exit(1)
+
+    opt = parser.parse_args()
+
+    return opt
+
+
+
 
 class StereotypeExecutor(object):
 
@@ -131,6 +162,9 @@ if __name__ == '__main__':
     # else:
     #     print 'Config/OK'
 
+
+    opt = process_opt()
+    operations = opt.ops
     parser = SafeConfigParser()
     parser.read('config.ini')
     print parser.get('executor', 'interface')   # eth0
@@ -155,8 +189,11 @@ if __name__ == '__main__':
 
     # read the line /vagrant/profile and use it
 
-    with open('/vagrant/profile') as f:
-        profile_type= f.read().split('\n')[0]
+    if opt.profile is not None:
+        profile_type = opt.profile
+    else:
+        with open('/vagrant/profile') as f:
+            profile_type= f.read().split('\n')[0]
     profile = './data/xl_markov_{}_all_ms.csv'.format(profile_type)
 
     print profile
@@ -173,12 +210,12 @@ if __name__ == '__main__':
     # start monitoring
     #sandBoxSocketIpPort = '192.168.56.101',11000
     monitor = CPUMonitor('192.168.56.101',11000)
-    interval = 1
+    interval = opt.itv
     log_filename = 'local.csv'
     proc_name = 'StackSync' # if its stacksync
     monitor.start_monitor(interval, log_filename, proc_name)
-    #operations = 100
-    operations = 10000
+    #  operations = 100
+    #  operations = 10000
     for i in range(operations):
         # stereotype_executor.execute(sender, parser.get('executor','files_folder'))
         stereotype_executor.execute()
