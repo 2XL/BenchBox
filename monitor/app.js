@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public'))); // serves from root dir
 app.use('/data',express.static(path.join(__dirname, 'logger/py_cpu_monitor'))); // Memory_append.log
 
 app.use('/', routes);
-app.use('/cpu', routes);
+// app.use('/cpu', routes);
 
 
 

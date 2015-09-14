@@ -6,7 +6,17 @@ router.get('/', function(req, res, next) {
 
     console.log("Index monitor index")
 
-  res.render('index', { title: 'Cpu Monitor ' });
+    res.render('index', { title: 'Index Monitor ' });
 });
+
+
+
+router.get('/cpu', function(req, res, next) {
+
+    console.log("Index monitor index")
+
+    res.render('cpu', { title: 'Cpu Monitor ' });
+});
+
 
 module.exports = router;

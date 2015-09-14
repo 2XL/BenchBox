@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-
+router.get('/cpu', function(req, res, next) {
+    alert('CPU')
     console.log("CPU monitor index")
-
-    res.render('cpu', { title: 'Cpu Monitor' });
+    res.send('this is a cpu!')
+    // res.render('cpu', { title: 'Cpu Monitor view' });
 });
 
 module.exports = router;

@@ -57,7 +57,7 @@ if __name__ == '__main__':
     #monitor = CPUMonitor('10.30.230.56', 11000)
     monitor = CPUMonitor(socket.gethostbyname(socket.gethostname()), 11000)
     if sys.argv[1] == "start":
-        interval = 5 # segons
+        interval = 1 # segons
         log_filename = "local.csv" # se podria anadir mas prefijos
         proc_name = "StackSync"
         monitor.start_monitor(interval, log_filename, proc_name)

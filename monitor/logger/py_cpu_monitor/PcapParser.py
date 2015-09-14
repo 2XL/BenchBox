@@ -36,7 +36,13 @@ class pcapDumper():
             src = socket.inet_ntoa(ip.src)
             udp = ip.data
             line = (ts, src, udp.sport, dst, udp.dport, ip.v, ip.len)
-            insert_into_logger = "insert into logger values ('{}', '{}', '{}', '{}', {}, {}, {})".format(line)
+            insert_into_logger = "insert into logger_pcap values ('{}', '{}', '{}', {}, {}, {}, {})".format(ts,
+                                                                                                              src,
+                                                                                                              dst,
+                                                                                                              udp.sport,
+                                                                                                              udp.dport,
+                                                                                                              ip.v,
+                                                                                                              ip.len)
             sm.execute(insert_into_logger)
 
         sm.quit()
@@ -45,15 +51,17 @@ class pcapDumper():
 
     '''
 
+    drop table if EXISTS  logger_pcap;
+
     create table if not EXISTS logger_pcap (
-    ts TIMESTAMP,
+    ts string,
     ip_src string,
     ip_tgt string,
     port_src int,
     port_tgt int,
     protocol int,
     len int
-    ) stored as parquet
+    ) stored as parquet;
 
     '''
 
