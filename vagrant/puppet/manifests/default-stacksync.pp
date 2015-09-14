@@ -38,6 +38,7 @@ node 'benchBox' {
   class {
     'benchbox':
   }
+  /*
   ->
   exec {
     'launch_benchbox_simulator':
@@ -48,6 +49,7 @@ node 'benchBox' {
       path    => ['/usr/bin', '/bin/'],
       cwd     => '/home/vagrant/simulator'
   }
+  */
 
 }
 
