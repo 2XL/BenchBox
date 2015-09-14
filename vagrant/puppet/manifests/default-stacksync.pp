@@ -248,6 +248,12 @@ package{
       provider => pip
   }
   ->
+  package {
+    ['dpkt']:
+      ensure => 'installed',
+      provider => pip
+  }
+  ->
 
   /*
   exec {

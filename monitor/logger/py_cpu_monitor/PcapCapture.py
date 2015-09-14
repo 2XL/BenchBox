@@ -5,7 +5,6 @@ from threading import Thread
 import netifaces as ni
 import time, traceback, sys
 import pcapy
-import dpkt
 import socket
 from PcapParser import pcapDumper
 
