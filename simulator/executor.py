@@ -35,6 +35,9 @@ def process_opt():
     parser.add_argument("-t", dest="itv", default=1, help="Option: itv #"
                                                              "example: ./executor.py -t 5")
 
+    parser.add_argument("-f", dest="folder", default='stacksync_folder', help="Option: ftp folder, folder owncloud_folder|stacksync_folder "
+                                                          "example: ./executor.py -f owncloud_folder")
+
     parser.add_argument("--out", dest="output", default='output', help="Folder for output files")
     opt = parser.parse_args()
 
@@ -185,7 +188,8 @@ if __name__ == '__main__':
                         parser.get('executor','port'),
                         parser.get('executor','user'),
                         parser.get('executor','passwd'),
-                        parser.get('executor','folder')) # root path ftp_client directory :: ~/stacksync_folder
+                        opt.folder)
+                       # parser.get('executor','folder')) # root path ftp_client directory :: ~/stacksync_folder
     ftp_files = parser.get('executor','files_folder') # relative path to local files :: ./files/demoFiles.txt
     print 'Markov/OK'
     stereotype_executor = StereotypeExecutorU1(ftp_client, ftp_files)

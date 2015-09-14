@@ -5,7 +5,8 @@ import pcapy
 import dpkt
 import socket
 from StoreManager import StoreManager
-
+import codecs, sys
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 class pcapDumper():
 
@@ -63,7 +64,10 @@ class pcapDumper():
 
     '''
 
-
+def print_obj_attr(an):
+    attrs = vars(an)
+    print ', '.join("%s: %s" % item for item in attrs.items())
+    print attrs
 #-------------------------------------------------------------------------------
 # Main - For testing purposes
 #-------------------------------------------------------------------------------
@@ -72,13 +76,48 @@ if __name__ == '__main__':
     p = '/tmp/test.pcap'
     pcapReader = dpkt.pcap.Reader(file((p),'rb'))
     for timestamp, data in pcapReader:
-        print timestamp
+        # print timestamp
         ether = dpkt.ethernet.Ethernet(data)
+
         if ether.type != dpkt.ethernet.ETH_TYPE_IP: raise
         ip = ether.data
         dst = socket.inet_ntoa(ip.dst)
         src = socket.inet_ntoa(ip.src)
         udp = ip.data
+        if hasattr(udp, 'flags'):
+            print udp.flags
+        if hasattr(udp, 'off_x2'):
+            print udp.off_x2
+
+        #print ip.keys()
         print timestamp, src, udp.sport, dst, udp.dport, ip.v, ip.len
+
+
+
+'''
+Ethernet(
+src='\x00\x1a\xa0kUf',
+dst='\x00\x13I\xae\x84,',
+data=IP(
+	src='\xc0\xa8\n\n',
+	off=16384,
+	dst='C\x17\x030',
+	sum=25129,
+	len=52,
+	p=6,
+	id=51105,
+	data=
+	TCP(seq=9632694,
+		off_x2=128,
+		ack=3382015884,
+		win=54,
+		sum=65372,
+		flags=17,
+		dport=80,
+		sport=56145)))
+
+'''
+
+
 
 
