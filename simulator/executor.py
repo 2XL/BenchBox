@@ -177,8 +177,8 @@ if __name__ == '__main__':
     log_filename = 'local.csv'
     proc_name = 'StackSync' # if its stacksync
     monitor.start_monitor(interval, log_filename, proc_name)
-    operations = 100
-    operations = 10
+    #operations = 100
+    operations = 10000
     for i in range(operations):
         # stereotype_executor.execute(sender, parser.get('executor','files_folder'))
         stereotype_executor.execute()
