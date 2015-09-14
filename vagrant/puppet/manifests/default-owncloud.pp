@@ -154,15 +154,6 @@ node 'sandBox' {
   }
 
   ->
-  exec {
-    'upagrade pip setup tools with include operation...':
-      command => 'sudo pip install -U setuptools',
-      user    => 'vagrant',
-      group   => 'vagrant',
-      path    => ['/usr/bin']
-  }
-
-  ->
 
   package {
     ['impyla']:
