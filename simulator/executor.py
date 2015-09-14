@@ -38,12 +38,16 @@ def process_opt():
     parser.add_argument("-f", dest="folder", default='stacksync_folder', help="Option: ftp folder, folder owncloud_folder|stacksync_folder "
                                                           "example: ./executor.py -f owncloud_folder")
 
+    parser.add_argument("-x", dest="pid", default='StackSync', help="Option: ProcedureName, "
+                                                                              "pid StackSync|OwnCloud "
+                                                                              "example: ./executor.py -x OwnCloud")
+
     parser.add_argument("--out", dest="output", default='output', help="Folder for output files")
     opt = parser.parse_args()
 
     if not opt.itv:
         parser.print_help()
-        print 'Example: ./executor.py -o 100 -p sync -t 1'
+        print 'Example: ./executor.py -o 100 -p sync -t 1 -f owncloud_folder -x OwnCloud'
         sys.exit(1)
 
     opt = parser.parse_args()
@@ -219,7 +223,7 @@ if __name__ == '__main__':
     monitor = CPUMonitor('192.168.56.101',11000)
     interval = int(opt.itv)
     log_filename = 'local.csv'
-    proc_name = 'StackSync' # if its stacksync
+    proc_name = opt.pid # if its stacksync
     print interval
     monitor.start_monitor(interval, log_filename, proc_name)
     #  operations = 100

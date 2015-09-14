@@ -38,18 +38,18 @@ node 'benchBox' {
   class {
     'benchbox':
   }
-  /*
+
   ->
   exec {
     'launch_benchbox_simulator':
-      command => 'python /home/vagrant/simulator/executor.py &',
+      command => 'python /home/vagrant/simulator/executor.py -o 100 -p sync -t 1 -f stacksync_folder -o StackSync &',
     # sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk '{print $2}')
       user    => 'vagrant',
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
       cwd     => '/home/vagrant/simulator'
   }
-  */
+
 
 }
 
