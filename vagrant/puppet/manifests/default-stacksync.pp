@@ -42,7 +42,7 @@ node 'benchBox' {
   ->
   exec {
     'launch_benchbox_simulator':
-      command => 'python /home/vagrant/simulator/executor.py -o 100 -p sync -t 1 -f stacksync_folder -o StackSync &',
+      command => 'python /home/vagrant/simulator/executor.p-o 100 -p sync -t 1 -f stacksync_folder -x StackSync &',
     # sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk '{print $2}')
       user    => 'vagrant',
       group   =>'vagrant',
@@ -176,7 +176,7 @@ package{
     provider => pip
 }
 ->
-*/
+  */
   package{
     'python-pcapy':
       ensure    => 'installed'
@@ -203,8 +203,9 @@ package{
     ['thrift']:
       ensure   => 'installed',
       provider => pip
-  }
 
+
+  }
   ->
   exec {
     'upagrade pip setup tools with include operation...':
@@ -213,7 +214,6 @@ package{
       group   => 'vagrant',
       path    => ['/usr/bin']
   }
-
   ->
 
   package {
