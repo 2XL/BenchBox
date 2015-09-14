@@ -54,9 +54,39 @@ FILE='owncloudsync.sh'
 cat > $FILE <<- EOM
 
 #!/usr/bin/env bash
+
+
+if [ ! -f /tmp/OwnCloud.pid ]
+then
+	echo 'Run the client'
+	echo $$ > /tmp/OwnCloud.pid
+else
+	echo 'Restart the client'
+
+	pid=$(head -n 1 /tmp/OwnCloud.pid)
+
+	if ps -p $pid > /dev/null
+	then
+		kill -9 $pid
+	# kill the previous if exists
+	echo $$ > /tmp/OwnCloud.pid
+fi
+
+
+
+
+if [ $# -eq 1 ]
+then
+	delay=$1
+else
+	delay=30
+fi
+
+
+
 while true; do
     owncloudcmd --httpproxy http://$sync_server_ip -u $user -p $pass /home/vagrant/owncloud_folder/ http://$sync_server_ip
-     sleep 30
+     sleep $delay
     # ls -l
 done
 
