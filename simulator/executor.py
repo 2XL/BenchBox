@@ -38,8 +38,7 @@ def process_opt():
     parser.add_argument("--out", dest="output", default='output', help="Folder for output files")
     opt = parser.parse_args()
 
-    if not opt.option:
-
+    if not opt.itv:
         parser.print_help()
         print 'Example: ./executor.py -o 100 -p sync -t 1'
         sys.exit(1)
