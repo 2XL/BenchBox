@@ -163,7 +163,7 @@ if __name__ == '__main__':
 
 
     opt = process_opt()
-    operations = opt.ops
+    operations = int(opt.ops)
     parser = SafeConfigParser()
     parser.read('config.ini')
     print parser.get('executor', 'interface')   # eth0
