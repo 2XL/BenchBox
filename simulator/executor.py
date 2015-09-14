@@ -45,6 +45,10 @@ def process_opt():
 
     opt = parser.parse_args()
 
+    print opt.profile
+    print opt.ops
+    print opt.itv
+
     return opt
 
 
@@ -209,7 +213,7 @@ if __name__ == '__main__':
     # start monitoring
     #sandBoxSocketIpPort = '192.168.56.101',11000
     monitor = CPUMonitor('192.168.56.101',11000)
-    interval = float(opt.itv)
+    interval = int(opt.itv)
     log_filename = 'local.csv'
     proc_name = 'StackSync' # if its stacksync
     print interval
