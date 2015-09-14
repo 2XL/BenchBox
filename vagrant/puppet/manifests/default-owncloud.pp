@@ -109,7 +109,8 @@ node 'sandBox' {
       command => 'sudo pip install -U setuptools',
       user    => 'vagrant',
       group   => 'vagrant',
-      path    => ['/usr/bin']
+      path    => ['/usr/bin'],
+      returns => [0, 1]
   }
   ->
 
