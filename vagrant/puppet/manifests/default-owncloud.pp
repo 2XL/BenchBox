@@ -112,6 +112,31 @@ node 'sandBox' {
       path    => ['/usr/bin']
   }
   ->
+
+
+
+
+
+  package {
+    ['netifaces']:
+      ensure   => 'installed',
+      provider => pip
+  }->
+  package {
+    ['PIL']:
+      ensure   => 'installed',
+      provider => pip
+  }->
+  package{
+    ['psutil']:
+      ensure   => 'installed',
+
+      provider => pip
+  }
+  ->
+
+
+
   package{
     'python-pcapy':
       ensure    => 'installed'
@@ -129,22 +154,7 @@ node 'sandBox' {
   package {
     ['bitarray']:
       ensure   => 'installed',
-      provider => pip
-  }
-  ->
-  package {
-    ['netifaces']:
-      ensure   => 'installed',
-      provider => pip
-  }->
-  package {
-    ['PIL']:
-      ensure   => 'installed',
-      provider => pip
-  }->
-  package{
-    ['psutil']:
-      ensure   => 'installed',
+
       provider => pip
   }->
   package {
@@ -177,12 +187,39 @@ node 'sandBox' {
       ensure => installed
   }
   ->
+
+  package {
+    ['logbook','trollius', 'mock', 'pytest', 'lxml']:
+      ensure   => 'installed',
+      provider => pip
+  }->
+  package {
+    ['pyshark']:
+      ensure   => 'installed',
+      provider => pip
+  }
+  ->
   package {
     ['dpkt']:
       ensure   => 'installed',
       provider => pip
   }
   ->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   class{
     "owncloud":
