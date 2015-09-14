@@ -26,11 +26,11 @@ from cpu_monitor import CPUMonitor
 def process_opt():
     parser = ArgumentParser()
 
-    parser.add_argument("-p", dest="profile", default=20, help="Option: profile sync|cdn|backup|idle|regular"
-                                                               "example: ./executor.py -p ")
+    parser.add_argument("-p", dest="profile", default=None, help="Option: profile sync|cdn|backup|idle|regular"
+                                                               "example: ./executor.py -p sync")
 
-    parser.add_argument("-o", dest="ops", default=None, help="Option: ops #"
-                                                             "example: ./executor.py -o ")
+    parser.add_argument("-o", dest="ops", default=10, help="Option: ops #"
+                                                             "example: ./executor.py -o 5")
 
     parser.add_argument("-t", dest="itv", default=1, help="Option: itv #"
                                                              "example: ./executor.py -t 5")
@@ -209,9 +209,10 @@ if __name__ == '__main__':
     # start monitoring
     #sandBoxSocketIpPort = '192.168.56.101',11000
     monitor = CPUMonitor('192.168.56.101',11000)
-    interval = opt.itv
+    interval = float(opt.itv)
     log_filename = 'local.csv'
     proc_name = 'StackSync' # if its stacksync
+    print interval
     monitor.start_monitor(interval, log_filename, proc_name)
     #  operations = 100
     #  operations = 10000
