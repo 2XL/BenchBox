@@ -63,11 +63,11 @@ then
 else
 	echo 'Restart the client'
 
-	pid=$(head -n 1 /tmp/OwnCloud.pid)
+	pid=\$(head -n 1 /tmp/OwnCloud.pid)
 
-	if ps -p $pid > /dev/null
+	if ps -p \$pid > /dev/null
 	then
-		kill -9 $pid
+		kill -9 \$pid
 	# kill the previous if exists
 	echo \$\$ > /tmp/OwnCloud.pid
 fi
