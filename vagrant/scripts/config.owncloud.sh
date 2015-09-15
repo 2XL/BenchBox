@@ -87,7 +87,7 @@ fi
 
 while true; do
     owncloudcmd --httpproxy http://$sync_server_ip -u $user -p $pass /home/vagrant/owncloud_folder/ http://$sync_server_ip
-     sleep $delay
+     sleep \$delay
     # ls -l
 done
 
