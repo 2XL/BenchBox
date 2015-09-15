@@ -76,6 +76,12 @@ node 'sandBox' {
   }->
   class {
     'git':
+  }->
+  class { 'python' :
+    version    => 'system',
+    pip        => true,
+    dev        => true,
+    virtualenv => true
   }
   ->
   class {
@@ -131,7 +137,6 @@ node 'sandBox' {
   package{
     ['psutil']:
       ensure   => 'installed',
-
       provider => pip
   }
   ->
