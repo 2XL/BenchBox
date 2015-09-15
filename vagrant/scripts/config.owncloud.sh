@@ -74,7 +74,9 @@ else
 	fi
 fi
 
-	echo \$\$ > /tmp/OwnCloud.pid
+
+	# echo \$\$ > /tmp/OwnCloud.pid
+	echo \$PPID > /tmp/OwnCloud.pid
 
 if [ \$# -eq 1 ]
 then
