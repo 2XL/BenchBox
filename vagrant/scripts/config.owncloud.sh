@@ -35,7 +35,7 @@ else
 echo "File: $1 exists!"
 fi
 
-line=($(<"$DIR/owncloud.key"))
+line=($(<"$DIR/ss.owncloud.key"))
 
 
 mystring="demo0"
