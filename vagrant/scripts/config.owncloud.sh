@@ -58,21 +58,23 @@ cat > $FILE <<- EOM
 if [ ! -f /tmp/OwnCloud.pid ]
 then
 	echo 'Run the client'
-	echo \$\$ > /tmp/OwnCloud.pid
 else
 	echo 'Restart the client'
-
 	pid=\$(head -n 1 /tmp/OwnCloud.pid)
+	echo 'status'
+	ps -p \$pid
+	status=\$?
 
-	if [ ps -p \$pid > /dev/null ]
+	if [ \$status -ne 0 ]
 	then
+		echo 'no such proc'
+	else
+		echo 'proc exists'
 		kill -9 \$pid
-	# kill the previous if exists
+	fi
+fi
+
 	echo \$\$ > /tmp/OwnCloud.pid
-fi
-fi
-
-
 
 if [ \$# -eq 1 ]
 then
