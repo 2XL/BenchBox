@@ -59,7 +59,7 @@ cat > $FILE <<- EOM
 if [ ! -f /tmp/OwnCloud.pid ]
 then
 	echo 'Run the client'
-	echo \$$ > /tmp/OwnCloud.pid
+	echo \$\$ > /tmp/OwnCloud.pid
 else
 	echo 'Restart the client'
 
@@ -69,7 +69,7 @@ else
 	then
 		kill -9 $pid
 	# kill the previous if exists
-	echo $$ > /tmp/OwnCloud.pid
+	echo \$\$ > /tmp/OwnCloud.pid
 fi
 
 
