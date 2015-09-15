@@ -59,7 +59,7 @@ cat > $FILE <<- EOM
 if [ ! -f /tmp/OwnCloud.pid ]
 then
 	echo 'Run the client'
-	echo $$ > /tmp/OwnCloud.pid
+	echo \$$ > /tmp/OwnCloud.pid
 else
 	echo 'Restart the client'
 
@@ -75,9 +75,9 @@ fi
 
 
 
-if [ $# -eq 1 ]
+if [ \$# -eq 1 ]
 then
-	delay=$1
+	delay=\$1
 else
 	delay=30
 fi
