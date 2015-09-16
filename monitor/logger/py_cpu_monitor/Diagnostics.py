@@ -62,11 +62,16 @@ class PerformanceCounter:
             p = psutil.Process(self.processPid)
         else:
             pids = self.getPidByName()
+
         if len(pids) == 0:
             return '{} {} {}'.format(self.processName, tstamp, 0)
         else:
-            p = psutil.Process(pids[0])
-        return '{} {} {}'.format(self.processName, tstamp, p.cpu_percent(interval=1))
+            try:
+                p = psutil.Process(pids[0])
+                return '{} {} {}'.format(self.processName, tstamp, p.cpu_percent(interval=1))
+            except Exception as e:
+                print 'Exception {}'.format(e)
+                return '{} {} {}'.format(self.processName, tstamp, 0)
 
 
     def doDisk(self): # input output % time {write/read unit}
@@ -96,13 +101,16 @@ class PerformanceCounter:
             p = psutil.Process(self.processPid)
         else:
             pids = self.getPidByName()
-            if len(pids) == 0:
-                return '{} {} {}'.format(self.processName, tstamp, 0)
-            else:
-                p = psutil.Process(pids[0])
-                print p
 
-        return '{} {} {}'.format(self.processName, tstamp, p.memory_info().rss)
+        if len(pids) == 0:
+            return '{} {} {}'.format(self.processName, tstamp, 0)
+        else:
+            try:
+                p = psutil.Process(pids[0])
+                return '{} {} {}'.format(self.processName, tstamp, p.memory_info().rss)
+            except Exception as e:
+                print 'Exception {}'.format(e)
+                return '{} {} {}'.format(self.processName, tstamp, 0)
         # rss : Resident set size
 
 
