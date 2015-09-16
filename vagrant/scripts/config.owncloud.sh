@@ -82,13 +82,15 @@ if [ \$# -eq 1 ]
 then
 	delay=\$1
 else
-	delay=30
+	delay=1
 fi
 
 
 
 while true; do
+	echo 'DoSync'
     owncloudcmd --httpproxy http://$sync_server_ip -u $user -p $pass /home/vagrant/owncloud_folder/ http://$sync_server_ip
+    echo 'SyncingComplete'
      sleep \$delay
     # ls -l
 done
