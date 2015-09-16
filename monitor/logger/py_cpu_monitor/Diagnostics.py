@@ -61,11 +61,11 @@ class PerformanceCounter:
         if self.isStatic:
             p = psutil.Process(self.processPid)
         else:
-            p = psutil.Process(self.getPidByName())
-        if len(p) == 0:
+            pids = self.getPidByName()
+        if len(pids) == 0:
             return '{} {} {}'.format(self.processName, tstamp, 0)
         else:
-            p = psutil.Process(p[0])
+            p = psutil.Process(pids[0])
         return '{} {} {}'.format(self.processName, tstamp, p.cpu_percent(interval=1))
 
 
@@ -95,11 +95,12 @@ class PerformanceCounter:
         if self.isStatic:
             p = psutil.Process(self.processPid)
         else:
-            p = psutil.Process(self.getPidByName())
-            if len(p) == 0:
+            pids = self.getPidByName()
+            if len(pids) == 0:
                 return '{} {} {}'.format(self.processName, tstamp, 0)
             else:
-                p = psutil.Process(p[0])
+                p = psutil.Process(pids[0])
+                print p
 
         return '{} {} {}'.format(self.processName, tstamp, p.memory_info().rss)
         # rss : Resident set size
@@ -160,7 +161,6 @@ class PerformanceCounter:
         return [p.pid for p in psutil.process_iter() if procCmd in str(p.name)]
 
 def getPidByName(procCmd = 'java'):
-
     return [p.pid for p in psutil.process_iter() if procCmd in str(p.name)]
 
 if __name__ == '__main__':
