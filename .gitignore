@@ -65,5 +65,6 @@ monitor/logger/py_cpu_monitor/*.pyc
 # hide or ignore installation packages
 *.deb
 *.OLD.*
+managerGUI
 
 
