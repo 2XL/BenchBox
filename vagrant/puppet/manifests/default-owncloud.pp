@@ -140,7 +140,7 @@ node 'sandBox' {
   }
   ->
   package {
-    ['logbook','trollius', 'mock', 'pytest', 'lxml']:
+    ['logbook','trollius', 'pytest', 'lxml']:
       ensure   => 'installed',
       provider => pip
   }->
