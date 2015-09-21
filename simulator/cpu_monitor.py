@@ -17,8 +17,10 @@ class CPUMonitor():
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.connect ((self.host, self.port))
     
-    def start_monitor(self, interval, filename, process_name, cmd):
-        msg = "start " + str(interval) + " " + str(filename) + " " + process_name +" " + cmd + "<EOF>"
+    def start_monitor(self, interval, filename, process_name, operations, profile):
+        # (interval, log_filename, proc_name, opt.ops, opt.profile)
+        msg = "start " + str(interval) + " " + str(filename) + " " + str(process_name) +" " + str(operations) + " " \
+                                                                                                      ""+str(profile)+"<EOF>"
         self.send_something(msg)
         time.sleep(interval)
     

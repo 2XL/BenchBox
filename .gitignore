@@ -66,5 +66,5 @@ monitor/logger/py_cpu_monitor/*.pyc
 *.deb
 *.OLD.*
 managerGUI
-
+test.py
 

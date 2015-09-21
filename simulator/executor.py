@@ -225,7 +225,7 @@ if __name__ == '__main__':
     log_filename = 'local.csv'
     proc_name = opt.pid # if its stacksync
     print interval
-    monitor.start_monitor(interval, log_filename, proc_name, str(sys.argv))
+    monitor.start_monitor(interval, log_filename, proc_name, opt.ops, opt.profile, 'ast03')
     #  operations = 100
     #  operations = 10000
     for i in range(operations):

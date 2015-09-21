@@ -125,22 +125,36 @@ class SocketListener():
         # this...
         print 'Start Monitoring: {}'.format(command)
         # start monitoring a specific process
+
+        '''
+        msg = "start " + str(interval) + " " + str(filename) + " " + str(process_name) +" " + str(operations) + " " \
+                                                                                                                ""+str(profile)+"<EOF>"
+        '''
         command = command.replace('<EOF>', '')
         parameters = command.split(' ')
         interval = int(parameters[1])
         filename = str(parameters[2])
-        processes = list()
+        processes = str(parameters[3])
+        operations = str(parameters[4])
+        profile = str(parameters[5])
+        hostname = str(parameters[6])
 
+
+        '''
+        processes = list()
         for i in range(3, len(parameters)):
             processes.append(parameters[i])
+        '''
         # [1 2 3 p1 p2 p3 p4...]
+        #  ./executor.py -o 20 -p sync -t 1 -f owncloud_folder -x OwnCloud
 
         print parameters, interval, filename, processes
 
         self.monitor.setInterval(interval)
         self.monitor.setFilename(filename)
         self.monitor.setProcess(processes)
-        self.monitor.setLoggerId(dummy_hostname, pc_server_name, profile, test_definition)
+        #  dummy_hostname, pc_server_name, profile, test_definition):
+        self.monitor.setLoggerId(hostname, processes, processes, operations)
 
         '''
         self.monitor.prepareMonitoring({'CPU': processes,
