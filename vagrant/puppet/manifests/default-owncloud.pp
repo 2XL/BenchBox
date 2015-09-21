@@ -110,10 +110,6 @@ node 'sandBox' {
     group  => "ftp",
     mode   => 755,
   }
-  -> package {
-    'python-setuptools':
-      ensure => installed
-  }
   ->
 
   package {
