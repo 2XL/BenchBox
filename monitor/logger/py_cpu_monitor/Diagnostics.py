@@ -49,7 +49,7 @@ class PerformanceCounter:
         for nic in net_io:
             if nic == self.processName:
                 result+= '{} {}'.format(net_io[nic].bytes_sent,  net_io[nic].bytes_recv)
-        return '{} {} {}'.format(tstamp, result)
+        return '{} {}'.format(tstamp, result)
 
 
     def doProcess(self): # cpu time %
