@@ -26,7 +26,7 @@ len int
 drop table if exists logger_cpu;
 create table if not exists logger_cpu (
   ts timestamp,
-  cpu_usage int,
+  cpu_usage double,
   cpu_count int,
   logger_id string,
   dummy_hostname string
@@ -36,8 +36,8 @@ create table if not exists logger_cpu (
 drop table if exists logger_ram;
 create table if not exists logger_ram (
   ts timestamp,
-  ram_usage int,
-  ram_count int,
+  ram_usage bigint,
+  ram_count bigint,
   logger_id string,
   dummy_hostname string
 ) stored as parquet;
@@ -46,8 +46,8 @@ create table if not exists logger_ram (
 drop table if exists logger_net;
 create table if not exists logger_net (
   ts timestamp,
-  up_size int,
-  down_size int,
+  up_size bigint,
+  down_size bigint,
   logger_id string,
   dummy_hostname string
 )stored as parquet;
@@ -57,8 +57,8 @@ drop table if exists logger_hdd;
 
 create table if not exists logger_hdd (
   ts timestamp,
-  data_write int,
-  data_read int,
+  data_write bigint,
+  data_read bigint,
   logger_id string,
   dummy_hostname string
 ) stored as parquet;

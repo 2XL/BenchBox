@@ -7,6 +7,7 @@ from NetworkMonitor import NetworkMonitor
 from time import sleep
 from PcapCapture import pcap_capture
 from time import time
+from StoreManager import StoreManager
 
 
 class Monitor:
@@ -101,8 +102,24 @@ class Monitor:
     def setProcess(self, processes): # list{string}
         self.processes = processes
 
-    def setLoggerId(self, pc_client_name, pc_server_name, profile, test_definition):
+    def setLoggerId(self, dummy_hostname, pc_server_name, profile, test_definition):
         self.logger_id = time()
+        sm = StoreManager('ast12.recerca.intranet.urv.es',
+                          21050,
+                          'lab144',
+                          'lab144')
+        sm.connect()
+        # asume that there is a benchbox database in impala
+        sm.execute('use benchbox')
+        # create table if not exists
+
+
+        insert_into_logger = "insert into logger_id values ('{}', '{}', '{}', '{}', '{}')" \
+                .format(self.logger_id, dummy_hostname, pc_server_name, profile, test_definition)
+            # StackSync 2015-09-08T17:35:10.455244 475340800
+            # ts,  up_size, down_size, logger_id, dummy_hostname
+        sm.execute(insert_into_logger)
+        sm.quit()
 
 
 

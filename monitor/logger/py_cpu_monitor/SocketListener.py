@@ -140,6 +140,7 @@ class SocketListener():
         self.monitor.setInterval(interval)
         self.monitor.setFilename(filename)
         self.monitor.setProcess(processes)
+        self.monitor.setLoggerId(dummy_hostname, pc_server_name, profile, test_definition)
 
         '''
         self.monitor.prepareMonitoring({'CPU': processes,
