@@ -60,7 +60,7 @@ class DiskMonitor(MonitorResource):
         for value in enumerate(self.diskValues):
             print value
             items = value[1].split(' ')
-            insert_into_logger = "insert into logger values ('{}', '{}', '{}', {})".format(items[1], 'Disk', items[0],
+            insert_into_logger = "insert into logger_hdd values ('{}', '{}', '{}', {})".format(items[1], 'Disk', items[0],
                                                                                            items[2])
             # StackSync 2015-09-08T17:35:10.455244 475340800
             sm.execute(insert_into_logger)

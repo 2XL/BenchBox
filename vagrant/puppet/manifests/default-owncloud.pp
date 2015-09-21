@@ -110,6 +110,7 @@ node 'sandBox' {
     group  => "ftp",
     mode   => 755,
   }
+
   ->  exec {
     'upagrade pip setup tools with include operation...':
       command => 'sudo pip install -U setuptools',
@@ -121,7 +122,8 @@ node 'sandBox' {
   ->  package {
     ['netifaces','PIL','psutil']:
       ensure   => 'installed',
-      provider => pip
+      provider => pip,
+      require => Package['python-pip']
   }
   ->  package{
     ['python-pcapy','python-bzrlib','scapy']:
@@ -178,6 +180,5 @@ node 'sandBox' {
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/'],
   }
-
 }
 

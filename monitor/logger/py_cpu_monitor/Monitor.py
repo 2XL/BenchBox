@@ -6,6 +6,7 @@ from CPUMonitor import CPUMonitor
 from NetworkMonitor import NetworkMonitor
 from time import sleep
 from PcapCapture import pcap_capture
+from time import time
 
 
 class Monitor:
@@ -20,6 +21,8 @@ class Monitor:
         self.resources = None# list{MonitorResource}
         self.pcapCapturer = pcap_capture('eth0')
         self.pcapCapturer.daemon = True
+        self.logger_id = None
+
 
     def ThreadProc(self): # aquesta funcio bucle infinit en un thread...
         print 'Started/ThreadProc'
@@ -30,6 +33,11 @@ class Monitor:
         # start pcapturer
         self.pcapCapturer.start()
         self.finish = False
+
+
+
+
+
         while not self.finish:
             print 'sleep:{}'.format(self.interval)
             for resource in self.resources:
@@ -92,6 +100,10 @@ class Monitor:
 
     def setProcess(self, processes): # list{string}
         self.processes = processes
+
+    def setLoggerId(self, pc_client_name, pc_server_name, profile, test_definition):
+        self.logger_id = time()
+
 
 
     '''
