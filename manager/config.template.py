@@ -81,7 +81,13 @@ ast03 = {'user': 'milax', 'passwd': 'milax', 'ip': '10.30.103.95',
          'owncloud_login': 'anna:anna',
          'stacksync_login': 'anna:anna'}
 
-li = {'ast03': ast03, }
+
+ast04 = {'user': 'milax', 'passwd': 'milax', 'ip': '10.30.103.96',
+         'owncloud_login': 'anna:anna',
+         'stacksync_login': 'anna:anna'}
+
+
+li = {'ast04': ast04, }
 
 
 for hostname in li:
