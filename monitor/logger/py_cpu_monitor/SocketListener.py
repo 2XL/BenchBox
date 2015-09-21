@@ -154,7 +154,7 @@ class SocketListener():
         self.monitor.setFilename(filename)
         self.monitor.setProcess(processes)
         #  dummy_hostname, pc_server_name, profile, test_definition):
-        self.monitor.setLoggerId(hostname, processes, processes, operations)
+        self.monitor.setLoggerId(hostname, processes, profile, operations, hostname)
 
         '''
         self.monitor.prepareMonitoring({'CPU': processes,
