@@ -71,8 +71,8 @@ class CPUMonitor(MonitorResource):
         for value in enumerate(self.cpuValues):
             print value
             items = value[1].split(' ')
-            insert_into_logger = "insert into logger_cpu values ('{}', '{}', '{}', {})"\
-                .format(items[1], 'CPU', items[0],           int(round(float(items[2]))))
+            insert_into_logger = "insert into logger_cpu values ('{}', {}, {}, '{}', '{}')" \
+                .format(items[0], items[1], items[2], items[3], items[4])
             # StackSync 2015-09-08T17:35:10.455244 475340800
             # ts,  cpu_usage, cpu_count, logger_id, dummy_hostname
             sm.execute(insert_into_logger)
