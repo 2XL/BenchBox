@@ -113,7 +113,7 @@ node 'sandBox' {
   ->
 
   package {
-    ['python-setuptools', 'python-dev', 'build-essential']:
+    ['python-setuptools', 'build-essential']:
       ensure => installed
   }
 
