@@ -74,12 +74,13 @@ class Monitor:
         self.resources = list() # list{MonitorResource}
 
 
-        if self.processes[0] == 'StackSync':
+        if self.processes == 'StackSync':
             folder_sync_client = 'stacksync_folder'
 
-        if self.processes[0] == 'OwnCloud':
+        if self.processes == 'OwnCloud':
             folder_sync_client = 'owncloud_folder'
 
+        print "loggerId: ".format(self.logger_id)
 
         self.resources.append(MemoryMonitor(self.processes, self.logger_id))
         self.resources.append(DiskMonitor(folder_sync_client, self.logger_id))
