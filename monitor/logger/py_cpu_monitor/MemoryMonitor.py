@@ -17,9 +17,10 @@ class MemoryMonitor(MonitorResource):
         self.ramValues = list() # list {float}
         self.ramCounter = list()
         self.loggerId = loggerId
-        for process in self.processes:
-            print 'CPUMonitor:{}'.format(process)
-            self.ramCounter.append(PerformanceCounter('Memory', 'Available MBytes', process))
+        #for process in self.processes:
+        process = processes
+        print 'CPUMonitor:{}'.format(process)
+        self.ramCounter.append(PerformanceCounter('Memory', 'Available MBytes', process))
 
     def prepareMonitoring(self):
         print 'RAM:prepareMonitor'

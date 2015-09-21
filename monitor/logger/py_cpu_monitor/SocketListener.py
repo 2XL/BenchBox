@@ -134,7 +134,7 @@ class SocketListener():
         parameters = command.split(' ')
         interval = int(parameters[1])
         filename = str(parameters[2])
-        processes = [str(parameters[3])]
+        processes = str(parameters[3])
         operations = str(parameters[4])
         profile = str(parameters[5])
         hostname = str(parameters[6])
