@@ -13,10 +13,12 @@ class DiskMonitor(MonitorResource):
 
     diskValues = list() # list {float}
 
-    def __init__(self, diskPath):
+    def __init__(self, diskPath, loggerId):
         print 'constructor'
         self.diskValues = list() # float
         self.diskCounter = PerformanceCounter('Disk', 'Available MBytes', diskPath)
+        self.loggerId = loggerId
+
 
     def prepareMonitoring(self):
         print 'DISK:prepareMonitor'
@@ -61,7 +63,7 @@ class DiskMonitor(MonitorResource):
             print value
             items = value[1].split(' ')
             insert_into_logger = "insert into logger_hdd values ('{}', {}, {}, '{}', '{}')" \
-                .format(items[0], items[1], items[2], items[3], items[4])
+                .format(items[0], items[1], items[2], self.loggerId, 'ast03')
             # StackSync 2015-09-08T17:35:10.455244 475340800
             # ts,  data_write, data_read, logger_id, dummy_hostname
             sm.execute(insert_into_logger)

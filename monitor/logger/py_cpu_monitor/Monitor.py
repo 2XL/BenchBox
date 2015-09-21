@@ -80,10 +80,10 @@ class Monitor:
             folder_sync_client = 'owncloud_folder'
 
 
-        self.resources.append(MemoryMonitor(self.processes))
-        self.resources.append(DiskMonitor(folder_sync_client))
-        self.resources.append(CPUMonitor(self.processes))
-        #self.resources.append(NetworkMonitor('eth0'))
+        self.resources.append(MemoryMonitor(self.processes, self.logger_id))
+        self.resources.append(DiskMonitor(folder_sync_client, self.logger_id))
+        self.resources.append(CPUMonitor(self.processes, self.logger_id))
+        self.resources.append(NetworkMonitor('eth0', self.logger_id))
         self.pcapCapturer = pcap_capture()
 
         x=0

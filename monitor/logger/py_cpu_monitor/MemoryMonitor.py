@@ -11,11 +11,12 @@ class MemoryMonitor(MonitorResource):
     ramCounter = None # PerformanceCounter
     ramValues = list()
 
-    def __init__(self, processes):
+    def __init__(self, processes, loggerId):
         print 'constructor'
         self.processes = processes # string, LinkedList
         self.ramValues = list() # list {float}
         self.ramCounter = list()
+        self.loggerId = loggerId
         for process in self.processes:
             print 'CPUMonitor:{}'.format(process)
             self.ramCounter.append(PerformanceCounter('Memory', 'Available MBytes', process))
@@ -58,8 +59,8 @@ class MemoryMonitor(MonitorResource):
         for value in enumerate(self.ramValues):
             print value
             items = value[1].split(' ')
-            insert_into_logger = "insert into logger_ram values ('{}', {}, {}, '{}', '{}')"\
-                .format(items[0], items[1], items[2], items[3], items[4])
+            insert_into_logger = "insert into logger_ram values ('{}', {}, {}, '{}', '{}')" \
+                .format(items[0], items[1], items[2], self.loggerId, 'ast03')
             # StackSync 2015-09-08T17:35:10.455244 475340800
             # ts, ram_usage, ram_count, logger_id, dummy_hostname
             sm.execute(insert_into_logger)

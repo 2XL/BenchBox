@@ -48,8 +48,8 @@ class PerformanceCounter:
         result=''
         for nic in net_io:
             if nic == self.processName:
-                result+= '{}/{}/{}'.format(nic, net_io[nic].bytes_recv,net_io[nic].bytes_sent)
-        return '{} {} {}'.format(self.processName, tstamp, result)
+                result+= '{} {}'.format(net_io[nic].bytes_sent,  net_io[nic].bytes_recv)
+        return '{} {} {}'.format(tstamp, result)
 
 
     def doProcess(self): # cpu time %
@@ -58,20 +58,23 @@ class PerformanceCounter:
         tstamp =  datetime.datetime.now().isoformat()
         #print self.processPid
 
+        cpu_c = psutil.cpu_count()
+
         if self.isStatic:
             p = psutil.Process(self.processPid)
         else:
             pids = self.getPidByName()
 
+
         if len(pids) == 0:
-            return '{} {} {}'.format(self.processName, tstamp, 0)
+            return '{} {} {}'.format(tstamp, 0, cpu_c)
         else:
             try:
                 p = psutil.Process(pids[0])
-                return '{} {} {}'.format(self.processName, tstamp, p.cpu_percent(interval=1))
+                return '{} {} {}'.format(tstamp, p.cpu_percent(interval=1),cpu_c)
             except Exception as e:
                 print 'Exception {}'.format(e)
-                return '{} {} {}'.format(self.processName, tstamp, 0)
+                return '{} {} {}'.format(tstamp, 0,cpu_c)
 
 
     def doDisk(self): # input output % time {write/read unit}
@@ -80,7 +83,7 @@ class PerformanceCounter:
         tstamp =  datetime.datetime.now().isoformat()
         #return '{} {} {}'.format(self.processName, tstamp, psutil.disk_usage('/').percent)
 
-        return '{} {} {}'.format(self.processName, tstamp, self.get_size())
+        return '{} {} {}'.format(tstamp, self.get_size(), psutil.disk_usage('/').used)
 
 
 
@@ -96,6 +99,7 @@ class PerformanceCounter:
         # overhead a reading a file... each time, should defined at class atribute level.
         tstamp =  datetime.datetime.now().isoformat()
 
+        ram_c = psutil.virtual_memory().total
 
         if self.isStatic:
             p = psutil.Process(self.processPid)
@@ -103,14 +107,14 @@ class PerformanceCounter:
             pids = self.getPidByName()
 
         if len(pids) == 0:
-            return '{} {} {}'.format(self.processName, tstamp, 0)
+            return '{} {} {}'.format(tstamp, 0, ram_c)
         else:
             try:
                 p = psutil.Process(pids[0])
-                return '{} {} {}'.format(self.processName, tstamp, p.memory_info().rss)
+                return '{} {} {}'.format(tstamp, p.memory_info().rss, ram_c)
             except Exception as e:
                 print 'Exception {}'.format(e)
-                return '{} {} {}'.format(self.processName, tstamp, 0)
+                return '{} {} {}'.format(tstamp, 0, ram_c)
         # rss : Resident set size
 
 
