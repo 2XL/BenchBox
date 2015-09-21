@@ -110,6 +110,10 @@ node 'sandBox' {
     group  => "ftp",
     mode   => 755,
   }
+  -> package {
+    'python-setuptools':
+      ensure => installed
+  }
 
 
   ->  package {
@@ -156,10 +160,6 @@ node 'sandBox' {
       returns => [0, 1]
   }
 */
-  -> package {
-    'python-setuptools':
-      ensure => installed
-  }
 
   ->  package {
     ['impyla']:
