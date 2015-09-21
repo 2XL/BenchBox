@@ -150,6 +150,15 @@ node 'sandBox' {
       provider => pip
   }
 
+
+  ->
+  exec {
+    'upagrade pip setup tools with include operation...':
+      command => 'sudo pip install -U setuptools',
+      user    => 'vagrant',
+      group   => 'vagrant',
+      path    => ['/usr/bin']
+  }
   /*
 
   ->  exec {
