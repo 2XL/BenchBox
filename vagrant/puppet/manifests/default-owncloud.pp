@@ -114,7 +114,12 @@ node 'sandBox' {
     'python-setuptools':
       ensure => installed
   }
+  ->
 
+  package {
+    ['python-setuptools', 'python-dev', 'build-essential']:
+      ensure => installed
+  }
 
   ->  package {
     ['netifaces','PIL','psutil']:
