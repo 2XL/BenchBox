@@ -69,22 +69,22 @@ define download_file(
 # sandBox
 # -------------------------------------------------------------------------------------------------------
 node 'sandBox' {
+
   class { 'apt':
     update => {
       frequency => 'daily',
     },
-  }->
-  class {
+  }
+  ->  class {
     'git':
-  }->
-  class { 'python' :
+  }
+  ->  class { 'python' :
     version    => 'system',
     pip        => true,
     dev        => true,
     virtualenv => true
   }
-  ->
-  class {
+  ->  class {
     'vsftpd':
       write_enable            => 'YES',
       ftpd_banner             => 'SandBox FTP Server',
@@ -95,22 +95,22 @@ node 'sandBox' {
       anon_mkdir_write_enable => 'YES',
       pasv_min_port           => 10090,
       pasv_max_port           => 10100,
-  }->
-  file { ["/etc/vsftpd.user_list" ]:
+  }
+  ->  file { ["/etc/vsftpd.user_list" ]:
     recurse => true,
     ensure  => present,
     mode    => 0777,
     content => 'vagrant vagrant',
   # ftp OOP 500 error becuase this file not present -> vsftpd
-  }-> # give anonymous user ftp permision
+  }
+  -> # give anonymous user ftp permision
   file { "/srv/ftp":
     ensure => "directory",
     owner  => "ftp",
     group  => "ftp",
     mode   => 755,
-  }->
-
-  exec {
+  }
+  ->  exec {
     'upagrade pip setup tools with include operation...':
       command => 'sudo pip install -U setuptools',
       user    => 'vagrant',
@@ -118,114 +118,42 @@ node 'sandBox' {
       path    => ['/usr/bin'],
       returns => [0, 1]
   }
-  ->
-
-
-
-
-
-  package {
-    ['netifaces']:
-      ensure   => 'installed',
-      provider => pip
-  }->
-  package {
-    ['PIL']:
-      ensure   => 'installed',
-      provider => pip
-  }->
-  package{
-    ['psutil']:
+  ->  package {
+    ['netifaces','PIL','psutil']:
       ensure   => 'installed',
       provider => pip
   }
-  ->
-
-
-
-  package{
-    'python-pcapy':
-      ensure    => 'installed'
-  }->
-  package{
-    'python-bzrlib':
-      ensure => 'installed'
-  }->
-
-  package{
-    'scapy':
-      ensure => 'installed'
+  ->  package{
+    ['python-pcapy','python-bzrlib','scapy']:
+      ensure    => installed
   }
-  ->
-  package {
-    ['bitarray']:
-      ensure   => 'installed',
-
-      provider => pip
-  }->
-  package {
-    ['thrift']:
+  ->  package {
+    ['bitarray','thrift']:
       ensure   => 'installed',
       provider => pip
   }
-
-  ->
-
-  package {
+  ->  package {
     ['impyla']:
       ensure   => 'installed',
       provider => pip
   }
-
-  ->
-  package {
-    ['libxml2-dev']:
-      ensure => installed
-  }
   ->
   package{
-    ['libxslt1-dev']:
+    ['libxml2-dev','libxslt1-dev','tshark']:
       ensure => installed
   }
   ->
-  package{
-    ['tshark']:
-      ensure => installed
-  }
-  ->
-
   package {
     ['logbook','trollius', 'mock', 'pytest', 'lxml']:
       ensure   => 'installed',
       provider => pip
   }->
   package {
-    ['pyshark']:
+    ['pyshark','dpkt']:
       ensure   => 'installed',
       provider => pip
   }
   ->
-  package {
-    ['dpkt']:
-      ensure   => 'installed',
-      provider => pip
-  }
-  ->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   class{
     "owncloud":
