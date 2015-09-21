@@ -28,7 +28,7 @@ create table if not exists logger_cpu (
   ts timestamp,
   cpu_usage int,
   cpu_count int,
-  logger_id bigint,
+  logger_id string,
   dummy_hostname string
 ) stored as parquet;
 
@@ -38,7 +38,7 @@ create table if not exists logger_ram (
   ts timestamp,
   ram_usage int,
   ram_count int,
-  logger_id bigint,
+  logger_id string,
   dummy_hostname string
 ) stored as parquet;
 
@@ -48,7 +48,7 @@ create table if not exists logger_net (
   ts timestamp,
   up_size int,
   down_size int,
-  logger_id bigint,
+  logger_id string,
   dummy_hostname string
 )stored as parquet;
 
@@ -59,15 +59,15 @@ create table if not exists logger_hdd (
   ts timestamp,
   data_write int,
   data_read int,
-  logger_id bigint,
+  logger_id string,
   dummy_hostname string
 ) stored as parquet;
 
 -- ID
 drop table if exists logger_id;
 create table if not exists logger_id(
-  logger_id bigint,
-  pc_client_name string,
+  logger_id string,
+  dummy_hostname string,
   pc_server_name string,
   profile string,
   test_definition string

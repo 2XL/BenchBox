@@ -55,8 +55,10 @@ class NetworkMonitor(MonitorResource):
         for value in enumerate(self.networkValues):
             print value
             items = value[1].split(' ')
-            insert_into_logger = "insert into logger_net values ('{}', '{}', '{}', {})".format(items[1], 'Memory', items[0], items[2])
+            insert_into_logger = "insert into logger_net values ('{}', {}, {}, '{}', '{}')"\
+                .format(items[1], items[], items[0], items[2])
             # StackSync 2015-09-08T17:35:10.455244 475340800
+            # ts,  up_size, down_size, logger_id, dummy_hostname
             sm.execute(insert_into_logger)
         sm.quit()
 

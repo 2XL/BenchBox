@@ -74,6 +74,7 @@ class CPUMonitor(MonitorResource):
             insert_into_logger = "insert into logger_cpu values ('{}', '{}', '{}', {})"\
                 .format(items[1], 'CPU', items[0],           int(round(float(items[2]))))
             # StackSync 2015-09-08T17:35:10.455244 475340800
+            # ts,  cpu_usage, cpu_count, logger_id, dummy_hostname
             sm.execute(insert_into_logger)
         sm.quit()
 

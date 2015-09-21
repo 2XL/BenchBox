@@ -111,19 +111,12 @@ node 'sandBox' {
     mode   => 755,
   }
 
-  ->  exec {
-    'upagrade pip setup tools with include operation...':
-      command => 'sudo pip install -U setuptools',
-      user    => 'vagrant',
-      group   => 'vagrant',
-      path    => ['/usr/bin'],
-      returns => [0, 1]
-  }
+
   ->  package {
     ['netifaces','PIL','psutil']:
       ensure   => 'installed',
       provider => pip,
-      require => Package['python-pip']
+      require  => Package['python-pip']
   }
   ->  package{
     ['python-pcapy','python-bzrlib','scapy']:
@@ -134,11 +127,7 @@ node 'sandBox' {
       ensure   => 'installed',
       provider => pip
   }
-  ->  package {
-    ['impyla']:
-      ensure   => 'installed',
-      provider => pip
-  }
+
   ->
   package{
     ['libxml2-dev','libxslt1-dev','tshark']:
@@ -152,6 +141,28 @@ node 'sandBox' {
   }->
   package {
     ['pyshark','dpkt']:
+      ensure   => 'installed',
+      provider => pip
+  }
+
+  /*
+
+  ->  exec {
+    'upagrade pip setup tools with include operation...':
+      command => 'sudo pip install -U setuptools',
+      user    => 'vagrant',
+      group   => 'vagrant',
+      path    => ['/usr/bin'],
+      returns => [0, 1]
+  }
+*/
+  -> package {
+    'python-setuptools':
+      ensure => installed
+  }
+
+  ->  package {
+    ['impyla']:
       ensure   => 'installed',
       provider => pip
   }
