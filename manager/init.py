@@ -143,12 +143,13 @@ def start(h, hostname, idx, cb):
     config(h, hostname, idx, CONFIG)  # tell each hosts their profile
     if idx < 0: # onlye has to be done once
         keygen_stacksync(h, hostname, CONFIG) # only have to be run once
-    credentials(h, hostname, idx)      # cal conectar desde la mateixa maquina virtual xk no dona accés a hosts externs
-    sserver(h, hostname, idx, CONFIG)   # tell each host where the sync servers are located
+    #credentials(h, hostname, idx)      # cal conectar desde la mateixa maquina virtual xk no dona accés a hosts
+    # externs
+    # sserver(h, hostname, idx, CONFIG)   # tell each host where the sync servers are located
     # split run test... how to tell each dummy to run a test???, have to open a socket a the simulator... or create a
     #  proxy at the dummy host
     #  test proxy
-    run(h, hostname, idx) # make vagrant up
+    # run(h, hostname, idx) # make vagrant up
     print 'start/OK: {}:{}'.format(hostname, idx)
     cb(hostname)
 
@@ -209,7 +210,8 @@ def setup(h, hostname):
               "echo '%s' | sudo -S ./installVagrantVBox.sh; " \
               "fi;" \
               "" % h['passwd']
-    # print str_cmd
+    print str_cmd
+
     rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'setup/OK: {}'.format(hostname)
 
