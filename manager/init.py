@@ -483,5 +483,7 @@ if __name__ == '__main__':
     print '...'
     COMMANDS['init']()
     print '...'
+    ''' paralelize this part '''
+
     COMMANDS[opt.option]()  # command pattern
 
