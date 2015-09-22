@@ -22,6 +22,7 @@ configAll.add_section('demo')
 configAll.add_section('profile')
 configAll.add_section('owncloud')
 configAll.add_section('stacksync')
+configAll.add_section('graphite') # log database
 configAll.add_section('log_server')
 
 
@@ -55,6 +56,19 @@ configAll.set('log_server', 'passwd', 'lab144')
 configAll.set('log_server', 'url', 'ast12.recerca.intranet.urv.es')
 configAll.set('log_server', 'port', '8888')
 
+
+# http://graphite.readthedocs.org/en/latest/carbon-daemons.html
+configAll.set('graphite', 'ip', '10.30.103.95')
+configAll.set('graphite', 'port', '8443')
+configAll.set('graphite', 'raw', '2003') # tcp, "plain text" protocol
+configAll.set('graphite', 'pickle', '2004') # picke # default listener port
+configAll.set('graphite', 'api', '7002') # api
+
+
+
+
+
+
 # Writing our configuration file to 'example.cfg'
 with open('config.all.ini', 'wb') as configfileAll:
     configAll.write(configfileAll)
@@ -87,7 +101,7 @@ ast04 = {'user': 'milax', 'passwd': 'milax', 'ip': '10.30.103.96',
          'stacksync_login': 'anna:anna'}
 
 
-li = {'ast04': ast04, }
+li = {'ast04': ast04, 'ast03': ast03}
 
 
 for hostname in li:
