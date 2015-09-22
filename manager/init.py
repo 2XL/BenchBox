@@ -309,12 +309,13 @@ def credentials(hosts):
                   "cd vagrant; " \
                   "echo '%s' > ss.stacksync.key; " \
                   "echo '%s' > ss.owncloud.key; " \
+                  "echo '%s' > hostname; " \
                   "echo 'Run: clients configuration scripts: '; " \
                   "cd scripts; " \
                   "./config.owncloud.sh; " \
                   "./config.stacksync.sh; " \
                   "echo 'clients configuration files generated'; " \
-                  "fi; " % (key, ownkey)
+                  "fi; " % (key, ownkey, host)
         # print str_cmd
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'credentials/OK'
