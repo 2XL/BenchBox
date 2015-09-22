@@ -12,12 +12,13 @@ class NetworkMonitor(MonitorResource):
     networkCounter = None # PerformanceCounter
     networkValues = list()
 
-    def __init__(self, nic, loggerId):
+    def __init__(self, nic, loggerId, hostname):
         print 'constructor'
         self.networkCounter # Memory, Available MBytes, true
         self.networkValues = list() # list {float}
         self.networkCounter = PerformanceCounter('Network', 'UpAndDown bytes', nic)
         self.loggerId = loggerId
+        self.hostname = hostname
 
     def prepareMonitoring(self):
         print 'NET:prepareMonitor'
@@ -57,7 +58,7 @@ class NetworkMonitor(MonitorResource):
             print value
             items = value[1].split(' ')
             insert_into_logger = "insert into logger_net values ('{}', {}, {}, '{}', '{}')" \
-                .format(items[0], items[1], items[2], self.loggerId, 'ast03')
+                .format(items[0], items[1], items[2], self.loggerId, self.hostname)
             # StackSync 2015-09-08T17:35:10.455244 475340800
             # ts,  up_size, down_size, logger_id, dummy_hostname
             sm.execute(insert_into_logger)

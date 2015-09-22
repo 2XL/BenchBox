@@ -82,10 +82,10 @@ class Monitor:
 
         print "loggerId: ".format(self.logger_id)
 
-        self.resources.append(MemoryMonitor(self.processes, self.logger_id))
-        self.resources.append(DiskMonitor(folder_sync_client, self.logger_id))
-        self.resources.append(CPUMonitor(self.processes, self.logger_id))
-        self.resources.append(NetworkMonitor('eth0', self.logger_id))
+        self.resources.append(MemoryMonitor(self.processes, self.logger_id, self.hostname))
+        self.resources.append(DiskMonitor(folder_sync_client, self.logger_id, self.hostname))
+        self.resources.append(CPUMonitor(self.processes, self.logger_id, self.hostname))
+        self.resources.append(NetworkMonitor('eth0', self.logger_id, self.hostname))
         self.pcapCapturer = pcap_capture()
 
         x=0
@@ -105,6 +105,7 @@ class Monitor:
 
     def setLoggerId(self, dummy_hostname, pc_server_name, profile, test_definition):
         self.logger_id = time()
+        self.hostname = dummy_hostname
         sm = StoreManager('ast12.recerca.intranet.urv.es',
                           21050,
                           'lab144',

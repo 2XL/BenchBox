@@ -173,6 +173,15 @@ if __name__ == '__main__':
     #     print 'Config/OK'
 
 
+    # read hostname
+    hostname = None
+    try:
+        f = open('/vagrant/hostname', 'r')
+        hostname = f.read().splitlines()[0]
+    except Exception as ex:
+        print ex
+
+
     opt = process_opt()
     operations = int(opt.ops)
     parser = SafeConfigParser()
@@ -225,7 +234,7 @@ if __name__ == '__main__':
     log_filename = 'local.csv'
     proc_name = opt.pid # if its stacksync
     print interval
-    monitor.start_monitor(interval, log_filename, proc_name, opt.ops, opt.profile, 'ast03')
+    monitor.start_monitor(interval, log_filename, proc_name, opt.ops, opt.profile, hostname)
     #  operations = 100
     #  operations = 10000
     for i in range(operations):

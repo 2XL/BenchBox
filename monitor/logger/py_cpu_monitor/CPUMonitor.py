@@ -12,12 +12,13 @@ class CPUMonitor(MonitorResource):
     'CPUMonitor class'
     processes = None # list of psutil.Process.iter_proc_list()
 
-    def __init__(self, processes, loggerId):
+    def __init__(self, processes, loggerId, hostname):
         print 'constructor'
         self.processes = processes # string, LinkedList
         self.cpuValues = list() # list of floats
         self.cpuCounter = list() # list of performanceCounter
         self.loggerId = loggerId
+        self.hostname = hostname
 
         process = processes
         #for process in self.processes:
@@ -75,7 +76,7 @@ class CPUMonitor(MonitorResource):
             print value
             items = value[1].split(' ')
             insert_into_logger = "insert into logger_cpu values ('{}', {}, {}, '{}', '{}')" \
-                .format(items[0], items[1], items[2], self.loggerId, 'ast03')
+                .format(items[0], items[1], items[2], self.loggerId, self.hostname)
             # StackSync 2015-09-08T17:35:10.455244 475340800
             # ts,  cpu_usage, cpu_count, logger_id, dummy_hostname
             sm.execute(insert_into_logger)
