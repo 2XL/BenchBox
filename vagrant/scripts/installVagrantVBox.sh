@@ -17,6 +17,7 @@ if which virtualbox; then
         echo '64'
         if [ ! -f virtualbox-4.2_4.2.2-81494~Debian~wheezy_amd64.deb ]
 		 then
+		 # 		 wget http://download.virtualbox.org/virtualbox/4.1.40/virtualbox-4.1_4.1.40-101594~Debian~squeeze_amd64.deb
 	      wget http://download.virtualbox.org/virtualbox/4.2.2/virtualbox-4.2_4.2.2-81494~Debian~wheezy_amd64.deb
 	     fi
 	    sudo dpkg -i virtualbox-4.2_4.2.2-81494~Debian~wheezy_amd64.deb;
