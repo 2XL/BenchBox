@@ -83,8 +83,12 @@ BenchBox uses GitHub!!!
 - Refactor the dummy client invocation paralelization, currently its not supported.
 - Write Tests
 - Rethink Github Save 
-  
- 
+
+- Provide WebInterface for /manager/init.py
+	* https://docs.python.org/2/library/cgi.html
+
+
+
 License
 ----
 

@@ -131,15 +131,19 @@ def init():
     greed_command()
 
 
-def start():
-    print 'start'
-    preconfig(HOSTS)  # tell all the hosts to download BenchBox
-    setup(HOSTS)  # tell all the hosts to install VirtualBox and Vagrant
-    summon(HOSTS)  # tell the hosts to download Vagrant box to use
-    config(HOSTS, CONFIG)  # tell each hosts their profile
-    credentials(HOSTS) # call conectar desde la mateixa maquina virtual xk no dona accés a hosts externs
-    sserver(HOSTS,CONFIG) # tell each host where the sync servers are located
-    run(HOSTS) # make vagrant up
+def start(h, hostname):
+    print 'start, {} '.format(hostname)
+    preconfig(h)  # tell all the hosts to download BenchBox
+    #setup(h)    # tell all the hosts to install VirtualBox and Vagrant
+    #summon(h)   # tell the hosts to download Vagrant box to use
+    # config(HOSTS, CONFIG)  # tell each hosts their profile
+    #keygen_stacksync()
+    #credentials(h)      # cal conectar desde la mateixa maquina virtual xk no dona accés a hosts externs
+    #sserver(h, CONFIG)   # tell each host where the sync servers are located
+    # split run test... how to tell each dummy to run a test???, have to open a socket a the simulator... or create a
+    #  proxy at the dummy host
+    #  test proxy
+    #run(h) # make vagrant up
     print 'start/OK'
 
 
@@ -164,23 +168,22 @@ def monitor():
     start_node_server(HOSTS)
 # Advance functions
 
-def preconfig(hosts):
+def preconfig(h, hostname):
     print 'preconfig: download BenchBox repo at the Slave hosts'
-    for host in hosts:
-        h = hosts[host]
-        str_cmd = "" \
-                  "echo 'check if Git is installed...'; " \
-                  "echo '%s' | sudo -S apt-get install git; " \
-                  "echo 'check if BenchBox is installed...'; " \
-                  "if [ -d BenchBox ]; then " \
-                  "cd BenchBox;" \
-                  "git pull; " \
-                  "else " \
-                  "git clone --recursive https://github.com/2XL/BenchBox.git; " \
-                  "fi;" \
-                  "" % h['passwd']
-        # print str_cmd
-        rpc(h['ip'], h['user'], h['passwd'], str_cmd) # utilitzar un worker del pool
+
+    str_cmd = "" \
+              "echo 'check if Git is installed...'; " \
+              "echo '%s' | sudo -S apt-get install git; " \
+              "echo 'check if BenchBox is installed...'; " \
+              "if [ -d BenchBox ]; then " \
+              "cd BenchBox;" \
+              "git pull; " \
+              "else " \
+              "git clone --recursive https://github.com/2XL/BenchBox.git; " \
+              "fi;" \
+              "" % h['passwd']
+    # print str_cmd
+    rpc(h['ip'], h['user'], h['passwd'], str_cmd) # utilitzar un worker del pool
 
     '''
     versió pool
@@ -188,37 +191,35 @@ def preconfig(hosts):
     print 'preconfig/OK'
 
 
-def setup(hosts):
+def setup(h):
     print 'setup: Setup vagrant and VirtualBox at the Slave hosts'
-    for host in hosts:
-        h = hosts[host]
-        str_cmd = "" \
-                  "if [ -d BenchBox ]; then " \
-                  "cd BenchBox;" \
-                  "git pull; " \
-                  "cd vagrant/scripts; " \
-                  "echo '%s' | sudo -S ./installVagrantVBox.sh; " \
-                  "fi;" \
-                  "" % h['passwd']
-        # print str_cmd
-        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+
+    str_cmd = "" \
+              "if [ -d BenchBox ]; then " \
+              "cd BenchBox;" \
+              "git pull; " \
+              "cd vagrant/scripts; " \
+              "echo '%s' | sudo -S ./installVagrantVBox.sh; " \
+              "fi;" \
+              "" % h['passwd']
+    # print str_cmd
+    rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'setup/OK'
 
 
-def summon(hosts):
+def summon(h):
     print 'summon: Download vagrant box dependencies at the Slave hosts'
-    for host in hosts:
-        h = hosts[host]
-        str_cmd = "" \
-                  "if [ -d BenchBox ]; then " \
-                  "cd BenchBox;" \
-                  "git pull; " \
-                  "cd vagrant/scripts; " \
-                  "./installDependencies.sh; " \
-                  "fi;" \
-                  ""
-        #print str_cmd
-        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+
+    str_cmd = "" \
+              "if [ -d BenchBox ]; then " \
+              "cd BenchBox;" \
+              "git pull; " \
+              "cd vagrant/scripts; " \
+              "./installDependencies.sh; " \
+              "fi;" \
+              ""
+    #print str_cmd
+    rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'summon/OK'
 
 
@@ -250,7 +251,9 @@ def config(hosts, config):
     print 'config/OK'
 
 
-def keygen(ip = "10.30.239.198"):
+
+
+def keygen_stacksync(ip = "10.30.239.198"):
     print 'keygen: retrieve stacksync login credentials'
     conn = psycopg2.connect(database="stacksync_db",
                             user="stacksync_user",
@@ -286,7 +289,8 @@ def sserver(hosts, conf):
 
 def credentials(hosts):
     print 'credentials'
-    keygen()  # stacksync
+
+    #keygen_stacksync()  # stacksync
 
     # keygen() # owncloud
     # push the generated keys to each slave host
@@ -321,31 +325,41 @@ def credentials(hosts):
     print 'credentials/OK'
 
 
-def run(hosts):
+
+
+def credentials_owncloud(hosts):
+    print 'pushOwnCloudCredentials'
+
+
+def credentials_stacksync(hosts):
+    print 'pushStackSyncCredentials'
+
+
+
+
+def run(h):
     print 'run: Call Vagrant init at each host'
-    for host in hosts:
-        h = hosts[host]
-        str_cmd = "" \
-                  "if [ -d BenchBox ]; then " \
-                  "cd BenchBox;" \
-                  "git pull; " \
-                  "cd vagrant; " \
-                  "echo '-------------------------------'; " \
-                  "ls -l *.box; " \
-                  "vagrant -v; " \
-                  "VBoxManage --version; " \
-                  "echo '-------------------------------'; " \
-                  "VBoxManage list runningvms | wc -l > running; " \
-                  "vagrant up sandBox; " \
-                  "vagrant provision sandBox; " \
-                  "vagrant up benchBox; " \
-                  "vagrant provision benchBox; " \
-                  "else " \
-                  "echo 'Vagrant Project not Found!??'; " \
-                  "fi;" \
-                  ""
-        # print str_cmd
-        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    str_cmd = "" \
+              "if [ -d BenchBox ]; then " \
+              "cd BenchBox;" \
+              "git pull; " \
+              "cd vagrant; " \
+              "echo '-------------------------------'; " \
+              "ls -l *.box; " \
+              "vagrant -v; " \
+              "VBoxManage --version; " \
+              "echo '-------------------------------'; " \
+              "VBoxManage list runningvms | wc -l > running; " \
+              "vagrant up sandBox; " \
+              "vagrant provision sandBox; " \
+              "vagrant up benchBox; " \
+              "vagrant provision benchBox; " \
+              "else " \
+              "echo 'Vagrant Project not Found!??'; " \
+              "fi;" \
+              ""
+    # print str_cmd
+    rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'run/OK'
 
 
@@ -435,14 +449,13 @@ def shutdown(hosts):
         rpc(h['ip'], h['user'], h['passwd'], str_cmd)
     print 'shutdown/OK'
 
-def start_node_server(hosts):
+def start_node_server(h):
     print 'run the nodejs monitor server at each Dummy Host'
-    for host in hosts:
-        h = hosts[host]
-        str_cmd = "cd BenchBox/monitor; " \
-                  "nohup /usr/local/bin/npm start & "
-        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
-        print 'nodeserver running at {}:{}'.format(h['ip'], '5000')
+
+    str_cmd = "cd BenchBox/monitor; " \
+              "nohup /usr/local/bin/npm start & "
+    rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    print 'nodeserver running at {}:{}'.format(h['ip'], '5000')
 # -------------------------------------------------------------------------------
 # Main
 # -------------------------------------------------------------------------------
@@ -481,7 +494,8 @@ if __name__ == '__main__':
     print 'Popen installed...'
     p.communicate()
     print '...'
-    COMMANDS['init']()
+    for host in HOSTS:
+        COMMANDS['init'](HOSTS[host], host)
     print '...'
     ''' paralelize this part '''
 
