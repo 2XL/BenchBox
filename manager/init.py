@@ -7,7 +7,7 @@ from ConfigParser import SafeConfigParser
 from argparse import ArgumentParser
 import shlex
 import psycopg2
-
+import threading
 from subprocess import Popen, PIPE
 import traceback, time, sys, os
 import random, numpy
@@ -48,6 +48,8 @@ def process_opt():
 
     parser.add_argument("--shutdown", dest='shutdown', default=None, help="Shutdown hosts")
 
+    parser.add_argument("-x", dest="xxx", default=None, help="Apply changes only at host x")
+
     opt = parser.parse_args()
 
     if not opt.option:
@@ -73,9 +75,11 @@ def loadConfiguration(path):
     owncloud = dict(configAll.items('owncloud'))
     stacksync = dict(configAll.items('stacksync'))
     log_server = dict(configAll.items('log_server'))
+    graphite = dict(configAll.items('graphite'))
     return {'profile': profile,
             'ss': {'owncloud': owncloud, 'stacksync': stacksync},
-            'ls': log_server}
+            'ls': log_server,
+            'graphite': graphite}
 
 def loadHosts(path):
     print 'Load hosts candidates config file'
@@ -131,20 +135,22 @@ def init():
     greed_command()
 
 
-def start(h, hostname):
-    print 'start, {} '.format(hostname)
-    preconfig(h)  # tell all the hosts to download BenchBox
-    #setup(h)    # tell all the hosts to install VirtualBox and Vagrant
-    #summon(h)   # tell the hosts to download Vagrant box to use
-    # config(HOSTS, CONFIG)  # tell each hosts their profile
-    #keygen_stacksync()
-    #credentials(h)      # cal conectar desde la mateixa maquina virtual xk no dona accés a hosts externs
-    #sserver(h, CONFIG)   # tell each host where the sync servers are located
+def start(h, hostname, idx, cb):
+    print 'start, hostname:{} :&&: idx:{} '.format(hostname, idx)
+    preconfig(h, hostname)  # tell all the hosts to download BenchBox
+    setup(h, hostname)    # tell all the hosts to install VirtualBox and Vagrant
+    summon(h, hostname)   # tell the hosts to download Vagrant box to use
+    config(h, hostname, idx, CONFIG)  # tell each hosts their profile
+    if idx < 0: # onlye has to be done once
+        keygen_stacksync(h, hostname, CONFIG) # only have to be run once
+    credentials(h, hostname, idx)      # cal conectar desde la mateixa maquina virtual xk no dona accés a hosts externs
+    sserver(h, hostname, idx, CONFIG)   # tell each host where the sync servers are located
     # split run test... how to tell each dummy to run a test???, have to open a socket a the simulator... or create a
     #  proxy at the dummy host
     #  test proxy
-    #run(h) # make vagrant up
-    print 'start/OK'
+    run(h, hostname, idx) # make vagrant up
+    print 'start/OK: {}:{}'.format(hostname, idx)
+    cb(hostname)
 
 
 def stop():
@@ -169,7 +175,7 @@ def monitor():
 # Advance functions
 
 def preconfig(h, hostname):
-    print 'preconfig: download BenchBox repo at the Slave hosts'
+    #print 'preconfig: download BenchBox repo at the Slave hosts: {}'.format(hostname)
 
     str_cmd = "" \
               "echo 'check if Git is installed...'; " \
@@ -183,16 +189,17 @@ def preconfig(h, hostname):
               "fi;" \
               "" % h['passwd']
     # print str_cmd
+    print h
     rpc(h['ip'], h['user'], h['passwd'], str_cmd) # utilitzar un worker del pool
 
     '''
     versió pool
     '''
-    print 'preconfig/OK'
+    print 'preconfig/OK: {}'.format(hostname)
 
 
-def setup(h):
-    print 'setup: Setup vagrant and VirtualBox at the Slave hosts'
+def setup(h, hostname):
+    #print 'setup: Setup vagrant and VirtualBox at the Slave hosts: {}'.format(hostname)
 
     str_cmd = "" \
               "if [ -d BenchBox ]; then " \
@@ -204,11 +211,11 @@ def setup(h):
               "" % h['passwd']
     # print str_cmd
     rpc(h['ip'], h['user'], h['passwd'], str_cmd)
-    print 'setup/OK'
+    print 'setup/OK: {}'.format(hostname)
 
 
-def summon(h):
-    print 'summon: Download vagrant box dependencies at the Slave hosts'
+def summon(h, hostname):
+    # print 'summon: Download vagrant box dependencies at the Slave hosts'
 
     str_cmd = "" \
               "if [ -d BenchBox ]; then " \
@@ -220,45 +227,46 @@ def summon(h):
               ""
     #print str_cmd
     rpc(h['ip'], h['user'], h['passwd'], str_cmd)
-    print 'summon/OK'
+    print 'summon/OK: {}'.format(hostname)
 
 
-def config(hosts, config):
-    print 'config: Assign a Stereotype to each host'
+def config(h, hostname, idx, cfg):
+    # print 'config: Assign a Stereotype to each host'
 
-    profiles = config['profile']
+    profiles = cfg['profile']
     p = []
     counter = 1
     for prof in profiles:
-        for idx in range(counter, counter+int(profiles[prof])):
+        for i in range(counter, counter+int(profiles[prof])):
             #print prof, idx
             p.append(prof)
         counter+=int(profiles[prof])
 
-    for idx, host in enumerate(hosts):
-        h = hosts[host]
-        str_cmd = "" \
-                  "if [ -d BenchBox ]; then " \
-                  "cd BenchBox;" \
-                  "git pull; " \
-                  "cd vagrant; " \
-                  "echo '%s' > profile; "  \
-                  "fi; " % p[idx]
 
-        #print str_cmd
-        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    str_cmd = "" \
+              "if [ -d BenchBox ]; then " \
+              "cd BenchBox;" \
+              "git pull; " \
+              "cd vagrant; " \
+              "echo '%s' > profile; "  \
+              "fi; " % p[idx]
 
-    print 'config/OK'
+    #print str_cmd
+    rpc(h['ip'], h['user'], h['passwd'], str_cmd)
 
+    print 'config/OK: {} :: {}'.format(hostname, p[idx])
 
 
 
-def keygen_stacksync(ip = "10.30.239.198"):
-    print 'keygen: retrieve stacksync login credentials'
+
+def keygen_stacksync(h, hostname, conf):
+    stacksync_ip = conf['ss']['stacksync']['ip']
+
+    # print 'keygen: retrieve stacksync login credentials'
     conn = psycopg2.connect(database="stacksync_db",
                             user="stacksync_user",
                             password="stacksync_pass",
-                            host=ip,
+                            host=stacksync_ip,
                             port="5432")
     cur = conn.cursor()
     query = "select id, name, swift_account, swift_user, email from user1 where name  ~ 'demo' order by email asc";
@@ -266,29 +274,13 @@ def keygen_stacksync(ip = "10.30.239.198"):
     with open('stacksync_credentials.csv', 'w') as f:
         cur.copy_expert(outputquery, f)
     conn.close()
-    print 'keygen/OK'
+    print 'keygen/OK {}'.format(hostname)
     # el allin one tiene este puerto bloqueado por ello no puedo acceder a esos datos.
 
 
-def sserver(hosts, conf):
-    print 'sserver'
-    # print config
-    owncloud_ip = conf['ss']['owncloud']
-    stacksync_ip = conf['ss']['stacksync']
-    for idx, host in enumerate(hosts):
-        h = hosts[host]
-        str_cmd = "" \
-                  "if [ -d BenchBox ]; then " \
-                  "cd BenchBox/vagrant; " \
-                  "echo '%s' > ss.stacksync.ip; " \
-                  "echo '%s' > ss.owncloud.ip; " \
-                  "fi; " % (stacksync_ip, owncloud_ip)
-        # print str_cmd
-        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
-    print 'sserver/OK'
 
-def credentials(hosts):
-    print 'credentials'
+def credentials(h, hostname, idx):
+    # print 'credentials'
 
     #keygen_stacksync()  # stacksync
 
@@ -302,30 +294,44 @@ def credentials(hosts):
             # process each row
             cred.append(row)
 
-    for idx, host in enumerate(hosts):
-        key = ','.join(cred[idx])
-        ownkey = cred[idx][1]
-        h = hosts[host]
-        str_cmd = "" \
-                  "if [ -d BenchBox ]; then " \
-                  "cd BenchBox; " \
-                  "git pull; " \
-                  "cd vagrant; " \
-                  "echo '%s' > ss.stacksync.key; " \
-                  "echo '%s' > ss.owncloud.key; " \
-                  "echo '%s' > hostname; " \
-                  "echo 'Run: clients configuration scripts: '; " \
-                  "cd scripts; " \
-                  "./config.owncloud.sh; " \
-                  "./config.stacksync.sh; " \
-                  "echo 'clients configuration files generated'; " \
-                  "fi; " % (key, ownkey, host)
-        # print str_cmd
-        rpc(h['ip'], h['user'], h['passwd'], str_cmd)
-    print 'credentials/OK'
+    key = ','.join(cred[idx])
+    ownkey = cred[idx][1]
+    str_cmd = "" \
+              "if [ -d BenchBox ]; then " \
+              "cd BenchBox; " \
+              "git pull; " \
+              "cd vagrant; " \
+              "echo '%s' > ss.stacksync.key; " \
+              "echo '%s' > ss.owncloud.key; " \
+              "echo '%s' > hostname; " \
+              "echo 'Run: clients configuration scripts: '; " \
+              "cd scripts; " \
+              "./config.owncloud.sh; " \
+              "./config.stacksync.sh; " \
+              "echo 'clients configuration files generated'; " \
+              "fi; " % (key, ownkey, hostname)
+    # print str_cmd
+    rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    print 'credentials/OK: {}:[{}] => {} / {}'.format(hostname, idx, ownkey, key)
 
 
 
+def sserver(h, hostname, idx,  conf):
+    # print 'sserver'
+    # print config
+    owncloud_ip = conf['ss']['owncloud']
+    stacksync_ip = conf['ss']['stacksync']
+
+    str_cmd = "" \
+              "if [ -d BenchBox ]; then " \
+              "cd BenchBox/vagrant; " \
+              "echo '%s' > ss.stacksync.ip; " \
+              "echo '%s' > ss.owncloud.ip; " \
+              "fi; " % (stacksync_ip, owncloud_ip)
+
+    # print str_cmd
+    rpc(h['ip'], h['user'], h['passwd'], str_cmd)
+    print 'sserver/OK {} : {}'.format(hostname, idx)
 
 def credentials_owncloud(hosts):
     print 'pushOwnCloudCredentials'
@@ -337,8 +343,8 @@ def credentials_stacksync(hosts):
 
 
 
-def run(h):
-    print 'run: Call Vagrant init at each host'
+def run(h, hostname, idx):
+    print 'run: Call Vagrant init at each host: {}'.format(hostname)
     str_cmd = "" \
               "if [ -d BenchBox ]; then " \
               "cd BenchBox;" \
@@ -360,7 +366,7 @@ def run(h):
               ""
     # print str_cmd
     rpc(h['ip'], h['user'], h['passwd'], str_cmd)
-    print 'run/OK'
+    print 'run/OK {}/{}'.format(hostname, idx)
 
 
 def keepalive(hosts):
@@ -471,6 +477,16 @@ COMMANDS = {
     'monitor': monitor
 }
 
+
+def cb_func(hostname):
+    "The callback function."
+    print 'Callback, in thread {} => {}'.format(threading.current_thread().name, hostname)
+
+def th_func(callback):
+    "The threaded function."
+    # ...
+    callback()
+
 if __name__ == '__main__':
 
     opt = process_opt()
@@ -491,13 +507,22 @@ if __name__ == '__main__':
     # Popen(['command to run', 'some arguments'], stdout=PIPE, stderr=PIPE)
     hw = ['/bin/echo',  "Popen/OK"]
     p = Popen(hw)
+
     print 'Popen installed...'
     p.communicate()
     print '...'
-    for host in HOSTS:
-        COMMANDS['init'](HOSTS[host], host)
-    print '...'
+    for idx, host in enumerate(HOSTS):
+        # COMMANDS['init']()
+        print '...'
+        # COMMANDS[opt.option](HOSTS[host], host)  # command pattern
+        if opt.xxx == None:
+            thr = threading.Thread(target=COMMANDS[opt.option], args=(HOSTS[host], host, idx, cb_func,)).start()
+        elif int(opt.xxx) != idx:
+            print 'Do nothing, {} != {}'.format(opt.xxx, idx)
+        else:
+            thr = threading.Thread(target=COMMANDS[opt.option], args=(HOSTS[host], host, idx, cb_func,)).start()
+
     ''' paralelize this part '''
 
-    COMMANDS[opt.option]()  # command pattern
+
 
