@@ -141,7 +141,7 @@ def start(h, hostname, idx, cb):
     setup(h, hostname)    # tell all the hosts to install VirtualBox and Vagrant
     summon(h, hostname)   # tell the hosts to download Vagrant box to use
     config(h, hostname, idx, CONFIG)  # tell each hosts their profile
-    if idx < 0: # onlye has to be done once
+    if False and idx < 0 : # onlye has to be done once / never run this step
         keygen_stacksync(h, hostname, CONFIG) # only have to be run once
     credentials(h, hostname, idx)      # cal conectar desde la mateixa maquina virtual xk no dona accés a hosts
     # externs
