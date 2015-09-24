@@ -39,12 +39,21 @@ configAll.set('owncloud', 'ip', '10.30.236.140')
 configAll.set('owncloud', 'port', '80')
 configAll.set('owncloud', 'user', 'user')
 configAll.set('owncloud', 'passwd', 'bitnami')
-
-configAll.set('stacksync', 'ip', '10.30.239.198')
+#
+configAll.set('stacksync', 'ip', '130.206.36.143')
 configAll.set('stacksync', 'port', '80')
-configAll.set('stacksync', 'admin', '10.30.239.198:8081/admin')
+configAll.set('stacksync', 'admin', '130.206.36.143:8081/admin')
 configAll.set('stacksync', 'user', 'swift')
 configAll.set('stacksync', 'passwd', 'urv')
+
+
+#
+# configAll.set('stacksync', 'ip', '10.30.239.198')
+# configAll.set('stacksync', 'port', '80')
+# configAll.set('stacksync', 'admin', '10.30.239.198:8081/admin')
+# configAll.set('stacksync', 'user', 'swift')
+# configAll.set('stacksync', 'passwd', 'urv')
+
 
 # configAll.set('log_server', 'url', 'ds055822.mongolab.com:55822/benchbox')
 # configAll.set('log_server', 'user', 'test')
