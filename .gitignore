@@ -22,7 +22,7 @@ manager/config
 manager/config/*
 manager/output
 manager/hosts
-manager/*.csv
+# manager/*.csv
 test
 
 
