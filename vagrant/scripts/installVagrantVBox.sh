@@ -63,7 +63,7 @@ fi
 
 # have to install sshpass at each dummyhost
 
-if which vagrant; then
+if which sshpass; then
     echo 'sshpass/OK';
  else
 	echo 'sshpass/no';
