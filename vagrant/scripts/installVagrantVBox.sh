@@ -56,3 +56,19 @@ if which vagrant; then
 	fi
 
 fi
+
+
+
+
+
+# have to install sshpass at each dummyhost
+
+if which vagrant; then
+    echo 'sshpass/OK';
+ else
+	echo 'sshpass/no';
+	sudo apt-get install sshpass
+fi
+
+
+
