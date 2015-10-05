@@ -30,7 +30,7 @@ sync_server_ip=`more "$DIR/ss.owncloud.ip" | awk -F ' ' '{ print $4}' | awk -F '
 if [ -z $sync_server_ip ];
 then
 	echo 'user next path'
-	sync_server_ip=($(<"$DIR/ss.owncloud.key"))
+	sync_server_ip=($(<"$DIR/ss.owncloud.ip"))
 else
 	echo 'already read once'
 	echo $sync_server_ip
