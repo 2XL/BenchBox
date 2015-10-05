@@ -27,6 +27,16 @@ fi
 #line=($(<"$DIR/ss.owncloud.ip"))
 sync_server_ip=`more "$DIR/ss.owncloud.ip" | awk -F ' ' '{ print $4}' | awk -F ',' '{print $1}'`
 
+if [ -z $sync_server_ip ];
+then
+	echo 'user next path'
+	sync_server_ip=($(<"$DIR/ss.owncloud.key"))
+else
+	echo 'already read once'
+	echo $sync_server_ip
+	# sync_server_ip=($(<"$DIR/ss.owncloud.key"))
+fi
+
 if [ ! -f "$DIR/ss.owncloud.key" ];
 then
 echo "File: not found!"
