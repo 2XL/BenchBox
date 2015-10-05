@@ -184,8 +184,12 @@ if __name__ == '__main__':
 
     opt = process_opt()
     operations = int(opt.ops)
+
+
     parser = SafeConfigParser()
-    parser.read('config.ini')
+
+
+    parser.read('/home/vagrant/simulator/config.ini')
     print parser.get('executor', 'interface')   # eth0
     print parser.get('executor', 'ftp')         # 192.168.56.2
     print parser.get('executor', 'port')        # 21
