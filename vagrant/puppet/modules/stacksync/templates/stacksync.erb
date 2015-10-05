@@ -2,7 +2,7 @@
 
 
 # kill the previous running if exists
-if [ -f /tmp/StackSync.pid ];
+if [ -f /tmp/StackSync.pid ] && [ -d "/proc/$(cat /tmp/StackSync.pid)" ];
 then
 	kill -9 $(cat /tmp/StackSync.pid)
 fi
