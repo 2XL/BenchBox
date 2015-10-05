@@ -23,6 +23,16 @@ echo "File: $2 exists!"
 fi
 # line=($(<"$DIR/ss.stacksync.ip"))
 sync_server_ip=`more "$DIR/ss.stacksync.ip" | awk -F ' ' '{ print $2}' | awk -F ':' '{print $1}'`
+# line=($(<"$DIR/ss.stacksync.ip"))
+if [ -z $sync_server_ip ];
+then
+	echo 'user next path'
+	sync_server_ip=($(<"$DIR/ss.stacksync.ip"))
+else
+	echo 'already read once'
+	echo $sync_server_ip
+	# sync_server_ip=($(<"$DIR/ss.stacksync.key"))
+fi
 
 
 if [ ! -f "$DIR/ss.stacksync.key" ];
