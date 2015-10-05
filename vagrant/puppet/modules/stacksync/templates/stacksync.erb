@@ -9,13 +9,14 @@ echo $lastPid> /tmp/StackSync.pid
 
 # they should not allow runnin more than one instance of this, how can i know the which procedure to monitor???,
 # if this is called java...
-#echo 'clear existing stacksync processes'
-#kill -9 $(ps -ef | grep -i stacksync | grep -v 'grep' | awk '{print $2}')
+# echo 'clear existing stacksync processes'
+# kill -9 $(ps -ef | grep -i stacksync | grep -v 'grep' | awk '{print $2}')
 
-echo 'start socketListener'
-if [ -d ~/monitor ]; then
-cd ~/monitor/logger/py_cpu_monitor && python SocketListener.py
-echo 'stacksync client and monitor started'
-else
-echo 'stacksync client monitoring not available'
-fi
+
+# echo 'start socketListener'
+# if [ -d ~/monitor ]; then
+# cd ~/monitor/logger/py_cpu_monitor && python SocketListener.py
+# echo 'stacksync client and monitor started'
+# else
+# echo 'stacksync client monitoring not available'
+# fi
