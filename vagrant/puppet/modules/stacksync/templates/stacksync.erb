@@ -1,9 +1,17 @@
 #!/bin/bash
 
 
+# kill the previous running if exists
+if [ -f /tmp/StackSync.pid ];
+then
+	kill -9 $(cat /tmp/StackSync.pid)
+fi
+#
+
+
 echo 'start stackyncClient'
 cd /usr/lib/stacksync/
-java -jar Stacksync.jar -d -c <%= @confdir %> & echo $!
+nohup java -jar Stacksync.jar -d -c <%= @confdir %> & echo $!
 lastPid=$!
 echo $lastPid> /tmp/StackSync.pid
 
