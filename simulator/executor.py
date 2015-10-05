@@ -189,7 +189,7 @@ if __name__ == '__main__':
     parser = SafeConfigParser()
 
 
-    parser.read('~/simulator/config.ini')
+    parser.read('/home/vagrant/simulator/config.ini')
     print parser.get('executor', 'interface')   # eth0
     print parser.get('executor', 'ftp')         # 192.168.56.2
     print parser.get('executor', 'port')        # 21
@@ -218,7 +218,7 @@ if __name__ == '__main__':
     else:
         with open('/vagrant/profile') as f:
             profile_type= f.read().split('\n')[0]
-    profile = '~/simulator/data/xl_markov_{}_all_ms.csv'.format(profile_type)
+    profile = '/home/vagrant/simulator/data/xl_markov_{}_all_ms.csv'.format(profile_type)
 
     print profile
     stereotype_executor.markov_chain.initialize_from_recipe(profile)
