@@ -67,4 +67,4 @@ monitor/logger/py_cpu_monitor/*.pyc
 *.OLD.*
 managerGUI
 test.py
-
+npm-debug.log
