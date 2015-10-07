@@ -6,7 +6,7 @@ import urllib2
 import json
 
 class GraphiteClient():
-    def __init__(self, host='localhost', portstr='22003', portpickle='22004'):
+    def __init__(self, host='localhost', portstr=22003, portpickle=22004):
         self.hostname = host
         self.portstr = portstr
         self.portpickle = portpickle
@@ -27,7 +27,7 @@ class GraphiteClient():
 
     def initClient(self):
         sock = socket.socket()
-        self.session = sock.connect((self.hostname, self.portpickle))
+        self.session = sock.connect((self.hostname, self.portstr))
 
     def exitClient(self):
         self.session.close()
