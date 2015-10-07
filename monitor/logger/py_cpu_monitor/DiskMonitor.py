@@ -16,7 +16,8 @@ class DiskMonitor(MonitorResource):
     def __init__(self, diskPath, loggerId, hostname):
         print 'constructor'
         self.diskValues = list() # float
-        self.diskCounter = PerformanceCounter('Disk', 'Available MBytes', diskPath)
+        self.diskCounter = PerformanceCounter('Disk', 'Available MBytes', diskPath).setMetricHeader('{}.{}.{}.{}'
+                                                                                                    .format('benchbox', hostname, diskPath, loggerId, 'hdd'))
         self.loggerId = loggerId
         self.hostname = hostname
 
@@ -47,6 +48,7 @@ class DiskMonitor(MonitorResource):
             print value
             file.write(str(value[1])+'\n' )
         file.close()
+        self.diskCounter.clearExit()
 
 
     def pushToLogger(self):

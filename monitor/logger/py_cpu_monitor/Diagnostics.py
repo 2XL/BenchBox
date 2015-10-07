@@ -1,9 +1,12 @@
 import psutil
 import datetime
 import os
+from GraphiteClient import GraphiteClient
+
 
 
 class PerformanceCounter:
+
 
     Type = None
     # have a live log appended
@@ -19,6 +22,12 @@ class PerformanceCounter:
         self.log_file = self.Type + '_append.log'
         self.logger = open(self.log_file, 'w').close() # clear the log file for new session
 
+        graphiteUrl = 'ast03'
+        graphitePort = 22003
+        self.gc = GraphiteClient(graphiteUrl, graphitePort)
+        self.metricHeader = None
+
+
         #if processName == 'StackSync':
         if processName == 'OwnCloud':
             isStatic = False
@@ -31,9 +40,13 @@ class PerformanceCounter:
         if type == 'Disk':
             self.setDiskMonitorPath()
 
+    def setMetricHeader(self, str):
+        self.metricHeader = str
+        self.gc.initClient()
+
+
     def NextValue(self):
         to_execute = getattr(self, 'do'+self.Type)
-
         value = to_execute()
         print value
         with open(self.log_file, 'a') as file:
@@ -44,12 +57,15 @@ class PerformanceCounter:
     def doNetwork(self): # network traffic , in / out  {unit}
         print 'doNetwork'
         tstamp =  datetime.datetime.now().isoformat()
+
         net_io = psutil.net_io_counters(pernic=True)
         result=''
         for nic in net_io:
             if nic == self.processName:
                 result+= '{} {}'.format(net_io[nic].bytes_sent,  net_io[nic].bytes_recv)
-
+                ts = self.gc.tsNow()
+                self.gc.collect(self.metricHeader+'.bytes_sent', net_io[nic].bytes_sent, ts)
+                self.gc.collect(self.metricHeader+'.bytes_recv', net_io[nic].bytes_recv, ts)
         return '{} {}'.format(tstamp, result)
 
 
@@ -72,7 +88,10 @@ class PerformanceCounter:
         else:
             try:
                 p = psutil.Process(pids[0])
-                return '{} {} {}'.format(tstamp, p.cpu_percent(interval=1),cpu_c)
+                ts = self.gc.tsNow()
+                cpu_usage = p.cpu_percent(interval=1)
+                self.gc.collect(self.metricHeader+'.cpu_usage', cpu_usage, ts)
+                return '{} {} {}'.format(tstamp,cpu_usage ,cpu_c)
             except Exception as e:
                 print 'Exception {}'.format(e)
                 return '{} {} {}'.format(tstamp, 0,cpu_c)
@@ -84,7 +103,10 @@ class PerformanceCounter:
         tstamp =  datetime.datetime.now().isoformat()
         #return '{} {} {}'.format(self.processName, tstamp, psutil.disk_usage('/').percent)
 
-        return '{} {} {}'.format(tstamp, self.get_size(), psutil.disk_usage('/').used)
+        ts = self.gc.tsNow()
+        disk_usage = psutil.disk_usage('/').used
+        self.gc.collect(self.metricHeader+'.disk_usage', disk_usage, ts)
+        return '{} {} {}'.format(tstamp, self.get_size(), disk_usage)
 
 
 
@@ -112,7 +134,10 @@ class PerformanceCounter:
         else:
             try:
                 p = psutil.Process(pids[0])
-                return '{} {} {}'.format(tstamp, p.memory_info().rss, ram_c)
+                ts = self.gc.tsNow()
+                memory_usage = p.memory_info().rss
+                self.gc.collect(self.metricHeader+'.memory_usage', memory_usage, ts)
+                return '{} {} {}'.format(tstamp, memory_usage, ram_c)
             except Exception as e:
                 print 'Exception {}'.format(e)
                 return '{} {} {}'.format(tstamp, 0, ram_c)
@@ -172,6 +197,11 @@ class PerformanceCounter:
         else:
             procCmd = None
         return [p.pid for p in psutil.process_iter() if procCmd in str(p.name)]
+
+
+    def clearExit(self):
+        self.gc.exitClient()
+
 
 def getPidByName(procCmd = 'java'):
     return [p.pid for p in psutil.process_iter() if procCmd in str(p.name)]

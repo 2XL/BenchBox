@@ -22,7 +22,9 @@ class MemoryMonitor(MonitorResource):
         #for process in self.processes:
         process = processes
         print 'CPUMonitor:{}'.format(process)
-        self.ramCounter.append(PerformanceCounter('Memory', 'Available MBytes', process))
+        self.ramCounter.append(PerformanceCounter('Memory', 'Available MBytes', process)
+                               .setMetricHeader('{}.{}.{}.{}'
+                                                .format('benchbox', hostname, process, loggerId, 'ram')))
 
     def prepareMonitoring(self):
         print 'RAM:prepareMonitor'
@@ -47,6 +49,7 @@ class MemoryMonitor(MonitorResource):
             print value
             file.write(str(value[1])+'\n' )
         file.close()
+        self.ramCounter.clearExit()
 
     def pushToLogger(self):
         print 'Store to impala'

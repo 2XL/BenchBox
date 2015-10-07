@@ -16,7 +16,8 @@ class NetworkMonitor(MonitorResource):
         print 'constructor'
         self.networkCounter # Memory, Available MBytes, true
         self.networkValues = list() # list {float}
-        self.networkCounter = PerformanceCounter('Network', 'UpAndDown bytes', nic)
+        self.networkCounter = PerformanceCounter('Network', 'UpAndDown bytes', nic).setMetricHeader('{}.{}.{}.{}'
+                                                                 .format('benchbox', hostname, nic, loggerId, 'net'))
         self.loggerId = loggerId
         self.hostname = hostname
 
@@ -41,7 +42,7 @@ class NetworkMonitor(MonitorResource):
             print value
             file.write(str(value[1])+'\n' )
         file.close()
-
+        self.networkCounter.clearExit()
 
     def pushToLogger(self):
         print 'Store to impala'
