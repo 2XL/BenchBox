@@ -24,7 +24,7 @@ class CPUMonitor(MonitorResource):
         #for process in self.processes:
         print 'CPUMonitor:{}'.format(process)
         pc = PerformanceCounter('Process', '% Process Time', process)
-        pc.setMetricHeader('{}.{}.{}.{}'.format('benchbox', hostname, process, loggerId, 'cpu'))
+        pc.setMetricHeader('{}.{}.{}.{}'.format('benchbox', hostname, process, loggerId.replace(".", "-"), 'cpu'))
         self.cpuCounter.append(pc)
     # vale hay processes porque lo implementan para cada personal cloud. pero eso no deberia afectar el traffico??? nose
 

@@ -34,6 +34,7 @@ class GraphiteClient():
 
     def collect(self, name, value, ts):
         str = '{} {} {}\n'.format(name, value, ts)
+        print str
         self.session.send(str)
 
 

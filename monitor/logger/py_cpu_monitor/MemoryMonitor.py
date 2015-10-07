@@ -23,7 +23,7 @@ class MemoryMonitor(MonitorResource):
         process = processes
         print 'CPUMonitor:{}'.format(process)
         pc = PerformanceCounter('Memory', 'Available MBytes', process)
-        pc.setMetricHeader('{}.{}.{}.{}'.format('benchbox', hostname, process, loggerId, 'ram'))
+        pc.setMetricHeader('{}.{}.{}.{}'.format('benchbox', hostname, process, loggerId.replace(".", "-"), 'ram'))
         self.ramCounter.append(pc)
 
 

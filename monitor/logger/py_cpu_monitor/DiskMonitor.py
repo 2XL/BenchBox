@@ -17,7 +17,7 @@ class DiskMonitor(MonitorResource):
         print 'constructor'
         self.diskValues = list() # float
         pc = PerformanceCounter('Disk', 'Available MBytes', diskPath)
-        pc.setMetricHeader('{}.{}.{}.{}'.format('benchbox', hostname, diskPath, loggerId, 'hdd'))
+        pc.setMetricHeader('{}.{}.{}.{}'.format('benchbox', hostname, diskPath, loggerId.replace(".", "-"), 'hdd'))
 
         self.diskCounter = pc
 
