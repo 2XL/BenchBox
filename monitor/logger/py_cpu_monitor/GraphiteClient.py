@@ -26,8 +26,8 @@ class GraphiteClient():
         sock.close()
 
     def initClient(self):
-        sock = socket.socket()
-        self.session = sock.connect((self.hostname, self.portstr))
+        self.session = socket.socket()
+        self.session.connect((self.hostname, self.portstr))
 
     def exitClient(self):
         self.session.close()
