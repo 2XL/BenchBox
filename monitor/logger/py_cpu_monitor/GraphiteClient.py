@@ -1,7 +1,7 @@
 import time
 import socket
 import random
-import wget
+#import wget
 import urllib2
 import json
 
