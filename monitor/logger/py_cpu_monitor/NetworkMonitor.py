@@ -16,8 +16,9 @@ class NetworkMonitor(MonitorResource):
         print 'constructor'
         self.networkCounter # Memory, Available MBytes, true
         self.networkValues = list() # list {float}
-        self.networkCounter = PerformanceCounter('Network', 'UpAndDown bytes', nic).setMetricHeader('{}.{}.{}.{}'
-                                                                 .format('benchbox', hostname, nic, loggerId, 'net'))
+        pc = PerformanceCounter('Network', 'UpAndDown bytes', nic)
+        pc.setMetricHeader('{}.{}.{}.{}'.format('benchbox', hostname, nic, loggerId, 'net'))
+        self.networkCounter = pc
         self.loggerId = loggerId
         self.hostname = hostname
 

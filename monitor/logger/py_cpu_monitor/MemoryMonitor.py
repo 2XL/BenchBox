@@ -22,9 +22,10 @@ class MemoryMonitor(MonitorResource):
         #for process in self.processes:
         process = processes
         print 'CPUMonitor:{}'.format(process)
-        self.ramCounter.append(PerformanceCounter('Memory', 'Available MBytes', process)
-                               .setMetricHeader('{}.{}.{}.{}'
-                                                .format('benchbox', hostname, process, loggerId, 'ram')))
+        pc = PerformanceCounter('Memory', 'Available MBytes', process)
+        pc.setMetricHeader('{}.{}.{}.{}'.format('benchbox', hostname, process, loggerId, 'ram'))
+        self.ramCounter.append(pc)
+
 
     def prepareMonitoring(self):
         print 'RAM:prepareMonitor'
