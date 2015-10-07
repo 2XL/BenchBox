@@ -14,6 +14,8 @@ class PerformanceCounter:
     processPidDynamic = None #
     diskPath = None # storage directory path
     isStatic = None
+    metricHeader = None
+
 
     def __init__(self, type, type_spec, processName):
         print '//constructor:PerformanceCounter {} {} {}'.format(type, type_spec, processName)
@@ -25,7 +27,7 @@ class PerformanceCounter:
         graphiteUrl = 'ast03'
         graphitePort = 22003
         self.gc = GraphiteClient(graphiteUrl, graphitePort)
-        self.metricHeader = None
+        self.gc.initClient()
 
 
         #if processName == 'StackSync':
@@ -42,7 +44,6 @@ class PerformanceCounter:
 
     def setMetricHeader(self, str):
         self.metricHeader = str
-        self.gc.initClient()
 
 
     def NextValue(self):

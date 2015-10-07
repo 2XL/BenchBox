@@ -33,7 +33,8 @@ class GraphiteClient():
         self.session.close()
 
     def collect(self, name, value, ts):
-        self.session.send('{} {} {}\n'.format(name, value, ts))
+        str = '{} {} {}\n'.format(name, value, ts)
+        self.session.send(str)
 
 
 
