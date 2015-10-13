@@ -24,7 +24,7 @@ class PerformanceCounter:
         self.log_file = self.Type + '_append.log'
         self.logger = open(self.log_file, 'w').close() # clear the log file for new session
 
-        graphiteUrl = 'ast03'
+        graphiteUrl = '10.30.103.95' # has to be ip if we test with lab machines
         graphitePort = 22003
         self.gc = GraphiteClient(graphiteUrl, graphitePort)
         self.gc.initClient()
