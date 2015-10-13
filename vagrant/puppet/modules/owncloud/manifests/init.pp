@@ -13,7 +13,7 @@ class owncloud (
   $apilogurl                = 'http://localhost/ownc/apiput',
   $language                   = 'es_ES',
   $remotelogs               = '',
-  $rmq_host                 = '10.30.236.140',
+  $rmq_host                 = '10.30.233.150',
   $rmq_port                = '5672',
 
 )inherits ::owncloud::params {

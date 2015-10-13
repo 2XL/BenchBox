@@ -108,7 +108,7 @@ node 'sandBox' {
 
   class{
     "owncloud":
-      rmq_host => '10.30.236.140'
+      rmq_host => '10.30.233.150'
   }
 
   ->

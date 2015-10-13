@@ -35,7 +35,7 @@ configAll.set('profile', 'regular', '1')
 configAll.set('profile', 'idle', '1')
 
 # configAll.set('owncloud', 'ip', '192.168.1.240')
-configAll.set('owncloud', 'ip', '10.30.236.140')
+configAll.set('owncloud', 'ip', '10.30.233.150')
 configAll.set('owncloud', 'port', '80')
 configAll.set('owncloud', 'user', 'user')
 configAll.set('owncloud', 'passwd', 'bitnami')
