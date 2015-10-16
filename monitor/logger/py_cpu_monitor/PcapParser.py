@@ -43,34 +43,18 @@ class pcapDumper():
                                                                                                               ip.v,
                                                                                                               ip.len)
             sm.execute(insert_into_logger)
-
         sm.quit()
 
-
-
-    '''
-
-    drop table if EXISTS  logger_pcap;
-
-    create table if not EXISTS logger_pcap (
-    ts string,
-    ip_src string,
-    ip_tgt string,
-    port_src int,
-    port_tgt int,
-    protocol int,
-    len int
-    ) stored as parquet;
-
-    '''
 
 def print_obj_attr(an):
     attrs = vars(an)
     print ', '.join("%s: %s" % item for item in attrs.items())
     print attrs
+
 #-------------------------------------------------------------------------------
 # Main - For testing purposes
 #-------------------------------------------------------------------------------
+
 if __name__ == '__main__':
 
     p = '/tmp/test.pcap'
@@ -89,34 +73,7 @@ if __name__ == '__main__':
         if hasattr(udp, 'off_x2'):
             print udp.off_x2
 
-        #print ip.keys()
         print timestamp, src, udp.sport, dst, udp.dport, ip.v, ip.len
-
-
-
-'''
-Ethernet(
-src='\x00\x1a\xa0kUf',
-dst='\x00\x13I\xae\x84,',
-data=IP(
-	src='\xc0\xa8\n\n',
-	off=16384,
-	dst='C\x17\x030',
-	sum=25129,
-	len=52,
-	p=6,
-	id=51105,
-	data=
-	TCP(seq=9632694,
-		off_x2=128,
-		ack=3382015884,
-		win=54,
-		sum=65372,
-		flags=17,
-		dport=80,
-		sport=56145)))
-
-'''
 
 
 

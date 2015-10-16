@@ -8,7 +8,7 @@ import threading
 
 
 class NetworkMonitor(MonitorResource):
-    ''
+
     networkCounter = None # PerformanceCounter
     networkValues = list()
 
@@ -18,7 +18,6 @@ class NetworkMonitor(MonitorResource):
         self.networkValues = list() # list {float}
         pc = PerformanceCounter('Network', 'UpAndDown bytes', nic)
         pc.setMetricHeader('{}.{}.{}'.format('benchbox', hostname, nic, 'net'))
-        #pc.setMetricHeader('{}.{}.{}.{}'.format('benchbox', hostname, nic, str(loggerId).replace(".", "-"), 'net'))
         self.networkCounter = pc
         self.loggerId = loggerId
         self.hostname = hostname
@@ -32,17 +31,10 @@ class NetworkMonitor(MonitorResource):
 
     def saveResults(self, filename):
         # open a file
-        file = open('net_' + filename, 'w+') # maybe it has to be append instead of crete and
-        # write
-        '''
-        os.write(file, str(os.getpid()))
-        for it in self.ramValues: # float iterator
-            while it:
-                os.write(file, it.pop(1))
-        '''
+        file = open('net_' + filename, 'w+')
         for value in enumerate(self.networkValues):
             print value
-            file.write(str(value[1])+'\n' )
+            file.write(str(value[1])+'\n')
         file.close()
         self.networkCounter.clearExit()
 
@@ -53,17 +45,13 @@ class NetworkMonitor(MonitorResource):
                           'lab144',
                           'lab144')
         sm.connect()
-        # asume that there is a benchbox database in impala
         sm.execute('use benchbox')
-        # create table if not exists
 
         for value in enumerate(self.networkValues):
             print value
             items = value[1].split(' ')
             insert_into_logger = "insert into logger_net values ('{}', {}, {}, '{}', '{}')" \
                 .format(items[0], items[1], items[2], self.loggerId, self.hostname)
-            # StackSync 2015-09-08T17:35:10.455244 475340800
-            # ts,  up_size, down_size, logger_id, dummy_hostname
             sm.execute(insert_into_logger)
         sm.quit()
 
@@ -72,4 +60,4 @@ if __name__ == '__main__':
     for x in range(10):
         network.captureValue();
         network.networkValues[len(network.networkValues)-1]
-        time.sleep(1) # 1s
+        time.sleep(1)

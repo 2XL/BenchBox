@@ -12,8 +12,6 @@ from StoreManager import StoreManager
 
 class Monitor:
 
-
-
     def __init__(self):
         self.finish = False # Boolean
         self.interval = None# int, sleep interval
@@ -24,31 +22,20 @@ class Monitor:
         self.pcapCapturer.daemon = True
         self.logger_id = None
 
-
-    def ThreadProc(self): # aquesta funcio bucle infinit en un thread...
+    def ThreadProc(self):
         print 'Started/ThreadProc'
         self.start()
 
     def start(self):
         print 'Started/MonitorCapture {}'.format((self.interval, self.resources, self.filename))
-        # start pcapturer
+
         self.pcapCapturer.start()
         self.finish = False
-
-
-
-
 
         while not self.finish:
             print 'sleep:{}'.format(self.interval)
             for resource in self.resources:
-                # print 'captureValue:{}'.format(resource)
-
                 resource.captureValue()
-                '''
-                todo: refactor to none blocking, instead of blocking, due to cpu_percentatge and network bandwidth
-                capture
-                '''
             sleep(self.interval)
 
     def stop(self):
@@ -58,8 +45,6 @@ class Monitor:
             print 'Not Monitoring Anything...'
         else:
             for resource in self.resources:
-                #resource.saveResults(self.filename)
-                # print 'saveResults({})'.format(resource)
                 resource.pushToLogger()
 
         while not self.pcapCapturer.stop(): pass
@@ -111,32 +96,20 @@ class Monitor:
                           'lab144',
                           'lab144')
         sm.connect()
-        # asume that there is a benchbox database in impala
         sm.execute('use benchbox')
-        # create table if not exists
-
 
         insert_into_logger = "insert into logger_id values ('{}', '{}', '{}', '{}', '{}')" \
                 .format(self.logger_id, dummy_hostname, pc_server_name, profile, test_definition)
-            # StackSync 2015-09-08T17:35:10.455244 475340800
-            # ts,  up_size, down_size, logger_id, dummy_hostname
         sm.execute(insert_into_logger)
         sm.quit()
 
+if __name__ == '__main__':
+
+    monitor = CPUMonitor()
+    # t = CPUMonitor.ThreadProc # declare a thread to be monitored
+    t.Start() # start monitor the thread
+    interval = 12000 # ms
+    sleep(interval)
+    monitor.end() # tell the monitor to quit
 
 
-    '''
-    # test the class
-
-    if __name__ = '__main__':
-
-        monitor = CPUMonitor()
-        # t = CPUMonitor.ThreadProc # declare a thread to be monitored
-        t.Start() # start monitor the thread
-        interval = 12000 # ms
-        sleep(interval)
-        monitor.end() # tell the monitor to quit
-
-
-
-    '''

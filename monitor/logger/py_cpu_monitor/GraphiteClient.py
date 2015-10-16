@@ -1,9 +1,7 @@
 import time
 import socket
 import random
-#import wget
-import urllib2
-import json
+
 
 class GraphiteClient():
     def __init__(self, host='localhost', portstr=22003, portpickle=22004):
@@ -38,8 +36,6 @@ class GraphiteClient():
         str = '{} {} {}\n'.format(name, value, ts)
         print str
         self.session.send(str)
-
-
 
     def tsNow(self):
         return int(time.time())

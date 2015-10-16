@@ -15,9 +15,6 @@ class pcap_capture(Thread):
     def __init__(self, iface = 'eth0', pcap_name = '/tmp/test.pcap'):
         Thread.__init__(self)
 
-        #TODO: Parameters!
-        #print ni.ifaddresses("eth0")[2]
-        #print ni.ifaddresses("eth1")[2]
         ip = ni.ifaddresses(iface)[2][0]['addr']
         p = ["80", "443", "8080", "3128", "38088", "5672"]
         my_filter = "(port " + " || port ".join(p) + ") && (host " + ip + ")"
@@ -63,18 +60,16 @@ class pcap_capture(Thread):
 def dump(obj, name):
     for attr  in dir(obj):
         print "%s => obj.%s = %s" % (name, attr, getattr(obj, attr))
-        #print obj.attr()
 
 #-------------------------------------------------------------------------------
 # Main - For testing purposes
 #-------------------------------------------------------------------------------
 if __name__ == '__main__':
 
-    # start capturing the traffic
     worker = None
     try:
         p = "/tmp/test.pcap"
-        worker = pcap_capture('wlan0' )
+        worker = pcap_capture('wlan0')
         worker.daemon = True
         worker.start()
         time.sleep(5)
