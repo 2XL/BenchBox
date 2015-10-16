@@ -1,15 +1,2 @@
-#bin
-#node_modules
-#public
-#routes
-#views
-#app.js
-#package.json
-logger/py_cpu_monitor/*.txt
-logger/py_cpu_monitor/*.log
-logger/*.log
-npm-debug.log
-logger/py_cpu_monitor/*.csv
-
-helloworld.js
-startApp.sh
+logger/py_cpu_monitor/log/*.log
+logger/test.sql
