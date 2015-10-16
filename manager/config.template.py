@@ -8,25 +8,23 @@ class Object(object):
 
 # General Configuration Setup ##########################################################################################
 
-configAll = ConfigParser.RawConfigParser()
+OWNCLOUD_SYNC_IP = '10.30.233.150'
+STACKSYNC_SYNC_IP = '130.206.36.143'    # stacksync.urv.cat
+IMPALA_IP = '10.30.103.146'             # ast12.recerca.intranet.urv.es
+GRAPHITE_IP = '10.30.103.95'
+#
 
-# When adding sections or items, add them in the reverse order of
-# how you want them to be displayed in the actual file.
-# In addition, please note that using RawConfigParser's and the raw
-# mode of ConfigParser's respective set functions, you can assign
-# non-string values to keys internally, but will receive an error
-# when attempting to write to a file or when you get it in non-raw
-# mode. SafeConfigParser does not allow such assignments to take place.
+
+configAll = ConfigParser.RawConfigParser()
 
 configAll.add_section('demo')
 configAll.add_section('profile')
 configAll.add_section('owncloud')
 configAll.add_section('stacksync')
-configAll.add_section('graphite') # log database
-configAll.add_section('log_server')
+configAll.add_section('graphite')       # log collector
+configAll.add_section('log_server')     # None
 
-
-configAll.set('demo', 'url', 'https://wiki.python.org/moin/ConfigParserExamples')
+# configAll.set('demo', 'url', 'https://wiki.python.org/moin/ConfigParserExamples')
 
 configAll.set('profile', 'sync', '1')
 configAll.set('profile', 'backup', '1')
@@ -34,47 +32,32 @@ configAll.set('profile', 'cdn', '1')
 configAll.set('profile', 'regular', '1')
 configAll.set('profile', 'idle', '1')
 
-# configAll.set('owncloud', 'ip', '192.168.1.240')
-configAll.set('owncloud', 'ip', '10.30.233.150')
+configAll.set('owncloud', 'ip', OWNCLOUD_SYNC_IP)
 configAll.set('owncloud', 'port', '80')
 configAll.set('owncloud', 'user', 'user')
 configAll.set('owncloud', 'passwd', 'bitnami')
-#
-configAll.set('stacksync', 'ip', '130.206.36.143')
+
+
+configAll.set('stacksync', 'ip', STACKSYNC_SYNC_IP)
 configAll.set('stacksync', 'port', '80')
-configAll.set('stacksync', 'admin', '130.206.36.143:8081/admin')
+configAll.set('stacksync', 'admin', STACKSYNC_SYNC_IP+':8081/admin')
 configAll.set('stacksync', 'user', 'swift')
 configAll.set('stacksync', 'passwd', 'urv')
 
 
-#
-# configAll.set('stacksync', 'ip', '10.30.239.198')
-# configAll.set('stacksync', 'port', '80')
-# configAll.set('stacksync', 'admin', '10.30.239.198:8081/admin')
-# configAll.set('stacksync', 'user', 'swift')
-# configAll.set('stacksync', 'passwd', 'urv')
-
-
-# configAll.set('log_server', 'url', 'ds055822.mongolab.com:55822/benchbox')
-# configAll.set('log_server', 'user', 'test')
-# configAll.set('log_server', 'passwd', 'test')
-
 configAll.set('log_server', 'type', 'impala')
 configAll.set('log_server', 'user', 'lab144')
 configAll.set('log_server', 'passwd', 'lab144')
-configAll.set('log_server', 'url', 'ast12.recerca.intranet.urv.es')
+configAll.set('log_server', 'url', IMPALA_ROUTE)
 configAll.set('log_server', 'port', '8888')
 
 
 # http://graphite.readthedocs.org/en/latest/carbon-daemons.html
-configAll.set('graphite', 'ip', '10.30.103.95')
+configAll.set('graphite', 'ip', GRAPHITE_IP)
 configAll.set('graphite', 'port', '8443')
-configAll.set('graphite', 'raw', '2003') # tcp, "plain text" protocol
-configAll.set('graphite', 'pickle', '2004') # picke # default listener port
-configAll.set('graphite', 'api', '7002') # api
-
-
-
+configAll.set('graphite', 'raw', '2003')  # tcp, "plain text" protocol
+configAll.set('graphite', 'pickle', '2004')  # pickle # default listener port
+configAll.set('graphite', 'api', '7002')  # api
 
 
 
