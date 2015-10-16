@@ -23,8 +23,6 @@ class owncloud (
   #    ip => '10.30.233.0'
   # dhcp :: mac( 08:00:27:1e:89:5e )
   }
-
-
   case $::operatingsystem {
     debian,ubuntu: {
       class { 'owncloud::package::debian': }

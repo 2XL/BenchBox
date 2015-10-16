@@ -266,34 +266,6 @@ package{
   }
   ->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /*
-  exec {
-    'clear_previous_client':
-      command => 'sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk \'{print $2}\')',
-    # sudo kill -9 $(ps -ef | grep -i stacksync | grep -v \'grep\' | awk '{print $2}')
-      user    => 'vagrant',
-      group   =>'vagrant',
-      path    => ['/usr/bin', '/bin/'],
-      returns => [0, 1]
-  }
-  ->
-  */
-
   exec {
     "check_presence_of_previous_execution":
       command => 'kill -9 $(head -n 1 /tmp/StackSync.pid)',
@@ -314,30 +286,6 @@ package{
       group   =>'vagrant',
       path    => ['/usr/bin', '/bin/']
   }
-/*
-->
-  exec {
-    'fix_debian keyring':
-      command => 'sudo aptitude install debian-keyring debian-archive-keyring',
-      user    => 'vagrant',
-      group   =>'vagrant',
-      path    => ['/usr/bin', '/bin/'],
-  }
-  */
-/*
-->
-class { 'nodejs':
-  version => 'stable',
-  target_dir => '/bin' # add binary to bin
-}
-
-# installing npm packages
-
-package{
-  'torrentjs':
-    provider => npm
-}
-*/
 }
 
 
