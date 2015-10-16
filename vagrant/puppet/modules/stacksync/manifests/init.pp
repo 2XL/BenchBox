@@ -59,44 +59,21 @@ class stacksync (
     onlyif  => '[ ! -e "/usr/bin/stacksync" ]'
   }
 
-  /*
-   exec {
-      'doing_foo_compile':
-        command => 'make compile',
-        path    => ['/usr/bin/', '/bin/'],
-        cwd     => '/home/vagrant/desktop/packaging/debian',
-        onlyif  => '[ ! -e "/usr/bin/stacksync" ]'
-    }->
-    exec {
-      'doing_foo_package':
-        command => 'make package',
-        path    => ['/usr/bin/', '/bin/'],
-        cwd     => '/home/vagrant/desktop/packaging/debian',
-        onlyif  => '[ ! -e "/usr/bin/stacksync" ]'
-    }
-    */
-
 
   ->
   exec {
     'doing_foo_dpkg':
-      command => 'sudo dpkg -i stacksync_2.0.1_all.deb', # maybe use a regular expression??? failure ...
+      command => 'sudo dpkg -i stacksync_2.0.1_all.deb',
       path    => ['/usr/bin/', '/bin/'],
       cwd     => '/home/vagrant/desktop/packaging/debian',
       onlyif  => '[ ! -e "/usr/bin/stacksync" ]'
   }->
-  /*
-    package { $package_name: ensure => installed }
-    ->
-    */
-  # define a no tty startup
-  file { # redefine the /usr/bin/stacksync script
+  file {
     ['/usr/bin/stacksync']:
       recurse => true,
       ensure  => file,
       mode    => 0755,
       content => template($stacksync),
-  /*    require => Package[$package_name] */
   }
 
   host {
@@ -107,33 +84,6 @@ class stacksync (
 
 
 
-/*
-# epp(<FILE REFERENCE>, [<PARAMETER HASH>])
-  file { '/etc/ntp.conf':
-    ensure  => file,
-    content => epp('ntp/ntp.conf.epp', {'service_name' => 'xntpd', 'iburst_enable' => true}),
-  # Loads /etc/puppetlabs/code/environments/production/modules/ntp/templates/ntp.conf.epp
-  }
-*/
-# customize each vagrant client startup user credentials for each box
-/*
-->
-file {
-  "${confdir}/config.xml":
-    require => Package[$package_name],
-    content => template($template),
-    notify  => Service[$service_name],   # when the config file changes notify to the service
-}
-*/
-# assurance that the service is running
-/*
-service { $service_name:
-  require   => Package[$package_name],
-  enable    => true,
-  ensure    => running,
-  hasstatus => true,
-}
-*/
 }
 
 

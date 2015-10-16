@@ -26,7 +26,6 @@ class owncloud (
 
 
   case $::operatingsystem {
-  # centos,fedora,rhel,redhat: {}
     debian,ubuntu: {
       class { 'owncloud::package::debian': }
     }
@@ -34,16 +33,5 @@ class owncloud (
       fail("Module ${module_name} is not supported on ${::operatingsystem}")
     }
   }
-
-# descargar deb7 :: bin directament :: http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Debian_7.0/amd64/owncloud-client_1.8.4-1_amd64.deb
-#
-#  package { 'owncloud':
-#    ensure => present,
-#  }
-
-
-
-# generar els instalar owncloud
-#
 
 }

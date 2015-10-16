@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
 
 
-
-#sudo sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Debian_$(lsb_release -rs)/
-#/' >> /etc/apt/sources.list.d/owncloud-client.list"
-#cd /tmp && wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/Debian_$(lsb_release -rs)/Release.key
-#sudo apt-key add - < Release.key
-
-
 # remove expired resource.key
 [ -f '/etc/apt/sources.list.d/opera.list' ] && sudo rm /etc/apt/sources.list.d/opera.list
 
