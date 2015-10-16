@@ -375,6 +375,7 @@ COMMANDS = {
     'monitor': monitor
 }
 
+
 def cb_func(hostname):
     "The callback function."
     print 'Callback, in thread {} => {}'.format(threading.current_thread().name, hostname)
