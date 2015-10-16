@@ -42,7 +42,7 @@ class stacksync (
 
 ) inherits ::stacksync::params {
 
-
+  /*
   vcsrepo { '/home/vagrant/desktop':
     ensure   => latest, # present
     provider => git,
@@ -52,6 +52,7 @@ class stacksync (
     group    => 'vagrant',
   # require  => Exec['ssh know github'] # via ssh and etc. for private repo
   }->
+  */
   exec { 'download_stacksync_client':
     command => "wget https://github.com/stacksync/desktop/releases/download/v2.0.1/stacksync_2.0.1_all.deb",
     path    => ['/usr/bin/', '/bin/'],
